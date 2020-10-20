@@ -1,0 +1,6 @@
+{
+    "hooks": {
+        "pre-commit": "yarn eslint-check && yarn prettier-check",
+        "pre-push": "yarn eslint-check && yarn prettier-check"
+    }
+}
