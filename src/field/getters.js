@@ -77,11 +77,3 @@ export const isFieldTouched = creatorGetField(FIELD_KEY_TOUCHED, FIELD_DEFAULT_T
  * @return {boolean}
  */
 export const isFieldValid = creatorGetField(FIELD_KEY_VALID, FIELD_DEFAULT_VALID)
-
-// export const resetField = (namespace, fieldName) => {
-//   // reset field to default state and setting last provided default value
-// }
-//
-// export const clearField = (namespace, fieldName) => {
-//   // reset field, but ignore default value
-// }

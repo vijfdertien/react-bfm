@@ -99,6 +99,22 @@ Returns an object with the state value of every field in the namespace.
 getNamespaceValuesOnFocus( namespace )**  
 Returns an object with the `valueOnFocus` value for every field in the namespace. Notice that only one field will have a value and all others are `null`, because only one field can have focus.
 
+**clearField( namespace, fieldName )**  
+Reset field, but ignoring default value.  
+See also `resetField`
+
+**resetField( namespace, fieldName )**  
+Reset field to default state and setting last provided default value, if applicable.  
+See also `clearField`
+
+**clearNamespace( namespace )**  
+Reset namespace, but ignoring the default values of the fields  
+See also `resetNamespace`
+
+**resetNamespace( namespace )**  
+Reset namespace to default state and setting last provided default value per field  
+See also `clearNamespace`
+
 # Examples
 
 ## Basic usages

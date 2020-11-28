@@ -1,5 +1,7 @@
 export { BFMHooksContext } from './context'
 export {
+  FIELD_DEFAULT_DEFAULT_VALUE,
+  FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
   FIELD_DEFAULT_DIRTY,
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_FOCUS,
@@ -7,6 +9,9 @@ export {
   FIELD_DEFAULT_VALID,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
+  FIELD_INITIAL_STATIC_VALUES,
+  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_DEFAULT_VALUE_ERROR,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -17,6 +22,7 @@ export {
   FIELD_STATE_DEFAULT,
   NAMESPACE_STATE_DEFAULT,
 } from './constants'
+export { clearField, resetField } from './field/actions'
 export {
   creatorGetField,
   getFieldError,
@@ -26,7 +32,7 @@ export {
   isFieldDirty,
   isFieldTouched,
   isFieldValid,
-} from './field/field'
+} from './field/getters'
 export {
   creatorUseField,
   useFieldError,
@@ -42,9 +48,11 @@ export {
   defaultDirtyCheck,
   defaultEventToValue,
   defaultValueToInput,
+  mapFieldValueAndError,
   validateFieldName,
   validateNamespace,
 } from './helpers'
+export { clearNamespace, resetNamespace } from './namespace/actions'
 export {
   creatorUseGetNamespace,
   creatorUseIsEveryNamespace,
@@ -69,7 +77,7 @@ export {
   isNamespaceDirty,
   isNamespaceTouched,
   isNamespaceValid,
-} from './namespace/namespace'
+} from './namespace/getters'
 export {
   getFieldState,
   getNamespaceState,

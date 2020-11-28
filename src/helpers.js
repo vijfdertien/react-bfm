@@ -1,3 +1,5 @@
+import { FIELD_KEY_ERROR, FIELD_KEY_VALID, FIELD_KEY_VALUE } from './constants'
+
 /**
  * Function to get the checked value from a event
  * @param event
@@ -26,6 +28,17 @@ export const defaultDirtyCheck = (newValue, valueOnFocus) => newValue !== valueO
  * @return {*}
  */
 export const defaultValueToInput = (value) => value
+
+/**
+ * @param value
+ * @param error
+ * @returns {Object}
+ */
+export const mapFieldValueAndError = (value, error) => ({
+  [FIELD_KEY_ERROR]: error || null,
+  [FIELD_KEY_VALID]: !error,
+  [FIELD_KEY_VALUE]: value,
+})
 
 const validateString = (value) => typeof value === 'string' && value.length > 0
 

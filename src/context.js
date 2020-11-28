@@ -1,14 +1,15 @@
 import { createContext } from 'react'
 import {
+  FIELD_INITIAL_STATIC_VALUES,
+  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_DEFAULT_VALUE_ERROR,
   FIELD_KEY_DIRTY,
-  FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
   FIELD_KEY_TOUCHED,
-  FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
 } from './constants'
-import { defaultDirtyCheck, validateFieldName, validateNamespace } from './helpers'
+import { defaultDirtyCheck, mapFieldValueAndError, validateFieldName, validateNamespace } from './helpers'
 import {
   getFieldState,
   getNamespaceState,
@@ -41,9 +42,7 @@ const focusField = (namespace, fieldName) => {
 const changeField = (namespace, fieldName, value, error, dirtyCheck = defaultDirtyCheck) => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
     [FIELD_KEY_DIRTY]: dirtyCheck(value, currentState[FIELD_KEY_VALUE_ON_FOCUS]),
-    [FIELD_KEY_ERROR]: error || null,
-    [FIELD_KEY_VALID]: !error,
-    [FIELD_KEY_VALUE]: value,
+    ...mapFieldValueAndError(value, error),
   }))
 }
 
@@ -76,12 +75,8 @@ const initField = (namespace, fieldName, value, error) => {
   }
 
   updateFieldStateWithCallback(namespace, fieldName, () => ({
-    [FIELD_KEY_DIRTY]: false,
-    [FIELD_KEY_ERROR]: error || null,
-    [FIELD_KEY_FOCUS]: false,
-    [FIELD_KEY_TOUCHED]: false,
-    [FIELD_KEY_VALID]: !error,
-    [FIELD_KEY_VALUE]: value,
+    ...FIELD_INITIAL_STATIC_VALUES,
+    ...mapFieldValueAndError(value, error),
   }))
 
   return getFieldState(namespace, fieldName)
@@ -93,22 +88,24 @@ const initField = (namespace, fieldName, value, error) => {
  *
  * @param namespace
  * @param fieldName
- * @param value
+ * @param defaultValue
  * @param error
  */
-const defaultValueField = (namespace, fieldName, value, error) =>
-  updateFieldStateWithCallback(
-    namespace,
-    fieldName,
-    (currentState) =>
+const defaultValueField = (namespace, fieldName, defaultValue, error) =>
+  updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
+    const updateState =
       !currentState[FIELD_KEY_TOUCHED] &&
       !currentState[FIELD_KEY_FOCUS] &&
-      currentState[FIELD_KEY_VALUE] !== value && {
-        [FIELD_KEY_ERROR]: error || null,
-        [FIELD_KEY_VALID]: !error,
-        [FIELD_KEY_VALUE]: value,
-      }
-  )
+      currentState[FIELD_KEY_VALUE] !== defaultValue
+        ? mapFieldValueAndError(defaultValue, error)
+        : {}
+
+    return {
+      ...updateState,
+      [FIELD_KEY_DEFAULT_VALUE]: defaultValue,
+      [FIELD_KEY_DEFAULT_VALUE_ERROR]: error,
+    }
+  })
 
 export const BFMHooksContext = createContext({
   blurField,

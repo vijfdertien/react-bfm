@@ -55,7 +55,6 @@ const stateCreator = () => {
     const update = callback(currentFieldState)
 
     if (update) {
-      // todo: add validation for development
       state[namespace] = {
         ...state[namespace],
         [fieldName]: { ...currentFieldState, ...update },

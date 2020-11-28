@@ -3,6 +3,10 @@ import {
   defaultDirtyCheck,
   defaultEventToValue,
   defaultValueToInput,
+  FIELD_KEY_ERROR,
+  FIELD_KEY_VALID,
+  FIELD_KEY_VALUE,
+  mapFieldValueAndError,
   validateFieldName,
   validateNamespace,
 } from '../src'
@@ -151,5 +155,65 @@ describe('validateNamespace', () => {
     })
     expect(validateNamespace('a')).toBe(true)
     expect(validateNamespace('longName')).toBe(true)
+  })
+})
+
+describe('mapFieldValueAndError', () => {
+  it('should map value and error', () => {
+    expect(mapFieldValueAndError('foobar', 'error-string')).toEqual({
+      [FIELD_KEY_ERROR]: 'error-string',
+      [FIELD_KEY_VALID]: false,
+      [FIELD_KEY_VALUE]: 'foobar',
+    })
+  })
+
+  it('should null value for error when not defined', () => {
+    expect(mapFieldValueAndError('foobar')).toEqual({
+      [FIELD_KEY_ERROR]: null,
+      [FIELD_KEY_VALID]: true,
+      [FIELD_KEY_VALUE]: 'foobar',
+    })
+  })
+
+  it('should map any truthy value for error', () => {
+    ;[
+      true,
+      Symbol('foobar'),
+      456n,
+      123.45,
+      123,
+      -123.45,
+      -123,
+      'foobar',
+      { foo: 'bar' },
+      ['foo', 'bar'],
+      TEST_MAP_VALUE,
+    ].forEach((error) =>
+      expect(mapFieldValueAndError('foobar', error)).toEqual({
+        [FIELD_KEY_ERROR]: error,
+        [FIELD_KEY_VALID]: false,
+        [FIELD_KEY_VALUE]: 'foobar',
+      })
+    )
+  })
+
+  it('should map any falsy value for error', () => {
+    ;[undefined, false, 0, -0, 0n, NaN, '', null].forEach((error) =>
+      expect(mapFieldValueAndError('foobar', error)).toEqual({
+        [FIELD_KEY_ERROR]: null,
+        [FIELD_KEY_VALID]: true,
+        [FIELD_KEY_VALUE]: 'foobar',
+      })
+    )
+  })
+
+  it('should map supported values', () => {
+    SUPPORTED_VALUES.forEach((value) =>
+      expect(mapFieldValueAndError(value, null)).toEqual({
+        [FIELD_KEY_ERROR]: null,
+        [FIELD_KEY_VALID]: true,
+        [FIELD_KEY_VALUE]: value,
+      })
+    )
   })
 })

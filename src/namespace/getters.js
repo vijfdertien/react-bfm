@@ -78,13 +78,3 @@ export const isNamespaceTouched = creatorIsSomeNamespace(FIELD_KEY_TOUCHED)
  * @return {boolean}
  */
 export const isNamespaceValid = creatorIsEveryNamespace(FIELD_KEY_VALID)
-
-// todo: same functions where namespace starts with substring
-
-// const resetNamespace = (namespace) => {
-//   // reset namespace to default state and setting last provided default value
-// }
-//
-// const clearNamespace = (namespace) => {
-//   // reset namespace, but ignore default values
-// }
