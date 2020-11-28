@@ -1,13 +1,5 @@
 import { createContext } from 'react'
 import {
-  getFieldState,
-  getNamespaceState,
-  removeField,
-  subscribeToField,
-  subscribeToNamespace,
-  updateFieldStateWithCallback,
-} from './state'
-import {
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -17,6 +9,14 @@ import {
   FIELD_KEY_VALUE_ON_FOCUS,
 } from './constants'
 import { defaultDirtyCheck, validateFieldName, validateNamespace } from './helpers'
+import {
+  getFieldState,
+  getNamespaceState,
+  removeField,
+  subscribeToField,
+  subscribeToNamespace,
+  updateFieldStateWithCallback,
+} from './state'
 
 /**
  * @param namespace

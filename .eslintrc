@@ -40,6 +40,17 @@
       }
     ],
     "react-hooks/rules-of-hooks": "error",
-    "unicorn/no-abusive-eslint-disable": "error"
+    "unicorn/no-abusive-eslint-disable": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }

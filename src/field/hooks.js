@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import { BFMHooksContext } from '../context'
 import {
   FIELD_DEFAULT_DIRTY,
   FIELD_DEFAULT_ERROR,
@@ -16,6 +15,7 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
 } from '../constants'
+import { BFMHooksContext } from '../context'
 import { validateFieldName, validateNamespace } from '../helpers'
 
 /**

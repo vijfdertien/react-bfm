@@ -2971,11 +2971,6 @@ eslint-plugin-redux-reselect@^1.1.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-redux-reselect/-/eslint-plugin-redux-reselect-1.1.1.tgz#bea0e9adc02d818768392d194238655d8fc18cee"
   integrity sha512-qkTlVaAkwlSZzHMrxmgV/O2QrX1M9lFj0Al0fkabpME6e7ZgwPmDm46TzL3Bi67XpdPMh/BR78V+26mqBeC1xg==
 
-eslint-plugin-standard@^4.0.2:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-4.1.0.tgz#0c3bf3a67e853f8bbbc580fb4945fbf16f41b7c5"
-  integrity sha512-ZL7+QRixjTR6/528YNGyDotyffm5OQst/sGxKDwGb9Uqs4In5Egi4+jbobhqJoyoCM6/7v/1A5fhQ7ScMtDjaQ==
-
 eslint-plugin-unicorn@^23.0.0:
   version "23.0.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-23.0.0.tgz#b2820212874735f9d91ecc8678b263ecfa6cf5f6"
