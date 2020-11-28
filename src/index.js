@@ -37,7 +37,14 @@ export {
   useFieldValue,
   useFieldValueOnFocus,
 } from './field/hooks'
-export { checkedEventToValue, defaultDirtyCheck, defaultEventToValue, defaultValueToInput } from './helpers'
+export {
+  checkedEventToValue,
+  defaultDirtyCheck,
+  defaultEventToValue,
+  defaultValueToInput,
+  validateFieldName,
+  validateNamespace,
+} from './helpers'
 export {
   creatorUseGetNamespace,
   creatorUseIsEveryNamespace,

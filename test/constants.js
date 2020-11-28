@@ -1,5 +1,5 @@
-const mapValue = new Map()
-mapValue.set('foo', 'bar')
+export const TEST_MAP_VALUE = new Map()
+TEST_MAP_VALUE.set('foo', 'bar')
 
 export const SUPPORTED_VALUES = [
   undefined,
@@ -8,8 +8,11 @@ export const SUPPORTED_VALUES = [
   Symbol('foobar'),
   456n,
   123.45,
+  123,
+  -123.45,
+  -123,
   'foobar',
   { foo: 'bar' },
   ['foo', 'bar'],
-  mapValue,
+  TEST_MAP_VALUE,
 ]

@@ -30,15 +30,15 @@ export const defaultValueToInput = (value) => value
 const validateString = (value) => typeof value === 'string' && value.length > 0
 
 /**
- * Validate namespace
- * @param value
- * @returns {boolean}
- */
-export const validateNamespace = validateString
-
-/**
  * Validate fieldName
  * @param value
  * @returns {boolean}
  */
 export const validateFieldName = validateString
+
+/**
+ * Validate namespace
+ * @param value
+ * @returns {boolean}
+ */
+export const validateNamespace = validateString
