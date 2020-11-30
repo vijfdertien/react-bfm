@@ -39,7 +39,8 @@
     "prepare": "yarn clean && yarn build",
     "prettier-check": "prettier --check .",
     "prettier-fix": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "version": "conventional-changelog --config ./changelog-config.js --infile CHANGELOG.md --same-file && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1"
@@ -59,6 +60,8 @@
     "@commitlint/config-conventional": "^11.0.0",
     "@testing-library/react-hooks": "^3.4.2",
     "babel-loader": "^8.1.0",
+    "conventional-changelog-cli": "^2.1.1",
+    "conventional-changelog-conventionalcommits": "^4.5.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.14.0",
     "eslint-config-standard": "^16.0.0",
