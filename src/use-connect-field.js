@@ -61,15 +61,8 @@ const omitKeys = (original, keysToOmit) =>
  *                    Included are onFocus, onChange and onBlur to handle the input field state.
  */
 export const useConnectField = (props, omitProps) => {
-  const {
-    blurField,
-    changeField,
-    defaultValueField,
-    focusField,
-    initField,
-    removeField,
-    subscribeToField,
-  } = useContext(BFMHooksContext)
+  const { blurField, changeField, defaultValueField, focusField, initField, removeField, subscribeToField } =
+    useContext(BFMHooksContext)
   const {
     validator,
     dirtyCheck,

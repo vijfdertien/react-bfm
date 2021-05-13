@@ -41,11 +41,9 @@ describe('creatorUseField', () => {
     useFieldTest = creatorUseField(DUMMY_KEY, DUMMY_DEFAULT)
   })
 
-  global.console = {
-    error: jest.fn(),
-  }
-
   it('should log a console error when namespace is too short', () => {
+    global.console.error = jest.fn()
+
     const { result } = renderHook(() => useFieldTest('', 'nameField'))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
@@ -55,6 +53,7 @@ describe('creatorUseField', () => {
   })
 
   it('should log a console error when fieldName is too short', () => {
+    global.console.error = jest.fn()
     const { result } = renderHook(() => useFieldTest('spaceName', ''))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `fieldName`')

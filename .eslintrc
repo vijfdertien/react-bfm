@@ -8,11 +8,9 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "prettier",
-    "prettier/react",
-    "prettier/standard",
     "plugin:jest/recommended"
   ],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "plugins": ["react-hooks", "import", "unicorn", "prefer-arrow", "jest"],
   "settings": {
     "react": {

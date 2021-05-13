@@ -12,28 +12,24 @@ describe('useConnectField', () => {
     removeField(TEST_NAMESPACE, TEST_FIELD_NAME_NEW)
   })
 
-  // use mock for console error, these errors can be ignored
-  global.console = {
-    error: jest.fn(),
-    // log: jest.fn(),
-  }
-
   it('should throw error when namespace changes', () => {
-    const { rerender } = renderHook(({ props }) => useConnectField(props), {
+    const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME } },
     })
 
-    expect(() => rerender({ props: { namespace: TEST_FIELD_NAME_NEW, fieldName: TEST_FIELD_NAME } })).toThrow(
+    rerender({ props: { namespace: TEST_FIELD_NAME_NEW, fieldName: TEST_FIELD_NAME } })
+    expect(result.error.message).toBe(
       'Changing the namespace and/or fieldName of an already rendered component is not supported.'
     )
   })
 
   it('should throw error when fieldName changes', () => {
-    const { rerender } = renderHook(({ props }) => useConnectField(props), {
+    const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME } },
     })
 
-    expect(() => rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME_NEW } })).toThrow(
+    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME_NEW } })
+    expect(result.error.message).toBe(
       'Changing the namespace and/or fieldName of an already rendered component is not supported.'
     )
   })
@@ -80,7 +76,7 @@ describe('useConnectField', () => {
     })
 
     expect(result.current.value).toBe('foobar')
-    result.current.onFocus({ target: {} })
+    act(() => result.current.onFocus({ target: {} }))
     expect(result.current.focus).toBe(true)
 
     rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
@@ -95,9 +91,9 @@ describe('useConnectField', () => {
     })
 
     expect(result.current.value).toBe('foobar')
-    result.current.onFocus({})
+    act(() => result.current.onFocus({}))
     expect(result.current.focus).toBe(true)
-    result.current.onBlur({})
+    act(() => result.current.onBlur({}))
     expect(result.current.focus).toBe(false)
 
     rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
