@@ -1,3 +1,15 @@
+## [0.4.0](https://github.com/SeBassFox/react-bfm/compare/v0.3.0...v0.4.0) (2021-08-23)
+
+### Features
+
+- updated the onChange callback to pass all arguments to transform and chained onChange ([2ebac28](https://github.com/SeBassFox/react-bfm/commit/2ebac2818f79c664654cc25281c882852bfda842))
+
+### Miscellaneous Chores
+
+- update dependencies ([53ea690](https://github.com/SeBassFox/react-bfm/commit/53ea690d19b21520de93ff63237c3cf54b362085))
+- update dependencies ([a71d85d](https://github.com/SeBassFox/react-bfm/commit/a71d85de6e9a7437cca40a8ddfac67f993dd073c))
+- upgrade Husky to version 6 ([55bd4dd](https://github.com/SeBassFox/react-bfm/commit/55bd4dd2f220bc4d2f7f10bbfb660d8dc6348426))
+
 ## [0.3.0](https://github.com/SeBassFox/react-bfm/compare/v0.2.0...v0.3.0) (2020-12-15)
 
 ### Miscellaneous Chores
