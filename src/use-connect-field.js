@@ -49,10 +49,10 @@ const omitKeys = (original, keysToOmit) =>
  * @param {dirtyCheckCallback} [props.dirtyCheck]
  * @param {function(value)} [props.transformValueToInput] - Transform state value to input value.
  *                                                          When not given: the value will not be transformed.
- * @param {function(event)} [props.transformEventToValue] - Transform onChange event to state value.
+ * @param {function(...args)} [props.transformEventToValue] - Transform onChange event to state value.
  *                                                          When not given: the event.target.value will be used.
  * @param {function(event)} [props.onFocus] - Called on an onFocus event. It can't be used to override the input prop.
- * @param {function(event)} [props.onChange] - Called on an onChange event. It can't be used to override the input prop.
+ * @param {function(...args)} [props.onChange] - Called on an onChange event. It can't be used to override the input prop.
  * @param {function(event)} [props.onBlur] - Called on an onBlur event. It can't be used to override the input prop.
  * @param {string[]} [omitProps] - Prop keys that should not be returned.
  * @return {object} - Props for the input field.
@@ -132,11 +132,11 @@ export const useConnectField = (props, omitProps) => {
   )
 
   _props.onChange = useCallback(
-    (event) => {
-      const value = transformEventToValue(event)
+    (...args) => {
+      const value = transformEventToValue(...args)
       const error = getError(value)
       changeField(namespace, fieldName, value, error, dirtyCheck)
-      onChange && onChange(event)
+      onChange && onChange(...args)
     },
     [transformEventToValue, getError, changeField, namespace, fieldName, dirtyCheck, onChange]
   )
