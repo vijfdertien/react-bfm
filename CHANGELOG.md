@@ -1,3 +1,9 @@
+## [0.5.0](https://github.com/SeBassFox/react-bfm/compare/v0.4.0...v0.5.0) (2021-08-27)
+
+### Bug Fixes
+
+- fixed issue where error message is not updated for default value ([4499fd5](https://github.com/SeBassFox/react-bfm/commit/4499fd544af491fe7812071127e9e3f4e32df06d))
+
 ## [0.4.0](https://github.com/SeBassFox/react-bfm/compare/v0.3.0...v0.4.0) (2021-08-23)
 
 ### Features
