@@ -4,6 +4,7 @@ import {
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DEFAULT_VALUE_ERROR,
   FIELD_KEY_DIRTY,
+  FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
   FIELD_KEY_TOUCHED,
   FIELD_KEY_VALUE,
@@ -93,12 +94,18 @@ const initField = (namespace, fieldName, value, error) => {
  */
 const defaultValueField = (namespace, fieldName, defaultValue, error) =>
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
+    // only update value and error when field is not touched or has focus
     const updateState =
       !currentState[FIELD_KEY_TOUCHED] &&
       !currentState[FIELD_KEY_FOCUS] &&
       currentState[FIELD_KEY_VALUE] !== defaultValue
         ? mapFieldValueAndError(defaultValue, error)
         : {}
+
+    // update error if value is still default
+    if (currentState[FIELD_KEY_VALUE] === defaultValue && currentState[FIELD_KEY_ERROR] !== error) {
+      updateState.error = error
+    }
 
     return {
       ...updateState,

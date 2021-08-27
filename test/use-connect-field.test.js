@@ -70,6 +70,32 @@ describe('useConnectField', () => {
     expect(result.current.value).toBe('barfoo')
   })
 
+  it('should be able to update the error when field has default value and message has changed by validator', () => {
+    const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
+      initialProps: {
+        props: {
+          namespace: TEST_NAMESPACE,
+          fieldName: TEST_FIELD_NAME,
+          defaultValue: 'foobar',
+          validator: () => 'first error',
+        },
+      },
+    })
+
+    expect(result.current.error).toBe('first error')
+
+    rerender({
+      props: {
+        namespace: TEST_NAMESPACE,
+        fieldName: TEST_FIELD_NAME,
+        defaultValue: 'foobar',
+        validator: () => 'second error',
+      },
+    })
+
+    expect(result.current.error).toBe('second error')
+  })
+
   it('should not update the defaultValue when field has focus', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
