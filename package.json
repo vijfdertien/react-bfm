@@ -1,7 +1,7 @@
 {
   "name": "react-bfm",
   "description": "A basic field / form manager for React using hooks",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "keywords": [
     "react",
     "reactjs",
