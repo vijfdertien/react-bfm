@@ -1,3 +1,9 @@
+## [0.6.0](https://github.com/SeBassFox/react-bfm/compare/v0.5.2...v0.6.0) (2021-10-14)
+
+### Features
+
+- added new getters to get the default values of field and/or namespace ([7901933](https://github.com/SeBassFox/react-bfm/commit/7901933f7d5603cc879148fe05033c0acdfdff4e))
+
 ### [0.5.2](https://github.com/SeBassFox/react-bfm/compare/v0.5.1...v0.5.2) (2021-10-02)
 
 ### Miscellaneous Chores
