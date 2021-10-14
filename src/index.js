@@ -25,6 +25,7 @@ export {
 export { clearField, resetField } from './field/actions'
 export {
   creatorGetField,
+  getFieldDefaultValue,
   getFieldError,
   getFieldValue,
   getFieldValueOnFocus,
@@ -70,6 +71,7 @@ export {
   creatorGetNamespace,
   creatorIsEveryNamespace,
   creatorIsSomeNamespace,
+  getNamespaceDefaultValues,
   getNamespaceErrors,
   getNamespaceValues,
   getNamespaceValuesOnFocus,

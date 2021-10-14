@@ -1,7 +1,9 @@
 import {
+  FIELD_DEFAULT_DEFAULT_VALUE,
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
+  FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -12,6 +14,7 @@ import {
   creatorGetNamespace,
   creatorIsEveryNamespace,
   creatorIsSomeNamespace,
+  getNamespaceDefaultValues,
   getNamespaceErrors,
   getNamespaceState,
   getNamespaceValues,
@@ -65,6 +68,18 @@ describe('creatorIsEveryNamespace', () => {
       const namespaceIsEvery = getNamespace('spaceName')
       expect(namespaceIsEvery).toBe(false)
     })
+  })
+})
+
+describe('getNamespaceDefaultValues', () => {
+  it('should return the correct value per field', () => {
+    getNamespaceState.mockReturnValueOnce({
+      field1: { [FIELD_KEY_DEFAULT_VALUE]: 'correct-value' },
+      field2: { barfoo: 'other-value' },
+    })
+    const values = getNamespaceDefaultValues('spaceName')
+    expect(values.field1).toBe('correct-value')
+    expect(values.field2).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
   })
 })
 

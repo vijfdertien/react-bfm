@@ -1,7 +1,9 @@
 import {
+  FIELD_DEFAULT_DEFAULT_VALUE,
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
+  FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -36,6 +38,12 @@ export const creatorIsEveryNamespace = (key) => (namespace) =>
  */
 export const creatorIsSomeNamespace = (key) => (namespace) =>
   Object.values(getNamespaceState(namespace)).some((fieldState) => fieldState[key] || false)
+
+/**
+ * @param {string} namespace
+ * @return {Object.<string, string|Array|Object|boolean>} Key is fieldName
+ */
+export const getNamespaceDefaultValues = creatorGetNamespace(FIELD_KEY_DEFAULT_VALUE, FIELD_DEFAULT_DEFAULT_VALUE)
 
 /**
  * @param {string} namespace

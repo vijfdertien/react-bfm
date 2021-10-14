@@ -1,4 +1,5 @@
 import {
+  FIELD_DEFAULT_DEFAULT_VALUE,
   FIELD_DEFAULT_DIRTY,
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_FOCUS,
@@ -6,6 +7,7 @@ import {
   FIELD_DEFAULT_VALID,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
+  FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -14,6 +16,7 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
   creatorGetField,
+  getFieldDefaultValue,
   getFieldError,
   getFieldState,
   getFieldValue,
@@ -42,6 +45,17 @@ describe('creatorGetField', () => {
       const getField = creatorGetField('foobar', 'defaultValue')
       expect(getField('spaceName', 'nameField')).toBe('defaultValue')
     })
+  })
+})
+
+describe('getFieldDefaultValue', () => {
+  it('should return the value', () => {
+    getFieldState.mockReturnValueOnce({ [FIELD_KEY_DEFAULT_VALUE]: 'foobar' })
+    expect(getFieldDefaultValue('spaceName', 'nameField')).toBe('foobar')
+  })
+  it('should return the default value', () => {
+    getFieldState.mockReturnValue({})
+    expect(getFieldDefaultValue('spaceName', 'nameField')).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
   })
 })
 
