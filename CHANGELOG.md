@@ -1,3 +1,9 @@
+## [0.7.0](https://github.com/SeBassFox/react-bfm/compare/v0.6.0...v0.7.0) (2022-05-09)
+
+### Miscellaneous Chores
+
+- update dependencies ([ca500f2](https://github.com/SeBassFox/react-bfm/commit/ca500f23f7f33bd4f84296d9531e651e8587abd6))
+
 ## [0.6.0](https://github.com/SeBassFox/react-bfm/compare/v0.5.2...v0.6.0) (2021-10-14)
 
 ### Features
