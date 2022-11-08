@@ -9,14 +9,14 @@
     "input"
   ],
   "license": "MIT",
-  "author": "Sebastiaan Vossebeld <fox@sebass.nl> (https://github.com/SeBassFox)",
-  "homepage": "https://github.com/SeBassFox/react-bfm",
+  "author": "Sebastiaan Vossebeld <sebastiaan@vijfdertien.nl> (https://github.com/vijfdertien)",
+  "homepage": "https://github.com/vijfdertien/react-bfm",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SeBassFox/react-bfm.git"
+    "url": "git+https://github.com/vijfdertien/react-bfm.git"
   },
   "bugs": {
-    "url": "https://github.com/SeBassFox/react-bfm/issues"
+    "url": "https://github.com/vijfdertien/react-bfm/issues"
   },
   "main": "./lib/index.js",
   "unpkg": "dist/react-bfm.js",
