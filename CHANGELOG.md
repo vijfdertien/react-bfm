@@ -1,3 +1,9 @@
+## [1.0.0](https://github.com/vijfdertien/react-bfm/compare/v0.8.0...v1.0.0) (2022-11-08)
+
+### Miscellaneous Chores
+
+- moved repository to new organisation ([13c3f0a](https://github.com/vijfdertien/react-bfm/commit/13c3f0a42958de024426c87c5a92417b848510c1))
+
 ## [0.8.0](https://github.com/SeBassFox/react-bfm/compare/v0.7.0...v0.8.0) (2022-10-31)
 
 ### Miscellaneous Chores
