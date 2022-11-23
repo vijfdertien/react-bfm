@@ -23,7 +23,6 @@ import {
 /**
  * @param namespace
  * @param fieldName
- * @returns {Object}
  */
 const focusField = (namespace, fieldName) => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
@@ -38,7 +37,6 @@ const focusField = (namespace, fieldName) => {
  * @param value
  * @param error
  * @param dirtyCheck
- * @returns {Object}
  */
 const changeField = (namespace, fieldName, value, error, dirtyCheck = defaultDirtyCheck) => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
@@ -50,7 +48,6 @@ const changeField = (namespace, fieldName, value, error, dirtyCheck = defaultDir
 /**
  * @param namespace
  * @param fieldName
- * @returns {Object}
  */
 const blurField = (namespace, fieldName) => {
   updateFieldStateWithCallback(namespace, fieldName, () => ({

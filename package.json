@@ -25,8 +25,10 @@
     "dist",
     "lib",
     "src",
-    "es"
+    "es",
+    "types"
   ],
+  "types": "./types/index.d.ts",
   "scripts": {
     "build": "yarn build-commonjs && yarn build-es && yarn build-umd && yarn build-umd-min",
     "build-commonjs": "BABEL_ENV=commonjs babel src --out-dir lib",
@@ -34,7 +36,7 @@
     "build-umd": "BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build-umd-min": "BABEL_ENV=commonjs NODE_ENV=production webpack",
     "clean": "rimraf lib dist es",
-    "eslint-check": "eslint .",
+    "eslint-check": "eslint . --ext .d.ts,.js",
     "eslint-fix": "eslint --fix .",
     "prepare": "yarn clean && yarn build && husky install",
     "prettier-check": "prettier --check .",
@@ -60,6 +62,8 @@
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@testing-library/react-hooks": "^5.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "babel-loader": "^8.1.0",
     "conventional-changelog-cli": "^2.1.1",
     "conventional-changelog-conventionalcommits": "^4.5.0",
@@ -83,6 +87,7 @@
     "react": "^17.0.1",
     "react-test-renderer": "^17.0.1",
     "rimraf": "^3.0.2",
+    "typescript": "^4.9.3",
     "webpack": "^5.3.2",
     "webpack-cli": "^4.1.0"
   },

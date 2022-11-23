@@ -82,7 +82,7 @@ export const useNamespaceErrors = creatorUseGetNamespace(FIELD_KEY_ERROR, FIELD_
 
 /**
  * @param {string} namespace
- * @return {string|Array|Object|boolean}
+ * @return {boolean}
  */
 export const useNamespaceHasFocus = creatorUseIsSomeNamespace(FIELD_KEY_FOCUS)
 
