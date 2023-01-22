@@ -61,6 +61,10 @@ const omitKeys = (original, keysToOmit) =>
  *                    Included are onFocus, onChange and onBlur to handle the input field state.
  */
 export const useConnectField = (props, omitProps) => {
+  if (process.env.NODE_ENV !== 'production') {
+    omitProps &&
+      console.warn('Deprecation: `omitProps` is deprecated since version 1.1.0 and will be removed in version 2.x') // eslint-disable-line no-console
+  }
   const { blurField, changeField, defaultValueField, focusField, initField, removeField, subscribeToField } =
     useContext(BFMHooksContext)
   const {
