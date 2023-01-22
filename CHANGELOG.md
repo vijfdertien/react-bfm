@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/vijfdertien/react-bfm/compare/v1.0.1...v1.1.0) (2023-01-22)
+
+### Miscellaneous Chores
+
+- added deprecation warning for omitProps ([d91f59f](https://github.com/vijfdertien/react-bfm/commit/d91f59f68b371b0ba97f119cd1d4b919a87e8191))
+- update dependencies ([956f71d](https://github.com/vijfdertien/react-bfm/commit/956f71d59f692dbcfa671681c7358f0e67e0ce3a))
+
 ### [1.0.1](https://github.com/vijfdertien/react-bfm/compare/v1.0.0...v1.0.1) (2022-11-24)
 
 ### Miscellaneous Chores
