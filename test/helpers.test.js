@@ -1,3 +1,4 @@
+import { SUPPORTED_VALUES, TEST_MAP_VALUE } from './constants'
 import {
   checkedEventToValue,
   defaultDirtyCheck,
@@ -10,7 +11,6 @@ import {
   validateFieldName,
   validateNamespace,
 } from '../src'
-import { SUPPORTED_VALUES, TEST_MAP_VALUE } from './constants'
 
 describe('defaultValueToInput', () => {
   it('should always return the same value when converting state value to input value', () => {
