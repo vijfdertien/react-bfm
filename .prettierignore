@@ -1,3 +1,5 @@
-dist
-es
-lib
+.pnp.*
+.yarn/*
+dist/
+es/
+lib/
