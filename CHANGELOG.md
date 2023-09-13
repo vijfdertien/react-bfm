@@ -1,3 +1,13 @@
+## [2.0.0-beta.0](https://github.com/vijfdertien/react-bfm/compare/v1.1.0...v2.0.0-beta.0) (2023-09-13)
+
+### Features
+
+- refactored code to TypeScript and implemented structure changes ([82789fe](https://github.com/vijfdertien/react-bfm/commit/82789fee01827050705ef4a43a6ddaad42c00418))
+
+### Miscellaneous Chores
+
+- update dependencies to latest major versions and installed latest stable yarn ([f6dd508](https://github.com/vijfdertien/react-bfm/commit/f6dd508ec0db8305b223feb14486086e8175a2ae))
+
 ## [1.1.0](https://github.com/vijfdertien/react-bfm/compare/v1.0.1...v1.1.0) (2023-01-22)
 
 ### Miscellaneous Chores
