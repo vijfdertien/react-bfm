@@ -48,9 +48,7 @@
     "version": "conventional-changelog --config ./changelog-config.js --infile CHANGELOG.md --same-file && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.15",
-    "eslint-plugin-n": "^16.0.2",
-    "ts-jest": "^29.1.1"
+    "@babel/runtime": "^7.22.15"
   },
   "peerDependencies": {
     "react": ">=18.2.0"
@@ -82,6 +80,7 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-n": "^16.0.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-promise": "^6.1.1",
@@ -95,6 +94,7 @@
     "react": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "rimraf": "^5.0.1",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
