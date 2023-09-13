@@ -1,7 +1,7 @@
 export const TEST_MAP_VALUE = new Map()
 TEST_MAP_VALUE.set('foo', 'bar')
 
-export const SUPPORTED_VALUES = [
+export const SUPPORTED_VALUES: any[] = [
   undefined,
   true,
   false,

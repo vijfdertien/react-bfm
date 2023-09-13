@@ -1,37 +1,32 @@
 import {
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_VALUE,
-  FIELD_INITIAL_STATIC_VALUES,
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_STATE_DEFAULT,
 } from '../constants'
 import { mapFieldValueAndError } from '../helpers'
 import { updateFieldStateWithCallback } from '../state'
+import { FieldNameType, FieldStateType, NamespaceType } from '../types'
 
 /**
  * Reset field, but ignoring default value
- * @param namespace
- * @param fieldName
  */
-export const clearField = (namespace, fieldName) => {
+export const clearField = (namespace: NamespaceType, fieldName: FieldNameType): void => {
   updateFieldStateWithCallback(namespace, fieldName, () => ({
-    ...FIELD_INITIAL_STATIC_VALUES,
+    ...FIELD_STATE_DEFAULT,
     ...mapFieldValueAndError(FIELD_DEFAULT_VALUE, FIELD_DEFAULT_ERROR),
   }))
 }
-
 /**
  * Reset field to default state and setting last provided default value
- * @param namespace
- * @param fieldName
  */
-export const resetField = (namespace, fieldName) => {
-  // reset field to default state and setting last provided default value
-  updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
-    ...FIELD_INITIAL_STATIC_VALUES,
+export const resetField = (namespace: NamespaceType, fieldName: FieldNameType): void => {
+  updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
+    ...FIELD_STATE_DEFAULT,
     ...mapFieldValueAndError(
       currentState[FIELD_KEY_DEFAULT_VALUE] || FIELD_DEFAULT_VALUE,
-      currentState[FIELD_KEY_DEFAULT_VALUE_ERROR] || FIELD_DEFAULT_ERROR
+      currentState[FIELD_KEY_DEFAULT_VALUE_ERROR],
     ),
   }))
 }

@@ -45,7 +45,7 @@ describe('clearNamespace', () => {
   })
 
   it('should clear a field without default value', () => {
-    clearNamespace('spaceName', 'nameField')
+    clearNamespace('spaceName')
     expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
       [FIELD_KEY_ERROR]: FIELD_DEFAULT_ERROR,
@@ -65,7 +65,7 @@ describe('clearNamespace', () => {
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
     }))
 
-    clearNamespace('spaceName', 'nameField')
+    clearNamespace('spaceName')
     expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
       [FIELD_KEY_ERROR]: FIELD_DEFAULT_ERROR,
@@ -85,7 +85,7 @@ describe('clearNamespace', () => {
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
     }))
 
-    clearNamespace('spaceName', 'nameField')
+    clearNamespace('spaceName')
     expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
       [FIELD_KEY_ERROR]: FIELD_DEFAULT_ERROR,

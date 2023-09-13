@@ -7,7 +7,9 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versionsdist/
+build/
 dist/
 es/
 lib/
 node_modules/
+types/

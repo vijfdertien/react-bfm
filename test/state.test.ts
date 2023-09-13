@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -31,11 +32,13 @@ describe('getFieldState', () => {
     }))
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALID]: true,
     })
 
     expect(getFieldState('namespace1', 'barfoo')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'barfoo',
       [FIELD_KEY_VALID]: true,
     })
@@ -47,6 +50,7 @@ describe('getFieldState', () => {
     expect(getFieldState('namespace2', 'barfoo')).toStrictEqual(FIELD_STATE_DEFAULT)
 
     expect(getFieldState('namespace2', 'bfaoro')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'bfaoro',
       [FIELD_KEY_VALID]: false,
     })
@@ -73,10 +77,12 @@ describe('getNamespaceState', () => {
 
     expect(getNamespaceState('namespace1')).toEqual({
       foobar: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
         [FIELD_KEY_VALID]: true,
       },
       barfoo: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'barfoo',
         [FIELD_KEY_VALID]: true,
       },
@@ -84,6 +90,7 @@ describe('getNamespaceState', () => {
     expect(getNamespaceState('namespace2')).toStrictEqual(NAMESPACE_STATE_DEFAULT)
     expect(getNamespaceState('namespace3')).toEqual({
       bfaoro: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'bfaoro',
         [FIELD_KEY_VALID]: false,
       },
@@ -106,11 +113,13 @@ describe('removeField', () => {
     }))
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALID]: false,
     })
 
     expect(getFieldState('namespace2', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'barfoo',
       [FIELD_KEY_VALID]: true,
     })
@@ -120,6 +129,7 @@ describe('removeField', () => {
     expect(getFieldState('namespace1', 'foobar')).toStrictEqual(FIELD_STATE_DEFAULT)
 
     expect(getFieldState('namespace2', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'barfoo',
       [FIELD_KEY_VALID]: true,
     })
@@ -128,6 +138,7 @@ describe('removeField', () => {
 
     expect(getNamespaceState('namespace2')).toEqual({
       foobar: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'barfoo',
         [FIELD_KEY_VALID]: true,
       },
@@ -175,11 +186,13 @@ describe('subscribeToField', () => {
     expect(mockCallback2).toHaveBeenCalledTimes(2)
 
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALID]: false,
     })
 
     const afterSecondUpdate = {
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_ERROR]: 'barfoo',
       [FIELD_KEY_FOCUS]: true,
       [FIELD_KEY_VALUE]: 'foobar',
@@ -188,6 +201,7 @@ describe('subscribeToField', () => {
     expect(mockCallback1).toHaveBeenNthCalledWith(2, afterSecondUpdate)
 
     expect(mockCallback2).toHaveBeenNthCalledWith(2, {
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_ERROR]: null,
       [FIELD_KEY_FOCUS]: true,
       [FIELD_KEY_VALUE]: 'foobar',
@@ -195,6 +209,7 @@ describe('subscribeToField', () => {
     })
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_ERROR]: null,
       [FIELD_KEY_FOCUS]: false,
       [FIELD_KEY_VALUE]: 'foobar',
@@ -242,25 +257,22 @@ describe('subscribeToNamespace', () => {
     expect(mockCallback1).toHaveBeenCalledTimes(2)
     expect(mockCallback2).toHaveBeenCalledTimes(2)
 
-    // expect(mockCallback1).toHaveBeenNthCalledWith(1, {})
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
       foobar1: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
         [FIELD_KEY_VALID]: false,
       },
     })
-    // expect(mockCallback2).toHaveBeenNthCalledWith(1, {
-    //   foobar1: {
-    //     [FIELD_KEY_VALUE]: 'foobar',
-    //     [FIELD_KEY_VALID]: false,
-    //   },
-    // })
+
     const afterSecondUpdate = {
       foobar1: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_ERROR]: 'barfoo',
         [FIELD_KEY_FOCUS]: true,
       },
@@ -269,14 +281,17 @@ describe('subscribeToNamespace', () => {
 
     expect(mockCallback2).toHaveBeenNthCalledWith(2, {
       foobar1: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_ERROR]: 'barfoo',
         [FIELD_KEY_FOCUS]: true,
       },
       foobar3: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_ERROR]: null,
         [FIELD_KEY_FOCUS]: true,
         [FIELD_KEY_VALID]: true,
@@ -285,19 +300,23 @@ describe('subscribeToNamespace', () => {
 
     expect(getNamespaceState('namespace1', 'foobar')).toEqual({
       foobar1: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_ERROR]: 'barfoo',
         [FIELD_KEY_FOCUS]: true,
       },
       foobar3: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_ERROR]: null,
         [FIELD_KEY_FOCUS]: true,
         [FIELD_KEY_VALID]: true,
       },
       foobar4: {
+        ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_FOCUS]: false,
       },
     })
@@ -318,6 +337,7 @@ describe('updateFieldStateWithCallback', () => {
     }))
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_ERROR]: 'error-text',
       [FIELD_KEY_VALID]: false,
@@ -329,6 +349,7 @@ describe('updateFieldStateWithCallback', () => {
     }))
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'barfoo',
       [FIELD_KEY_ERROR]: 'error-text',
       [FIELD_KEY_VALID]: false,
@@ -350,6 +371,7 @@ describe('updateFieldStateWithCallback', () => {
     }))
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_ERROR]: 'error-text',
       [FIELD_KEY_VALID]: false,
@@ -360,6 +382,7 @@ describe('updateFieldStateWithCallback', () => {
     updateFieldStateWithCallback('namespace1', 'foobar', () => null)
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
+      ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_ERROR]: 'error-text',
       [FIELD_KEY_VALID]: false,

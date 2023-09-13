@@ -1,6 +1,5 @@
 import { createContext } from 'react'
 import {
-  FIELD_INITIAL_STATIC_VALUES,
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DEFAULT_VALUE_ERROR,
   FIELD_KEY_DIRTY,
@@ -9,50 +8,41 @@ import {
   FIELD_KEY_TOUCHED,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
+  FIELD_STATE_DEFAULT,
 } from './constants'
 import { defaultDirtyCheck, mapFieldValueAndError, validateFieldName, validateNamespace } from './helpers'
 import {
   getFieldState,
   getNamespaceState,
   removeField,
+  StateCreatorReturnType,
   subscribeToField,
   subscribeToNamespace,
   updateFieldStateWithCallback,
 } from './state'
+import { DirtyCheckFunction, FieldNameType, FieldStateType, NamespaceType } from './types'
 
-/**
- * @param namespace
- * @param fieldName
- * @returns {Object}
- */
-const focusField = (namespace, fieldName) => {
-  updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
+const focusField = (namespace: NamespaceType, fieldName: FieldNameType) => {
+  updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
     [FIELD_KEY_FOCUS]: true,
     [FIELD_KEY_VALUE_ON_FOCUS]: currentState[FIELD_KEY_VALUE],
   }))
 }
 
-/**
- * @param namespace
- * @param fieldName
- * @param value
- * @param error
- * @param dirtyCheck
- * @returns {Object}
- */
-const changeField = (namespace, fieldName, value, error, dirtyCheck = defaultDirtyCheck) => {
-  updateFieldStateWithCallback(namespace, fieldName, (currentState) => ({
+const changeField = (
+  namespace: NamespaceType,
+  fieldName: FieldNameType,
+  value: any,
+  error: any,
+  dirtyCheck = defaultDirtyCheck,
+) => {
+  updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
     [FIELD_KEY_DIRTY]: dirtyCheck(value, currentState[FIELD_KEY_VALUE_ON_FOCUS]),
     ...mapFieldValueAndError(value, error),
   }))
 }
 
-/**
- * @param namespace
- * @param fieldName
- * @returns {Object}
- */
-const blurField = (namespace, fieldName) => {
+const blurField = (namespace: NamespaceType, fieldName: FieldNameType) => {
   updateFieldStateWithCallback(namespace, fieldName, () => ({
     [FIELD_KEY_FOCUS]: false,
     [FIELD_KEY_TOUCHED]: true,
@@ -60,14 +50,7 @@ const blurField = (namespace, fieldName) => {
   }))
 }
 
-/**
- * @param {string} namespace
- * @param {string} fieldName
- * @param {string|Array|Object|boolean|null} value
- * @param {string|Array|Object|boolean|null} error
- * @returns {*}
- */
-const initField = (namespace, fieldName, value, error) => {
+const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any): FieldStateType => {
   if (!validateNamespace(namespace)) {
     throw new Error('Expected string with a minimal length of 1 for `namespace`')
   }
@@ -76,7 +59,7 @@ const initField = (namespace, fieldName, value, error) => {
   }
 
   updateFieldStateWithCallback(namespace, fieldName, () => ({
-    ...FIELD_INITIAL_STATIC_VALUES,
+    ...FIELD_STATE_DEFAULT,
     ...mapFieldValueAndError(value, error),
   }))
 
@@ -86,16 +69,11 @@ const initField = (namespace, fieldName, value, error) => {
 /**
  * sets default value only when the field is not touched or has focus
  * this way you can still change the input value after first rendering
- *
- * @param namespace
- * @param fieldName
- * @param defaultValue
- * @param error
  */
-const defaultValueField = (namespace, fieldName, defaultValue, error) =>
+const defaultValueField = (namespace: NamespaceType, fieldName: FieldNameType, defaultValue: any, error: any) =>
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
     // only update value and error when field is not touched or has focus
-    const updateState =
+    const updateState: Partial<FieldStateType> =
       !currentState[FIELD_KEY_TOUCHED] &&
       !currentState[FIELD_KEY_FOCUS] &&
       currentState[FIELD_KEY_VALUE] !== defaultValue
@@ -114,7 +92,21 @@ const defaultValueField = (namespace, fieldName, defaultValue, error) =>
     }
   })
 
-export const BFMHooksContext = createContext({
+export interface BFMHookContextType extends Omit<StateCreatorReturnType, 'updateFieldStateWithCallback'> {
+  blurField: (namespace: NamespaceType, fieldName: FieldNameType) => void
+  changeField: (
+    namespace: NamespaceType,
+    fieldName: FieldNameType,
+    value: any,
+    error: any,
+    dirtyCheck?: DirtyCheckFunction,
+  ) => void
+  defaultValueField: (namespace: NamespaceType, fieldName: FieldNameType, defaultValue: any, error: any) => void
+  focusField: (namespace: NamespaceType, fieldName: FieldNameType) => void
+  initField: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => FieldStateType
+}
+
+export const BFMHooksContext = createContext<BFMHookContextType>({
   blurField,
   changeField,
   defaultValueField,

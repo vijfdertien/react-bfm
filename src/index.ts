@@ -9,7 +9,6 @@ export {
   FIELD_DEFAULT_VALID,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
-  FIELD_INITIAL_STATIC_VALUES,
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DEFAULT_VALUE_ERROR,
   FIELD_KEY_DIRTY,
@@ -24,7 +23,6 @@ export {
 } from './constants'
 export { clearField, resetField } from './field/actions'
 export {
-  creatorGetField,
   getFieldDefaultValue,
   getFieldError,
   getFieldValue,
@@ -35,12 +33,12 @@ export {
   isFieldValid,
 } from './field/getters'
 export {
-  creatorUseField,
   useFieldError,
   useFieldHasFocus,
   useFieldIsDirty,
   useFieldIsTouched,
   useFieldIsValid,
+  useFieldState,
   useFieldValue,
   useFieldValueOnFocus,
 } from './field/hooks'
@@ -55,24 +53,24 @@ export {
 } from './helpers'
 export { clearNamespace, resetNamespace } from './namespace/actions'
 export {
-  creatorUseGetNamespace,
-  creatorUseIsEveryNamespace,
-  creatorUseIsSomeNamespace,
-  creatorUseNamespace,
   useNamespaceErrors,
   useNamespaceHasFocus,
   useNamespaceIsDirty,
   useNamespaceIsTouched,
   useNamespaceIsValid,
+  useNamespaceKeyIsEvery,
+  useNamespaceKeyIsSome,
+  useNamespaceKeyValues,
+  useNamespaceState,
   useNamespaceValues,
   useNamespaceValuesOnFocus,
 } from './namespace/hooks'
 export {
-  creatorGetNamespace,
-  creatorIsEveryNamespace,
-  creatorIsSomeNamespace,
   getNamespaceDefaultValues,
   getNamespaceErrors,
+  getNamespaceKeyIsEvery,
+  getNamespaceKeyIsSome,
+  getNamespaceKeyValues,
   getNamespaceValues,
   getNamespaceValuesOnFocus,
   hasNamespaceFocus,

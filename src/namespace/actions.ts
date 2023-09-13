@@ -1,26 +1,25 @@
 import { clearField, resetField } from '..'
 import { getNamespaceState } from '../state'
+import { FieldNameType, NamespaceType } from '../types'
 
 /**
- * Reset namespace, but ignoring the default values of the  fields
- * @param namespace
+ * Reset namespace, but ignoring the default values of the fields
  */
-export const clearNamespace = (namespace) => {
+export const clearNamespace = (namespace: NamespaceType): void => {
   const fieldNames = Object.keys(getNamespaceState(namespace))
 
-  fieldNames.forEach((fieldName) => {
+  fieldNames.forEach((fieldName: FieldNameType) => {
     clearField(namespace, fieldName)
   })
 }
 
 /**
  * Reset namespace to default state and setting last provided default value per field
- * @param namespace
  */
-export const resetNamespace = (namespace) => {
+export const resetNamespace = (namespace: NamespaceType): void => {
   const fieldNames = Object.keys(getNamespaceState(namespace))
 
-  fieldNames.forEach((fieldName) => {
+  fieldNames.forEach((fieldName: FieldNameType) => {
     resetField(namespace, fieldName)
   })
 }

@@ -1,5 +1,7 @@
 .pnp.*
 .yarn/*
+build/
 dist/
 es/
 lib/
+types/

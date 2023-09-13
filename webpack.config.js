@@ -7,7 +7,7 @@ const filename = `react-bfm${NODE_ENV === 'production' ? '.min' : ''}.js`
 const config = {
   mode: NODE_ENV === 'production' ? 'production' : 'development',
   devtool: NODE_ENV === 'production' ? undefined : false,
-  entry: './src/index.js',
+  entry: './build/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename,
@@ -26,7 +26,7 @@ const config = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'build'),
         use: [
           {
             loader: 'babel-loader',

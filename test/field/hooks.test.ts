@@ -1,6 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import {
-  creatorUseField,
   useFieldError,
   useFieldHasFocus,
   FIELD_DEFAULT_DIRTY,
@@ -24,6 +23,8 @@ import {
   useFieldIsValid,
   useFieldValue,
   useFieldValueOnFocus,
+  useFieldState,
+  FIELD_STATE_DEFAULT,
 } from '../../src'
 
 // reset modules to be sure that we have a clean state for every test
@@ -32,65 +33,65 @@ beforeEach(() => {
 })
 
 describe('creatorUseField', () => {
-  const DUMMY_KEY = 'dummy-key'
-  const DUMMY_DEFAULT = 'default-value'
-
-  let useFieldTest
-
-  beforeEach(() => {
-    useFieldTest = creatorUseField(DUMMY_KEY, DUMMY_DEFAULT)
-  })
-
   it('should log a console error when namespace is too short', () => {
     global.console.error = jest.fn()
 
-    const { result } = renderHook(() => useFieldTest('', 'nameField'))
+    const { result } = renderHook(() => useFieldState('', 'nameField'))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
     // should still return a value
-    expect(result.current).toBe(DUMMY_DEFAULT)
+    expect(result.current).toBe(FIELD_STATE_DEFAULT)
   })
 
   it('should log a console error when fieldName is too short', () => {
     global.console.error = jest.fn()
-    const { result } = renderHook(() => useFieldTest('spaceName', ''))
+    const { result } = renderHook(() => useFieldState('spaceName', ''))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `fieldName`')
 
     // should still return a value
-    expect(result.current).toBe(DUMMY_DEFAULT)
+    expect(result.current).toBe(FIELD_STATE_DEFAULT)
   })
 
   it('should return the default value if field is not initialized', () => {
-    const { result } = renderHook(() => useFieldTest('spaceName', 'nameField'))
-    expect(result.current).toBe(DUMMY_DEFAULT)
+    const { result } = renderHook(() => useFieldState('spaceName', 'nameField'))
+    expect(result.current).toBe(FIELD_STATE_DEFAULT)
   })
 
   it('should return the current state on initial render', () => {
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [DUMMY_KEY]: 'foobar',
+      [FIELD_KEY_VALUE]: 'foobar',
     }))
 
-    const { result } = renderHook(() => useFieldTest('spaceName', 'nameField'))
-    expect(result.current).toBe('foobar')
+    const { result } = renderHook(() => useFieldState('spaceName', 'nameField'))
+    expect(result.current).toStrictEqual({
+      ...FIELD_STATE_DEFAULT,
+      value: 'foobar',
+    })
   })
 
   it('should return the state and renders the component when the state updates', async () => {
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [DUMMY_KEY]: 'foobar',
+      [FIELD_KEY_VALUE]: 'foobar',
     }))
 
-    const { result } = renderHook(() => useFieldTest('spaceName', 'nameField'))
-    expect(result.current).toBe('foobar')
+    const { result } = renderHook(() => useFieldState('spaceName', 'nameField'))
+    expect(result.current).toStrictEqual({
+      ...FIELD_STATE_DEFAULT,
+      value: 'foobar',
+    })
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-        [DUMMY_KEY]: 'barfoo',
-      }))
+        [FIELD_KEY_VALUE]: 'barfoo',
+      })),
     )
 
-    expect(result.current).toBe('barfoo')
+    expect(result.current).toStrictEqual({
+      ...FIELD_STATE_DEFAULT,
+      value: 'barfoo',
+    })
   })
 })
 
@@ -120,7 +121,7 @@ describe('useFieldError', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_ERROR]: 'barfoo',
-      }))
+      })),
     )
 
     expect(result.current).toBe('barfoo')
@@ -153,7 +154,7 @@ describe('useFieldHasFocus', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_FOCUS]: false,
-      }))
+      })),
     )
 
     expect(result.current).toBe(false)
@@ -186,7 +187,7 @@ describe('useFieldIsDirty', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_DIRTY]: false,
-      }))
+      })),
     )
 
     expect(result.current).toBe(false)
@@ -219,7 +220,7 @@ describe('useFieldIsTouched', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_TOUCHED]: false,
-      }))
+      })),
     )
 
     expect(result.current).toBe(false)
@@ -252,7 +253,7 @@ describe('useFieldIsValid', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_VALID]: false,
-      }))
+      })),
     )
 
     expect(result.current).toBe(false)
@@ -285,7 +286,7 @@ describe('useFieldValue', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_VALUE]: 'fboaor',
-      }))
+      })),
     )
 
     expect(result.current).toBe('fboaor')
@@ -318,7 +319,7 @@ describe('useFieldValueOnFocus', () => {
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField', () => ({
         [FIELD_KEY_VALUE_ON_FOCUS]: 'fboaor',
-      }))
+      })),
     )
 
     expect(result.current).toBe('fboaor')

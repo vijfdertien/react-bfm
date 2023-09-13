@@ -1,4 +1,4 @@
-import { SUPPORTED_VALUES, TEST_MAP_VALUE } from './constants'
+import { ChangeEvent } from 'react'
 import {
   checkedEventToValue,
   defaultDirtyCheck,
@@ -11,6 +11,7 @@ import {
   validateFieldName,
   validateNamespace,
 } from '../src'
+import { SUPPORTED_VALUES, TEST_MAP_VALUE } from './constants'
 
 describe('defaultValueToInput', () => {
   it('should always return the same value when converting state value to input value', () => {
@@ -22,46 +23,53 @@ describe('defaultValueToInput', () => {
 
 describe('defaultEventToValue', () => {
   it('should return the target value of a event', () => {
+    const target = {
+      value: 'foobar',
+    } as unknown as EventTarget
     const event = {
-      target: {
-        value: 'foobar',
-      },
-    }
+      target,
+    } as ChangeEvent<HTMLInputElement>
     expect(defaultEventToValue(event)).toBe('foobar')
   })
 
   it('should return undefined if the target value is not set on a event', () => {
     const event = {
       target: {},
-    }
+    } as ChangeEvent<HTMLInputElement>
     expect(defaultEventToValue(event)).toBe(undefined)
   })
 
   it('should return undefined if the target is not set on a event', () => {
-    const event = {}
+    const event = {} as ChangeEvent<HTMLInputElement>
     expect(defaultEventToValue(event)).toBe(undefined)
   })
 
   it('should return the checked value of a event', () => {
-    const event = {
+    const event1 = {
       target: {
         checked: true,
       },
-    }
-    expect(checkedEventToValue(event)).toBe(true)
-    event.target.checked = false
-    expect(checkedEventToValue(event)).toBe(false)
+    } as unknown as ChangeEvent<HTMLInputElement>
+
+    expect(checkedEventToValue(event1)).toBe(true)
+
+    const event2 = {
+      target: {
+        checked: false,
+      },
+    } as unknown as ChangeEvent<HTMLInputElement>
+    expect(checkedEventToValue(event2)).toBe(false)
   })
 
   it('should return undefined if the target checked value is not set on a event', () => {
     const event = {
       target: {},
-    }
+    } as ChangeEvent<HTMLInputElement>
     expect(checkedEventToValue(event)).toBe(undefined)
   })
 
   it('should return undefined if the target is not set on a event (checked)', () => {
-    const event = {}
+    const event = {} as ChangeEvent<HTMLInputElement>
     expect(checkedEventToValue(event)).toBe(undefined)
   })
 })
@@ -100,8 +108,8 @@ describe('defaultDirtyCheck', () => {
   })
 
   it('should check if a object value is `dirty`', () => {
-    const newValue = { foo: 'bar' }
-    let valueOnFocus = newValue
+    const newValue: object = { foo: 'bar' }
+    let valueOnFocus: object = newValue
     expect(defaultDirtyCheck(newValue, valueOnFocus)).toBe(false)
     valueOnFocus = { bar: 'foo' }
     expect(defaultDirtyCheck(newValue, valueOnFocus)).toBe(true)
@@ -110,24 +118,7 @@ describe('defaultDirtyCheck', () => {
 
 describe('validateFieldName', () => {
   it('should validate field name', () => {
-    ;[
-      undefined,
-      null,
-      NaN,
-      true,
-      false,
-      Symbol('foobar'),
-      456n,
-      123.45,
-      123,
-      -123.45,
-      -123,
-      { foo: 'bar' },
-      ['foo', 'bar'],
-      TEST_MAP_VALUE,
-    ].forEach((value) => {
-      expect(validateFieldName(value)).toBe(false)
-    })
+    expect(validateFieldName('')).toBe(false)
     expect(validateFieldName('a')).toBe(true)
     expect(validateFieldName('longName')).toBe(true)
   })
@@ -135,24 +126,7 @@ describe('validateFieldName', () => {
 
 describe('validateNamespace', () => {
   it('should validate namespace', () => {
-    ;[
-      undefined,
-      null,
-      NaN,
-      true,
-      false,
-      Symbol('foobar'),
-      456n,
-      123.45,
-      123,
-      -123.45,
-      -123,
-      { foo: 'bar' },
-      ['foo', 'bar'],
-      TEST_MAP_VALUE,
-    ].forEach((value) => {
-      expect(validateNamespace(value)).toBe(false)
-    })
+    expect(validateNamespace('')).toBe(false)
     expect(validateNamespace('a')).toBe(true)
     expect(validateNamespace('longName')).toBe(true)
   })
@@ -193,7 +167,7 @@ describe('mapFieldValueAndError', () => {
         [FIELD_KEY_ERROR]: error,
         [FIELD_KEY_VALID]: false,
         [FIELD_KEY_VALUE]: 'foobar',
-      })
+      }),
     )
   })
 
@@ -203,7 +177,7 @@ describe('mapFieldValueAndError', () => {
         [FIELD_KEY_ERROR]: null,
         [FIELD_KEY_VALID]: true,
         [FIELD_KEY_VALUE]: 'foobar',
-      })
+      }),
     )
   })
 
@@ -213,7 +187,7 @@ describe('mapFieldValueAndError', () => {
         [FIELD_KEY_ERROR]: null,
         [FIELD_KEY_VALID]: true,
         [FIELD_KEY_VALUE]: value,
-      })
+      }),
     )
   })
 })
