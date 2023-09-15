@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/vijfdertien/react-bfm/issues"
   },
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
   "unpkg": "dist/react-bfm.js",
   "module": "es/index.js",
   "files": [
@@ -28,7 +28,7 @@
     "es",
     "types"
   ],
-  "types": "./types/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "yarn build-ts && yarn build-commonjs && yarn build-es && yarn build-umd && yarn build-umd-min",
     "build-ts": "tsc",
