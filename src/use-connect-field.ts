@@ -1,39 +1,48 @@
-import { ChangeEventHandler, FocusEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FocusEventHandler,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { DirtyCheckFunction, EventToValueFunction, TransformValueToInputFunction, ValidatorFunction } from './common'
 import { BFMHooksContext } from './context'
 import { defaultEventToValue, defaultValueToInput } from './helpers'
 
-interface ConnectFieldEventHandlerProps {
-  onFocus: FocusEventHandler<HTMLInputElement>
-  onChange: ChangeEventHandler<HTMLInputElement>
-  onBlur: FocusEventHandler<HTMLInputElement>
+interface ConnectFieldEventHandlerProps<T = unknown> {
+  onFocus: FocusEventHandler<T>
+  onChange: ChangeEventHandler<T>
+  onBlur: FocusEventHandler<T>
 }
-export interface ConnectFieldReturnProps extends ConnectFieldEventHandlerProps {
+export interface ConnectFieldReturnProps<T = HTMLInputElement> extends ConnectFieldEventHandlerProps<T> {
   readonly value: any
 }
 
-export interface ConnectFieldProps extends Partial<ConnectFieldEventHandlerProps> {
+export interface ConnectFieldProps<T = HTMLInputElement> extends Partial<ConnectFieldEventHandlerProps<T>> {
   namespace: string
   fieldName: string
   defaultValue?: unknown
   validator?: ValidatorFunction
   dirtyCheck?: DirtyCheckFunction
   transformValueToInput?: TransformValueToInputFunction
-  transformEventToValue?: EventToValueFunction
+  transformEventToValue?: EventToValueFunction<T>
 }
 
 export type FactoryWithoutConnectFieldProps<P> = Omit<P, keyof ConnectFieldProps>
 
-export const useConnectField = <P>(
-  props: ConnectFieldProps,
-): FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps => {
+export const useConnectField = <P = unknown, T = HTMLInputElement>(
+  props: ConnectFieldProps<T>,
+): FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps<T> => {
   const { blurField, changeField, defaultValueField, focusField, initField, removeField, subscribeToField } =
     useContext(BFMHooksContext)
   const {
     validator,
     dirtyCheck,
     transformValueToInput = defaultValueToInput,
-    transformEventToValue = defaultEventToValue,
+    transformEventToValue,
     onChange,
     onFocus,
     onBlur,
@@ -81,7 +90,7 @@ export const useConnectField = <P>(
     defaultValueField(namespace, fieldName, defaultValue, getError(defaultValue))
   }, [defaultValue, defaultValueField, fieldName, getError, namespace])
 
-  const handleFocus = useCallback<FocusEventHandler<HTMLInputElement>>(
+  const handleFocus = useCallback<FocusEventHandler<T>>(
     (event) => {
       focusField(namespace, fieldName)
       onFocus && onFocus(event)
@@ -89,9 +98,11 @@ export const useConnectField = <P>(
     [fieldName, namespace, onFocus, focusField],
   )
 
-  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+  const handleChange = useCallback<ChangeEventHandler<T>>(
     (event) => {
-      const value = transformEventToValue(event)
+      const value = transformEventToValue
+        ? transformEventToValue(event)
+        : defaultEventToValue(event as ChangeEvent<HTMLInputElement>)
       const error = getError(value)
       changeField(namespace, fieldName, value, error, dirtyCheck)
       onChange && onChange(event)
@@ -99,7 +110,7 @@ export const useConnectField = <P>(
     [transformEventToValue, getError, changeField, namespace, fieldName, dirtyCheck, onChange],
   )
 
-  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
+  const handleBlur = useCallback<FocusEventHandler<T>>(
     (event) => {
       blurField(namespace, fieldName)
       onBlur && onBlur(event)
@@ -113,5 +124,5 @@ export const useConnectField = <P>(
     onFocus: handleFocus,
     onChange: handleChange,
     onBlur: handleBlur,
-  } as FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps
+  } as FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps<T>
 }

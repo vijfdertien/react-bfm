@@ -41,7 +41,7 @@ export type UpdateFieldCallbackType = (state: FieldStateType) => Partial<FieldSt
 // callback functions
 export type ValidatorFunction = (value: any, props: object) => any
 export type DirtyCheckFunction = (newValue: any, valueOnFocus: any) => boolean
-export type EventToValueFunction = (event: ChangeEvent<HTMLInputElement>) => any
+export type EventToValueFunction<T = HTMLInputElement> = (event: ChangeEvent<T>) => any
 export type TransformValueToInputFunction = (value: any) => any
 
 // others

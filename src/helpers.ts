@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import {
   FieldNameType,
   FieldStateType,
@@ -10,10 +9,9 @@ import {
 import { FIELD_KEY_ERROR, FIELD_KEY_VALID, FIELD_KEY_VALUE } from './constants/field-keys'
 import { FIELD_DEFAULT_ERROR } from './constants/field-defaults'
 
-export const checkedEventToValue: EventToValueFunction = (event: ChangeEvent<HTMLInputElement>) =>
-  event?.target?.checked
+export const checkedEventToValue: EventToValueFunction = (event) => event?.target?.checked
 
-export const defaultEventToValue: EventToValueFunction = (event: ChangeEvent<HTMLInputElement>) => event?.target?.value
+export const defaultEventToValue: EventToValueFunction = (event) => event?.target?.value
 
 export const defaultDirtyCheck: DirtyCheckFunction = (newValue: any, valueOnFocus: any): boolean =>
   newValue !== valueOnFocus
