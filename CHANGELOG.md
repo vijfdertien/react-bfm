@@ -1,3 +1,9 @@
+## [2.0.0-beta.6](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-09-15)
+
+### Bug Fixes
+
+- base defaultValue on HTMLAttributes ([4c777c3](https://github.com/vijfdertien/react-bfm/commit/4c777c3d7b27e5b21d3df708bd7a85484214e031))
+
 ## [2.0.0-beta.5](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2023-09-15)
 
 ### Bug Fixes
