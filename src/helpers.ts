@@ -1,5 +1,4 @@
 import { ChangeEvent } from 'react'
-import { FIELD_DEFAULT_ERROR, FIELD_KEY_ERROR, FIELD_KEY_VALID, FIELD_KEY_VALUE } from './constants'
 import {
   FieldNameType,
   FieldStateType,
@@ -7,7 +6,9 @@ import {
   DirtyCheckFunction,
   EventToValueFunction,
   TransformValueToInputFunction,
-} from './types'
+} from './common'
+import { FIELD_KEY_ERROR, FIELD_KEY_VALID, FIELD_KEY_VALUE } from './constants/field-keys'
+import { FIELD_DEFAULT_ERROR } from './constants/field-defaults'
 
 export const checkedEventToValue: EventToValueFunction = (event: ChangeEvent<HTMLInputElement>) =>
   event?.target?.checked

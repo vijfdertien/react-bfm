@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { DirtyCheckFunction, EventToValueFunction, TransformValueToInputFunction, ValidatorFunction } from './types'
+import { DirtyCheckFunction, EventToValueFunction, TransformValueToInputFunction, ValidatorFunction } from './common'
 import { BFMHooksContext } from './context'
 import { defaultEventToValue, defaultValueToInput } from './helpers'
 

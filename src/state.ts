@@ -1,4 +1,4 @@
-import { FIELD_STATE_DEFAULT, NAMESPACE_STATE_DEFAULT } from './constants'
+import { FIELD_STATE_DEFAULT, NAMESPACE_STATE_DEFAULT } from './constants/state-defaults'
 import {
   FieldNameType,
   FieldStateType,
@@ -7,7 +7,7 @@ import {
   SubscriberFieldCallbackType,
   SubscriberNamespaceCallbackType,
   UpdateFieldCallbackType,
-} from './types'
+} from './common'
 
 interface StateType {
   [namespace: NamespaceType]: NamespaceStateType

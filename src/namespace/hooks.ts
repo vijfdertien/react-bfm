@@ -1,4 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
+import { BFMHooksContext } from '../context'
+import { validateNamespace } from '../helpers'
+import { FieldStateKeyType, FieldStateType, GetNamespaceType, NamespaceStateType, NamespaceType } from '../common'
 import {
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
@@ -7,10 +10,7 @@ import {
   FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
-} from '../constants'
-import { BFMHooksContext } from '../context'
-import { validateNamespace } from '../helpers'
-import { FieldStateKeyType, FieldStateType, GetNamespaceType, NamespaceStateType, NamespaceType } from '../types'
+} from '../constants/field-keys'
 
 export const useNamespaceState = (namespace: NamespaceType) => {
   if (process.env.NODE_ENV !== 'production') {

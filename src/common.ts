@@ -9,14 +9,13 @@ import {
   FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
-} from './constants'
+} from './constants/field-keys'
 
 // generic
 export type NamespaceType = string
 export type FieldNameType = string
 
 // state
-// todo: undefined?
 export interface FieldStateType {
   [FIELD_KEY_DIRTY]: boolean
   [FIELD_KEY_FOCUS]: boolean

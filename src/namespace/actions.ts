@@ -1,6 +1,6 @@
 import { clearField, resetField } from '..'
 import { getNamespaceState } from '../state'
-import { FieldNameType, NamespaceType } from '../types'
+import { FieldNameType, NamespaceType } from '../common'
 
 /**
  * Reset namespace, but ignoring the default values of the fields

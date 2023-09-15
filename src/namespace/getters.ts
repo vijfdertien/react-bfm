@@ -1,3 +1,5 @@
+import { getNamespaceState } from '../state'
+import { FieldStateType, NamespaceType, FieldStateKeyType, GetNamespaceType } from '../common'
 import {
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
@@ -7,9 +9,7 @@ import {
   FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
-} from '../constants'
-import { getNamespaceState } from '../state'
-import { FieldStateType, NamespaceType, FieldStateKeyType, GetNamespaceType } from '../types'
+} from '../constants/field-keys'
 
 export const getNamespaceKeyValues = (namespace: NamespaceType, key: FieldStateKeyType) =>
   Object.entries<FieldStateType>(getNamespaceState(namespace)).reduce(

@@ -1,3 +1,5 @@
+import { getFieldState } from '../state'
+import { FieldNameType, FieldStateType, NamespaceType } from '../common'
 import {
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
@@ -7,9 +9,7 @@ import {
   FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
-} from '../constants'
-import { getFieldState } from '../state'
-import { FieldNameType, FieldStateType, NamespaceType } from '../types'
+} from '../constants/field-keys'
 
 export const getFieldError = (namespace: NamespaceType, fieldName: FieldNameType): any => {
   const fieldState: FieldStateType = getFieldState(namespace, fieldName)

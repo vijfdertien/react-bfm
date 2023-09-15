@@ -1,15 +1,4 @@
 import { createContext } from 'react'
-import {
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
-  FIELD_KEY_DIRTY,
-  FIELD_KEY_ERROR,
-  FIELD_KEY_FOCUS,
-  FIELD_KEY_TOUCHED,
-  FIELD_KEY_VALUE,
-  FIELD_KEY_VALUE_ON_FOCUS,
-  FIELD_STATE_DEFAULT,
-} from './constants'
 import { defaultDirtyCheck, mapFieldValueAndError, validateFieldName, validateNamespace } from './helpers'
 import {
   getFieldState,
@@ -20,7 +9,18 @@ import {
   subscribeToNamespace,
   updateFieldStateWithCallback,
 } from './state'
-import { DirtyCheckFunction, FieldNameType, FieldStateType, NamespaceType } from './types'
+import { DirtyCheckFunction, FieldNameType, FieldStateType, NamespaceType } from './common'
+import {
+  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_KEY_DIRTY,
+  FIELD_KEY_ERROR,
+  FIELD_KEY_FOCUS,
+  FIELD_KEY_TOUCHED,
+  FIELD_KEY_VALUE,
+  FIELD_KEY_VALUE_ON_FOCUS,
+} from './constants/field-keys'
+import { FIELD_STATE_DEFAULT } from './constants/state-defaults'
 
 const focusField = (namespace: NamespaceType, fieldName: FieldNameType) => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({

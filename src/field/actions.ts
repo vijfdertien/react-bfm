@@ -1,13 +1,9 @@
-import {
-  FIELD_DEFAULT_ERROR,
-  FIELD_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
-  FIELD_STATE_DEFAULT,
-} from '../constants'
 import { mapFieldValueAndError } from '../helpers'
 import { updateFieldStateWithCallback } from '../state'
-import { FieldNameType, FieldStateType, NamespaceType } from '../types'
+import { FieldNameType, FieldStateType, NamespaceType } from '../common'
+import { FIELD_STATE_DEFAULT } from '../constants/state-defaults'
+import { FIELD_DEFAULT_ERROR, FIELD_DEFAULT_VALUE } from '../constants/field-defaults'
+import { FIELD_KEY_DEFAULT_VALUE, FIELD_KEY_DEFAULT_VALUE_ERROR } from '../constants/field-keys'
 
 /**
  * Reset field, but ignoring default value
