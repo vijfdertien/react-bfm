@@ -148,7 +148,7 @@ describe('useConnectField', () => {
   })
 
   it('should use the default the transform value to input', () => {
-    const value = Symbol('should-not-change')
+    const value = ['should-not-change']
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {
         props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: value },

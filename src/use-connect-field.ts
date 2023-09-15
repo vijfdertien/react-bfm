@@ -2,6 +2,7 @@ import {
   ChangeEvent,
   ChangeEventHandler,
   FocusEventHandler,
+  HTMLAttributes,
   useCallback,
   useContext,
   useEffect,
@@ -21,10 +22,11 @@ export interface ConnectFieldReturnProps<T = HTMLInputElement> extends ConnectFi
   readonly value: any
 }
 
-export interface ConnectFieldProps<T = HTMLInputElement> extends Partial<ConnectFieldEventHandlerProps<T>> {
+export interface ConnectFieldProps<T = HTMLInputElement>
+  extends Partial<ConnectFieldEventHandlerProps<T>>,
+    Pick<HTMLAttributes<T>, 'defaultValue'> {
   namespace: string
   fieldName: string
-  defaultValue?: unknown
   validator?: ValidatorFunction
   dirtyCheck?: DirtyCheckFunction
   transformValueToInput?: TransformValueToInputFunction
