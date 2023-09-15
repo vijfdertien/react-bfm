@@ -1,3 +1,9 @@
+## [2.0.0-beta.2](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2023-09-15)
+
+### Bug Fixes
+
+- config for typing in package.json ([3857b7f](https://github.com/vijfdertien/react-bfm/commit/3857b7f6dc6d1356ab74e2fae13332f96309d5e9))
+
 ## [2.0.0-beta.1](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2023-09-13)
 
 ### Bug Fixes
