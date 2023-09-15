@@ -1,3 +1,9 @@
+## [2.0.0-beta.4](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2023-09-15)
+
+### Bug Fixes
+
+- exposed TS typing in index ([e1af470](https://github.com/vijfdertien/react-bfm/commit/e1af4706788234b3b989dc09e61a1c61c7da75fb))
+
 ## [2.0.0-beta.3](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2023-09-15)
 
 ### Bug Fixes
