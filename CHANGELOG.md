@@ -1,3 +1,9 @@
+## [2.0.0-beta.5](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2023-09-15)
+
+### Bug Fixes
+
+- allow other typing then HTMLInputElement on change events ([1135a2d](https://github.com/vijfdertien/react-bfm/commit/1135a2d163137e0239d199a1899dd43083e65f44))
+
 ## [2.0.0-beta.4](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2023-09-15)
 
 ### Bug Fixes
