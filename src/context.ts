@@ -83,6 +83,7 @@ const defaultValueField = (namespace: NamespaceType, fieldName: FieldNameType, d
     // update error if value is still default
     if (currentState[FIELD_KEY_VALUE] === defaultValue && currentState[FIELD_KEY_ERROR] !== error) {
       updateState.error = error
+      updateState.valid = !error
     }
 
     return {
