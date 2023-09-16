@@ -1,3 +1,9 @@
+## [2.0.0-beta.8](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2023-09-16)
+
+### Bug Fixes
+
+- default value for field didn't update valid state ([f7fdddc](https://github.com/vijfdertien/react-bfm/commit/f7fdddc70880271dfa872774a70c96d9ad291106))
+
 ## [2.0.0-beta.7](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2023-09-16)
 
 ### Features
