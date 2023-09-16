@@ -88,7 +88,7 @@ export {
   NamespaceStateType,
   GetNamespaceType,
   SubscriberFieldCallbackType,
-  EventToValueFunction,
+  TransformEventToValueFunction,
   TransformValueToInputFunction,
   ValidatorFunction,
   SubscriberNamespaceCallbackType,

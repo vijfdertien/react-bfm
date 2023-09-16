@@ -9,7 +9,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import { DirtyCheckFunction, EventToValueFunction, TransformValueToInputFunction, ValidatorFunction } from './common'
+import {
+  DirtyCheckFunction,
+  TransformEventToValueFunction,
+  TransformValueToInputFunction,
+  ValidatorFunction,
+} from './common'
 import { BFMHooksContext } from './context'
 import { defaultEventToValue, defaultValueToInput } from './helpers'
 
@@ -30,7 +35,7 @@ export interface ConnectFieldProps<T = HTMLInputElement>
   validator?: ValidatorFunction
   dirtyCheck?: DirtyCheckFunction
   transformValueToInput?: TransformValueToInputFunction
-  transformEventToValue?: EventToValueFunction<T>
+  transformEventToValue?: TransformEventToValueFunction<T>
 }
 
 export type FactoryWithoutConnectFieldProps<P> = Omit<P, keyof ConnectFieldProps>

@@ -3,15 +3,15 @@ import {
   FieldStateType,
   NamespaceType,
   DirtyCheckFunction,
-  EventToValueFunction,
+  TransformEventToValueFunction,
   TransformValueToInputFunction,
 } from './common'
 import { FIELD_KEY_ERROR, FIELD_KEY_VALID, FIELD_KEY_VALUE } from './constants/field-keys'
 import { FIELD_DEFAULT_ERROR } from './constants/field-defaults'
 
-export const checkedEventToValue: EventToValueFunction = (event) => event?.target?.checked
+export const checkedEventToValue: TransformEventToValueFunction = (event) => event?.target?.checked
 
-export const defaultEventToValue: EventToValueFunction = (event) => event?.target?.value
+export const defaultEventToValue: TransformEventToValueFunction = (event) => event?.target?.value
 
 export const defaultDirtyCheck: DirtyCheckFunction = (newValue: any, valueOnFocus: any): boolean =>
   newValue !== valueOnFocus
