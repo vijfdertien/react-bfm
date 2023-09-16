@@ -1,3 +1,9 @@
+## [2.0.0-beta.7](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2023-09-16)
+
+### Features
+
+- small changes to function typing ([3c71726](https://github.com/vijfdertien/react-bfm/commit/3c717263bae96204ff6fc080a3a8a16bb866642e))
+
 ## [2.0.0-beta.6](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-09-15)
 
 ### Bug Fixes
