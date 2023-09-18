@@ -1,5 +1,5 @@
 import { getFieldState } from '../state'
-import { FieldNameType, FieldStateType, NamespaceType } from '../common'
+import { FieldNameType, NamespaceType } from '../common'
 import {
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DIRTY,
@@ -11,50 +11,50 @@ import {
   FIELD_KEY_VALUE_ON_FOCUS,
 } from '../constants/field-keys'
 
-export const getFieldError = (namespace: NamespaceType, fieldName: FieldNameType): any => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+export const getFieldError = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_ERROR]
+  return fieldState?.[FIELD_KEY_ERROR]
 }
 
-export const getFieldValue = (namespace: NamespaceType, fieldName: FieldNameType): any => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+export const getFieldValue = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_VALUE]
+  return fieldState?.[FIELD_KEY_VALUE]
 }
 
-export const getFieldDefaultValue = (namespace: NamespaceType, fieldName: FieldNameType): any => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+export const getFieldDefaultValue = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_DEFAULT_VALUE]
+  return fieldState?.[FIELD_KEY_DEFAULT_VALUE]
 }
 
-export const getFieldValueOnFocus = (namespace: NamespaceType, fieldName: FieldNameType): any => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+export const getFieldValueOnFocus = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_VALUE_ON_FOCUS]
+  return fieldState?.[FIELD_KEY_VALUE_ON_FOCUS]
 }
 
 export const hasFieldFocus = (namespace: NamespaceType, fieldName: FieldNameType): boolean => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_FOCUS]
+  return fieldState?.[FIELD_KEY_FOCUS] || false
 }
 
 export const isFieldDirty = (namespace: NamespaceType, fieldName: FieldNameType): boolean => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_DIRTY]
+  return fieldState?.[FIELD_KEY_DIRTY] || false
 }
 
 export const isFieldTouched = (namespace: NamespaceType, fieldName: FieldNameType): boolean => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_TOUCHED]
+  return fieldState?.[FIELD_KEY_TOUCHED] || false
 }
 
 export const isFieldValid = (namespace: NamespaceType, fieldName: FieldNameType): boolean => {
-  const fieldState: FieldStateType = getFieldState(namespace, fieldName)
+  const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState[FIELD_KEY_VALID]
+  return fieldState?.[FIELD_KEY_VALID] || false
 }

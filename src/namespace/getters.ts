@@ -11,28 +11,42 @@ import {
   FIELD_KEY_VALUE_ON_FOCUS,
 } from '../constants/field-keys'
 
-export const getNamespaceKeyValues = (namespace: NamespaceType, key: FieldStateKeyType) =>
-  Object.entries<FieldStateType>(getNamespaceState(namespace)).reduce(
-    (values: GetNamespaceType, [fieldName, fieldState]) => {
+export const getNamespaceKeyValues = <T = GetNamespaceType>(
+  namespace: NamespaceType,
+  key: FieldStateKeyType,
+): T | undefined => {
+  const namespaceState = getNamespaceState(namespace)
+
+  return (
+    namespaceState &&
+    (Object.entries<FieldStateType>(namespaceState).reduce((values: GetNamespaceType, [fieldName, fieldState]) => {
       values[fieldName] = fieldState[key]
       return values
-    },
-    {},
+    }, {}) as T)
   )
-export const getNamespaceKeyIsEvery = (namespace: NamespaceType, key: FieldStateKeyType): boolean =>
-  Object.values(getNamespaceState(namespace)).every((fieldState) => fieldState[key] || false)
-export const getNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateKeyType): boolean =>
-  Object.values(getNamespaceState(namespace)).some((fieldState) => fieldState[key] || false)
+}
 
-export const getNamespaceDefaultValues = (namespace: NamespaceType) =>
-  getNamespaceKeyValues(namespace, FIELD_KEY_DEFAULT_VALUE)
+export const getNamespaceKeyIsEvery = (namespace: NamespaceType, key: FieldStateKeyType): boolean | undefined => {
+  const namespaceState = getNamespaceState(namespace)
 
-export const getNamespaceErrors = (namespace: NamespaceType) => getNamespaceKeyValues(namespace, FIELD_KEY_ERROR)
+  return namespaceState && Object.values(namespaceState).every((fieldState) => fieldState[key] || false)
+}
+export const getNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateKeyType): boolean | undefined => {
+  const namespaceState = getNamespaceState(namespace)
 
-export const getNamespaceValues = (namespace: NamespaceType) => getNamespaceKeyValues(namespace, FIELD_KEY_VALUE)
+  return namespaceState && Object.values(namespaceState).some((fieldState) => fieldState[key] || false)
+}
+export const getNamespaceDefaultValues = <T = GetNamespaceType>(namespace: NamespaceType) =>
+  getNamespaceKeyValues<T>(namespace, FIELD_KEY_DEFAULT_VALUE)
 
-export const getNamespaceValuesOnFocus = (namespace: NamespaceType) =>
-  getNamespaceKeyValues(namespace, FIELD_KEY_VALUE_ON_FOCUS)
+export const getNamespaceErrors = <T = GetNamespaceType>(namespace: NamespaceType) =>
+  getNamespaceKeyValues<T>(namespace, FIELD_KEY_ERROR)
+
+export const getNamespaceValues = <T = GetNamespaceType>(namespace: NamespaceType) =>
+  getNamespaceKeyValues<T>(namespace, FIELD_KEY_VALUE)
+
+export const getNamespaceValuesOnFocus = <T = GetNamespaceType>(namespace: NamespaceType) =>
+  getNamespaceKeyValues<T>(namespace, FIELD_KEY_VALUE_ON_FOCUS)
 
 export const hasNamespaceFocus = (namespace: NamespaceType) => getNamespaceKeyIsSome(namespace, FIELD_KEY_FOCUS)
 

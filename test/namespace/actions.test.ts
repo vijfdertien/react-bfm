@@ -23,6 +23,7 @@ import {
   resetNamespace,
   updateFieldStateWithCallback,
 } from '../../src'
+import { initFieldState } from '../../src/state'
 
 // reset modules to be sure that we have a clean state for every test
 beforeEach(() => {
@@ -45,6 +46,7 @@ describe('clearNamespace', () => {
   })
 
   it('should clear a field without default value', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     clearNamespace('spaceName')
     expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
@@ -60,6 +62,7 @@ describe('clearNamespace', () => {
   })
 
   it('should clear a field with default value and no error', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
@@ -80,6 +83,7 @@ describe('clearNamespace', () => {
   })
 
   it('should clear a field with default value and error', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
@@ -102,6 +106,9 @@ describe('clearNamespace', () => {
 
 describe('resetNamespace', () => {
   beforeEach(() => {
+    initFieldState('spaceName1', 'nameField1', '', null)
+    initFieldState('spaceName1', 'nameField2', '', null)
+    initFieldState('spaceName2', 'nameField3', '', null)
     updateFieldStateWithCallback('spaceName1', 'nameField1', () => ({
       [FIELD_KEY_DIRTY]: true,
       [FIELD_KEY_ERROR]: true,

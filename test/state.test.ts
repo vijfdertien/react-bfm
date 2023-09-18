@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import {
-  FIELD_KEY_ERROR,
-  FIELD_KEY_FOCUS,
-  FIELD_KEY_VALID,
-  FIELD_KEY_VALUE,
-  FIELD_STATE_DEFAULT,
-  NAMESPACE_STATE_DEFAULT,
-} from '../src'
+import { FIELD_KEY_ERROR, FIELD_KEY_FOCUS, FIELD_KEY_VALID, FIELD_KEY_VALUE, FIELD_STATE_DEFAULT } from '../src'
 
 // reset modules to be sure that we have a clean state for every test
 beforeEach(() => {
@@ -16,7 +9,11 @@ beforeEach(() => {
 describe('getFieldState', () => {
   it('should return the field state, or an empty state', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, updateFieldStateWithCallback } = require('../src/state')
+    const { getFieldState, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+
+    initFieldState('namespace1', 'foobar', '', null)
+    initFieldState('namespace1', 'barfoo', '', null)
+    initFieldState('namespace2', 'bfaoro', '', null)
 
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
@@ -43,11 +40,11 @@ describe('getFieldState', () => {
       [FIELD_KEY_VALID]: true,
     })
 
-    expect(getFieldState('namespace1', 'bfaoro')).toStrictEqual(FIELD_STATE_DEFAULT)
+    expect(getFieldState('namespace1', 'bfaoro')).not.toBeDefined()
 
-    expect(getFieldState('namespace2', 'foobar')).toStrictEqual(FIELD_STATE_DEFAULT)
+    expect(getFieldState('namespace2', 'foobar')).not.toBeDefined()
 
-    expect(getFieldState('namespace2', 'barfoo')).toStrictEqual(FIELD_STATE_DEFAULT)
+    expect(getFieldState('namespace2', 'barfoo')).not.toBeDefined()
 
     expect(getFieldState('namespace2', 'bfaoro')).toEqual({
       ...FIELD_STATE_DEFAULT,
@@ -60,7 +57,11 @@ describe('getFieldState', () => {
 describe('getNamespaceState', () => {
   it('should return the namespace state, or an empty state', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getNamespaceState, updateFieldStateWithCallback } = require('../src/state')
+    const { getNamespaceState, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+
+    initFieldState('namespace1', 'foobar', '', null)
+    initFieldState('namespace1', 'barfoo', '', null)
+    initFieldState('namespace3', 'bfaoro', '', null)
 
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
@@ -87,7 +88,7 @@ describe('getNamespaceState', () => {
         [FIELD_KEY_VALID]: true,
       },
     })
-    expect(getNamespaceState('namespace2')).toStrictEqual(NAMESPACE_STATE_DEFAULT)
+    expect(getNamespaceState('namespace2')).not.toBeDefined()
     expect(getNamespaceState('namespace3')).toEqual({
       bfaoro: {
         ...FIELD_STATE_DEFAULT,
@@ -101,7 +102,16 @@ describe('getNamespaceState', () => {
 describe('removeField', () => {
   it('should be possible to remove the field state', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, getNamespaceState, removeField, updateFieldStateWithCallback } = require('../src/state')
+    const {
+      getFieldState,
+      getNamespaceState,
+      removeField,
+      updateFieldStateWithCallback,
+      initFieldState,
+    } = require('../src/state')
+
+    initFieldState('namespace1', 'foobar', '', null)
+    initFieldState('namespace2', 'foobar', '', null)
 
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
@@ -126,7 +136,7 @@ describe('removeField', () => {
 
     removeField('namespace1', 'foobar')
 
-    expect(getFieldState('namespace1', 'foobar')).toStrictEqual(FIELD_STATE_DEFAULT)
+    expect(getFieldState('namespace1', 'foobar')).not.toBeDefined()
 
     expect(getFieldState('namespace2', 'foobar')).toEqual({
       ...FIELD_STATE_DEFAULT,
@@ -134,7 +144,7 @@ describe('removeField', () => {
       [FIELD_KEY_VALID]: true,
     })
 
-    expect(getNamespaceState('namespace1')).toStrictEqual(NAMESPACE_STATE_DEFAULT)
+    expect(getNamespaceState('namespace1')).not.toBeDefined()
 
     expect(getNamespaceState('namespace2')).toEqual({
       foobar: {
@@ -149,13 +159,14 @@ describe('removeField', () => {
 describe('subscribeToField', () => {
   it('should be possible to subscribe to a field state change', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, subscribeToField, updateFieldStateWithCallback } = require('../src/state')
+    const { getFieldState, subscribeToField, updateFieldStateWithCallback, initFieldState } = require('../src/state')
 
     const mockCallback1 = jest.fn()
     const mockCallback2 = jest.fn()
 
     const unsubscribe1 = subscribeToField('namespace1', 'foobar', mockCallback1)
 
+    initFieldState('namespace1', 'foobar', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALID]: false,
@@ -221,13 +232,19 @@ describe('subscribeToField', () => {
 describe('subscribeToNamespace', () => {
   it('should be possible to subscribe to a namespace state change', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getNamespaceState, subscribeToNamespace, updateFieldStateWithCallback } = require('../src/state')
+    const {
+      getNamespaceState,
+      subscribeToNamespace,
+      updateFieldStateWithCallback,
+      initFieldState,
+    } = require('../src/state')
 
     const mockCallback1 = jest.fn()
     const mockCallback2 = jest.fn()
 
     const unsubscribe1 = subscribeToNamespace('namespace1', mockCallback1)
 
+    initFieldState('namespace1', 'foobar1', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar1', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALID]: false,
@@ -235,6 +252,7 @@ describe('subscribeToNamespace', () => {
 
     const unsubscribe2 = subscribeToNamespace('namespace1', mockCallback2)
 
+    initFieldState('namespace1', 'foobar2', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar2', () => ({
       [FIELD_KEY_ERROR]: 'barfoo',
       [FIELD_KEY_FOCUS]: true,
@@ -242,6 +260,7 @@ describe('subscribeToNamespace', () => {
 
     unsubscribe1()
 
+    initFieldState('namespace1', 'foobar3', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar3', () => ({
       [FIELD_KEY_ERROR]: null,
       [FIELD_KEY_VALID]: true,
@@ -250,6 +269,7 @@ describe('subscribeToNamespace', () => {
 
     unsubscribe2()
 
+    initFieldState('namespace1', 'foobar4', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar4', () => ({
       [FIELD_KEY_FOCUS]: false,
     }))
@@ -326,10 +346,11 @@ describe('subscribeToNamespace', () => {
 describe('updateFieldStateWithCallback', () => {
   it('should be possible to update the field state with a callback', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, updateFieldStateWithCallback } = require('../src/state')
+    const { getFieldState, updateFieldStateWithCallback, initFieldState } = require('../src/state')
 
-    expect(getFieldState('namespace1', 'foobar')).toStrictEqual(FIELD_STATE_DEFAULT)
+    expect(getFieldState('namespace1', 'foobar')).not.toBeDefined()
 
+    initFieldState('namespace1', 'foobar', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_ERROR]: 'error-text',
@@ -359,11 +380,12 @@ describe('updateFieldStateWithCallback', () => {
 
   it('should only update the field state when the callback returns object', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, subscribeToField, updateFieldStateWithCallback } = require('../src/state')
+    const { getFieldState, subscribeToField, updateFieldStateWithCallback, initFieldState } = require('../src/state')
 
     const mockCallback = jest.fn()
     subscribeToField('namespace1', 'foobar', mockCallback)
 
+    initFieldState('namespace1', 'foobar', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_ERROR]: 'error-text',

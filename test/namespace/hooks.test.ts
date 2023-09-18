@@ -11,7 +11,6 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
   FIELD_STATE_DEFAULT,
-  NAMESPACE_STATE_DEFAULT,
   removeField,
   updateFieldStateWithCallback,
   useNamespaceErrors,
@@ -25,6 +24,7 @@ import {
   useNamespaceValues,
   useNamespaceValuesOnFocus,
 } from '../../src'
+import { initFieldState } from '../../src/state'
 
 // reset modules to be sure that we have a clean state for every test
 beforeEach(() => {
@@ -40,20 +40,14 @@ beforeEach(() => {
 
 describe('useNamespaceState', () => {
   it('should log a console error when namespace is too short', () => {
-    const { result } = renderHook(() => useNamespaceState(''))
+    renderHook(() => useNamespaceState(''))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    // should still return a value
-    expect(result.current).toEqual(NAMESPACE_STATE_DEFAULT)
-  })
-
-  it('should return empty object if namespace is not initialized', () => {
-    const { result } = renderHook(() => useNamespaceState('spaceName'))
-    expect(result.current).toEqual(NAMESPACE_STATE_DEFAULT)
   })
 
   it('should return the default value if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceState('spaceName'))
@@ -63,6 +57,8 @@ describe('useNamespaceState', () => {
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -77,6 +73,8 @@ describe('useNamespaceState', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -109,16 +107,16 @@ describe('useNamespaceKeyIsEvery', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(true)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return true if namespace is not initialized', () => {
+  it('should return undefined if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceKeyIsEvery('spaceName', FIELD_KEY_VALUE))
-    expect(result.current).toEqual(true)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: true,
     }))
@@ -126,6 +124,7 @@ describe('useNamespaceKeyIsEvery', () => {
     const { result: result1 } = renderHook(() => useNamespaceKeyIsEvery('spaceName', FIELD_KEY_VALUE))
     expect(result1.current).toEqual(true)
 
+    initFieldState('spaceName', 'nameField2', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_VALUE]: false,
     }))
@@ -135,12 +134,15 @@ describe('useNamespaceKeyIsEvery', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceKeyIsEvery('spaceName', FIELD_KEY_VALUE))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -158,23 +160,23 @@ describe('useNamespaceKeyIsSome', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if namespace is not initialized', () => {
+  it('should return undefined if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceKeyIsSome('spaceName', FIELD_KEY_VALUE))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if field key is not set', () => {
+  it('should return undefined if field key is not set', () => {
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceKeyIsSome('spaceName', FIELD_KEY_VALUE))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: true,
     }))
@@ -182,6 +184,7 @@ describe('useNamespaceKeyIsSome', () => {
     const { result: result1 } = renderHook(() => useNamespaceKeyIsSome('spaceName', FIELD_KEY_VALUE))
     expect(result1.current).toEqual(true)
 
+    initFieldState('spaceName', 'nameField2', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_VALUE]: false,
     }))
@@ -191,12 +194,15 @@ describe('useNamespaceKeyIsSome', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceKeyIsSome('spaceName', FIELD_KEY_VALUE))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -214,16 +220,17 @@ describe('useNamespaceErrors', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return empty object if namespace is not initialized', () => {
+  it('should return undefined if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceErrors('spaceName'))
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the default value if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceErrors('spaceName'))
@@ -231,6 +238,8 @@ describe('useNamespaceErrors', () => {
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_ERROR]: 'foobar',
     }))
@@ -240,6 +249,8 @@ describe('useNamespaceErrors', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_ERROR]: 'foobar',
     }))
@@ -263,29 +274,32 @@ describe('useNamespaceHasFocus', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if namespace is not initialized', () => {
+  it('should return undefined if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceHasFocus('spaceName'))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if field key is not set', () => {
+  it('should return undefined if field key is not set', () => {
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceHasFocus('spaceName'))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_FOCUS]: true,
     }))
 
     const { result: result1 } = renderHook(() => useNamespaceHasFocus('spaceName'))
     expect(result1.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_FOCUS]: false,
@@ -296,12 +310,16 @@ describe('useNamespaceHasFocus', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_FOCUS]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceHasFocus('spaceName'))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -319,29 +337,32 @@ describe('useNamespaceIsDirty', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if namespace is not initialized', () => {
+  it('should return undefined if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceIsDirty('spaceName'))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
-  it('should return false if field key is not set', () => {
+  it('should return undefined if field key is not set', () => {
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceIsDirty('spaceName'))
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_DIRTY]: true,
     }))
 
     const { result: result1 } = renderHook(() => useNamespaceIsDirty('spaceName'))
     expect(result1.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_DIRTY]: false,
@@ -352,12 +373,16 @@ describe('useNamespaceIsDirty', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_DIRTY]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceIsDirty('spaceName'))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -375,16 +400,18 @@ describe('useNamespaceIsTouched', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(false)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return false if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceIsTouched('spaceName'))
-    expect(result.current).toEqual(false)
+
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return false if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceIsTouched('spaceName'))
@@ -392,12 +419,16 @@ describe('useNamespaceIsTouched', () => {
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_TOUCHED]: true,
     }))
 
     const { result: result1 } = renderHook(() => useNamespaceIsTouched('spaceName'))
     expect(result1.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_TOUCHED]: false,
@@ -408,12 +439,16 @@ describe('useNamespaceIsTouched', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_TOUCHED]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceIsTouched('spaceName'))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -431,22 +466,25 @@ describe('useNamespaceIsValid', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual(true)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return true if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceIsValid('spaceName'))
-    expect(result.current).toEqual(true)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALID]: true,
     }))
 
     const { result: result1 } = renderHook(() => useNamespaceIsValid('spaceName'))
     expect(result1.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
       [FIELD_KEY_VALID]: false,
@@ -457,12 +495,16 @@ describe('useNamespaceIsValid', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALID]: true,
     }))
 
     const { result } = renderHook(() => useNamespaceIsValid('spaceName'))
     expect(result.current).toEqual(true)
+
+    initFieldState('spaceName', 'nameField2', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
@@ -480,16 +522,17 @@ describe('useNamespaceValues', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return empty object if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceValues('spaceName'))
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the default value if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceValues('spaceName'))
@@ -497,6 +540,8 @@ describe('useNamespaceValues', () => {
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -506,12 +551,16 @@ describe('useNamespaceValues', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
 
     const { result } = renderHook(() => useNamespaceValues('spaceName'))
     expect(result.current).toEqual({ nameField1: 'foobar' })
+
+    initFieldState('spaceName', 'nameField1', '', null)
 
     act(() =>
       updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
@@ -529,16 +578,17 @@ describe('useNamespaceValuesOnFocus', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
 
-    // should still return a value
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return empty object if namespace is not initialized', () => {
     const { result } = renderHook(() => useNamespaceValuesOnFocus('spaceName'))
-    expect(result.current).toEqual({})
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the default value if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceValuesOnFocus('spaceName'))
@@ -546,6 +596,8 @@ describe('useNamespaceValuesOnFocus', () => {
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE_ON_FOCUS]: 'foobar',
     }))
@@ -555,6 +607,8 @@ describe('useNamespaceValuesOnFocus', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
       [FIELD_KEY_VALUE_ON_FOCUS]: 'foobar',
     }))

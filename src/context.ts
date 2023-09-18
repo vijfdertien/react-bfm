@@ -3,6 +3,7 @@ import { defaultDirtyCheck, mapFieldValueAndError, validateFieldName, validateNa
 import {
   getFieldState,
   getNamespaceState,
+  initFieldState,
   removeField,
   StateCreatorReturnType,
   subscribeToField,
@@ -20,7 +21,6 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
 } from './constants/field-keys'
-import { FIELD_STATE_DEFAULT } from './constants/state-defaults'
 
 const focusField = (namespace: NamespaceType, fieldName: FieldNameType) => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
@@ -58,12 +58,7 @@ const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: an
     throw new Error('Expected string with a minimal length of 1 for `fieldName`')
   }
 
-  updateFieldStateWithCallback(namespace, fieldName, () => ({
-    ...FIELD_STATE_DEFAULT,
-    ...mapFieldValueAndError(value, error),
-  }))
-
-  return getFieldState(namespace, fieldName)
+  return initFieldState(namespace, fieldName, value, error)
 }
 
 /**
@@ -93,7 +88,8 @@ const defaultValueField = (namespace: NamespaceType, fieldName: FieldNameType, d
     }
   })
 
-export interface BFMHookContextType extends Omit<StateCreatorReturnType, 'updateFieldStateWithCallback'> {
+export interface BFMHookContextType
+  extends Omit<StateCreatorReturnType, 'updateFieldStateWithCallback' | 'initFieldState'> {
   blurField: (namespace: NamespaceType, fieldName: FieldNameType) => void
   changeField: (
     namespace: NamespaceType,

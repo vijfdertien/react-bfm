@@ -11,6 +11,7 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
 } from '../constants/field-keys'
+import { NAMESPACE_STATE_DEFAULT } from '../constants/state-defaults'
 
 export const useNamespaceState = (namespace: NamespaceType) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -31,24 +32,40 @@ export const useNamespaceState = (namespace: NamespaceType) => {
   return value
 }
 
-export const useNamespaceKeyValues = (namespace: NamespaceType, key: FieldStateKeyType) => {
+export const useNamespaceKeyValues = (
+  namespace: NamespaceType,
+  key: FieldStateKeyType,
+): GetNamespaceType | undefined => {
   const namespaceState = useNamespaceState(namespace)
 
-  return Object.entries<FieldStateType>(namespaceState).reduce((values: GetNamespaceType, [fieldName, fieldState]) => {
-    values[fieldName] = fieldState[key]
-    return values
-  }, {})
+  return (
+    namespaceState &&
+    Object.entries<FieldStateType>(namespaceState).reduce((values: GetNamespaceType, [fieldName, fieldState]) => {
+      values[fieldName] = fieldState[key]
+      return values
+    }, {})
+  )
 }
 
-export const useNamespaceKeyIsEvery = (namespace: NamespaceType, key: FieldStateKeyType): boolean => {
+export const useNamespaceKeyIsEvery = (namespace: NamespaceType, key: FieldStateKeyType): boolean | undefined => {
   const namespaceState = useNamespaceState(namespace)
 
-  return Object.values(namespaceState).every((fieldState: FieldStateType) => fieldState[key] || false)
+  return (
+    namespaceState &&
+    Object.values(namespaceState || NAMESPACE_STATE_DEFAULT).every(
+      (fieldState: FieldStateType) => fieldState[key] || false,
+    )
+  )
 }
-export const useNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateKeyType): boolean => {
+export const useNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateKeyType): boolean | undefined => {
   const namespaceState = useNamespaceState(namespace)
 
-  return Object.values(namespaceState).some((fieldState: FieldStateType) => fieldState[key] || false)
+  return (
+    namespaceState &&
+    Object.values(namespaceState || NAMESPACE_STATE_DEFAULT).some(
+      (fieldState: FieldStateType) => fieldState[key] || false,
+    )
+  )
 }
 
 /**

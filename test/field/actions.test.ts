@@ -23,6 +23,7 @@ import {
   FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
   clearField,
 } from '../../src'
+import { initFieldState } from '../../src/state'
 
 // reset modules to be sure that we have a clean state for every test
 beforeEach(() => {
@@ -45,6 +46,7 @@ describe('clearField', () => {
   })
 
   it('should clear a field without default value', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     clearField('spaceName', 'nameField')
     expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
@@ -60,6 +62,7 @@ describe('clearField', () => {
   })
 
   it('should clear a field with default value and no error', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
@@ -80,6 +83,7 @@ describe('clearField', () => {
   })
 
   it('should clear a field with default value and error', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
       [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
@@ -102,6 +106,7 @@ describe('clearField', () => {
 
 describe('resetField', () => {
   beforeEach(() => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DIRTY]: true,
       [FIELD_KEY_ERROR]: true,

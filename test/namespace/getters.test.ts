@@ -38,8 +38,8 @@ describe('creatorGetNamespace', () => {
         field2: FIELD_STATE_DEFAULT,
       })
       const values = getNamespaceKeyValues('spaceName', FIELD_KEY_VALUE)
-      expect(values.field1).toBe(value)
-      expect(values.field2).toBe(FIELD_DEFAULT_VALUE)
+      expect(values?.field1).toBe(value)
+      expect(values?.field2).toBe(FIELD_DEFAULT_VALUE)
     })
   })
 })
@@ -88,8 +88,8 @@ describe('getNamespaceDefaultValues', () => {
       field2: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_VALUE]: 'other-value' },
     })
     const values = getNamespaceDefaultValues('spaceName')
-    expect(values.field1).toBe('correct-value')
-    expect(values.field2).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
+    expect(values?.field1).toBe('correct-value')
+    expect(values?.field2).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
   })
 })
 
@@ -100,8 +100,8 @@ describe('getNamespaceErrors', () => {
       field2: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_VALUE]: 'other-value' },
     })
     const values = getNamespaceErrors('spaceName')
-    expect(values.field1).toBe('correct-value')
-    expect(values.field2).toBe(FIELD_DEFAULT_ERROR)
+    expect(values?.field1).toBe('correct-value')
+    expect(values?.field2).toBe(FIELD_DEFAULT_ERROR)
   })
 })
 
@@ -112,8 +112,8 @@ describe('getNamespaceValues', () => {
       field2: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_ERROR]: 'other-value' },
     })
     const values = getNamespaceValues('spaceName')
-    expect(values.field1).toBe('correct-value')
-    expect(values.field2).toBe(FIELD_DEFAULT_VALUE)
+    expect(values?.field1).toBe('correct-value')
+    expect(values?.field2).toBe(FIELD_DEFAULT_VALUE)
   })
 })
 
@@ -124,8 +124,8 @@ describe('getNamespaceValuesOnFocus', () => {
       field2: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_VALUE]: 'other-value' },
     })
     const values = getNamespaceValuesOnFocus('spaceName')
-    expect(values.field1).toBe('correct-value')
-    expect(values.field2).toBe(FIELD_DEFAULT_VALUE_ON_FOCUS)
+    expect(values?.field1).toBe('correct-value')
+    expect(values?.field2).toBe(FIELD_DEFAULT_VALUE_ON_FOCUS)
   })
 })
 

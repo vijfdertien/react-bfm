@@ -1,6 +1,8 @@
 import { ChangeEvent, FocusEvent } from 'react'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { getFieldError, getFieldValue, getNamespaceState, hasFieldFocus, removeField, useConnectField } from '../src'
+import type { NamespaceStateType } from '../types'
+import { initFieldState } from '../src/state'
 
 const TEST_FIELD_NAME = 'nameField'
 const TEST_FIELD_NAME_NEW = 'nameFieldNew'
@@ -298,14 +300,17 @@ describe('useConnectField', () => {
   })
 
   it('should remove field from state on unmount', () => {
+    initFieldState(TEST_NAMESPACE, TEST_FIELD_NAME, '', null)
+
     const { unmount } = renderHook(() => useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME }))
 
-    expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
-    expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
+    const namespace1: NamespaceStateType = getNamespaceState(TEST_NAMESPACE)!
+    expect(namespace1).toHaveProperty(TEST_FIELD_NAME)
+    expect(Object.keys(namespace1)).toHaveLength(1)
 
     unmount()
 
-    expect(getNamespaceState(TEST_NAMESPACE)).not.toHaveProperty(TEST_FIELD_NAME)
-    expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(0)
+    const namespace2 = getNamespaceState(TEST_NAMESPACE)
+    expect(namespace2).not.toBeDefined()
   })
 })

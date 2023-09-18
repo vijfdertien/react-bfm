@@ -97,6 +97,7 @@ export {
 export {
   getFieldState,
   getNamespaceState,
+  initFieldState,
   removeField,
   subscribeToField,
   subscribeToNamespace,

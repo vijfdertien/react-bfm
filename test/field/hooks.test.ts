@@ -2,13 +2,6 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import {
   useFieldError,
   useFieldHasFocus,
-  FIELD_DEFAULT_DIRTY,
-  FIELD_DEFAULT_ERROR,
-  FIELD_DEFAULT_FOCUS,
-  FIELD_DEFAULT_TOUCHED,
-  FIELD_DEFAULT_VALID,
-  FIELD_DEFAULT_VALUE,
-  FIELD_DEFAULT_VALUE_ON_FOCUS,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -16,6 +9,7 @@ import {
   FIELD_KEY_VALID,
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
+  initFieldState,
   updateFieldStateWithCallback,
   removeField,
   useFieldIsDirty,
@@ -32,34 +26,30 @@ beforeEach(() => {
   removeField('spaceName', 'nameField')
 })
 
-describe('creatorUseField', () => {
+describe('useFieldState', () => {
   it('should log a console error when namespace is too short', () => {
     global.console.error = jest.fn()
 
-    const { result } = renderHook(() => useFieldState('', 'nameField'))
+    renderHook(() => useFieldState('', 'nameField'))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    // should still return a value
-    expect(result.current).toBe(FIELD_STATE_DEFAULT)
   })
 
   it('should log a console error when fieldName is too short', () => {
     global.console.error = jest.fn()
-    const { result } = renderHook(() => useFieldState('spaceName', ''))
+    renderHook(() => useFieldState('spaceName', ''))
 
     expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `fieldName`')
-
-    // should still return a value
-    expect(result.current).toBe(FIELD_STATE_DEFAULT)
   })
 
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldState('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_STATE_DEFAULT)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -72,6 +62,8 @@ describe('creatorUseField', () => {
   })
 
   it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -98,10 +90,12 @@ describe('creatorUseField', () => {
 describe('useFieldError', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldError('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_ERROR)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_ERROR]: 'foobar',
     }))
@@ -111,6 +105,8 @@ describe('useFieldError', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_ERROR]: 'foobar',
     }))
@@ -131,10 +127,12 @@ describe('useFieldError', () => {
 describe('useFieldHasFocus', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldHasFocus('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_FOCUS)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_FOCUS]: true,
     }))
@@ -144,6 +142,8 @@ describe('useFieldHasFocus', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_FOCUS]: true,
     }))
@@ -164,10 +164,12 @@ describe('useFieldHasFocus', () => {
 describe('useFieldIsDirty', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldIsDirty('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_DIRTY)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DIRTY]: true,
     }))
@@ -177,6 +179,8 @@ describe('useFieldIsDirty', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_DIRTY]: true,
     }))
@@ -195,12 +199,13 @@ describe('useFieldIsDirty', () => {
 })
 
 describe('useFieldIsTouched', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldIsTouched('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_TOUCHED)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_TOUCHED]: true,
     }))
@@ -210,6 +215,7 @@ describe('useFieldIsTouched', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_TOUCHED]: true,
     }))
@@ -230,19 +236,23 @@ describe('useFieldIsTouched', () => {
 describe('useFieldIsValid', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldIsValid('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_VALID)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_VALID]: true,
+      [FIELD_KEY_VALID]: false,
     }))
 
     const { result } = renderHook(() => useFieldIsValid('spaceName', 'nameField'))
-    expect(result.current).toBe(true)
+    expect(result.current).toBe(false)
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALID]: true,
     }))
@@ -263,10 +273,12 @@ describe('useFieldIsValid', () => {
 describe('useFieldValue', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldValue('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_VALUE)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE]: 'barfoo',
     }))
@@ -276,6 +288,8 @@ describe('useFieldValue', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE]: 'foobar',
     }))
@@ -296,10 +310,12 @@ describe('useFieldValue', () => {
 describe('useFieldValueOnFocus', () => {
   it('should return the default value if field is not initialized', () => {
     const { result } = renderHook(() => useFieldValueOnFocus('spaceName', 'nameField'))
-    expect(result.current).toBe(FIELD_DEFAULT_VALUE_ON_FOCUS)
+    expect(result.current).not.toBeDefined()
   })
 
   it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
     }))
@@ -309,6 +325,8 @@ describe('useFieldValueOnFocus', () => {
   })
 
   it('should return the state and renders the component when the store updates', async () => {
+    initFieldState('spaceName', 'nameField', '', null)
+
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_VALUE_ON_FOCUS]: 'foobar',
     }))

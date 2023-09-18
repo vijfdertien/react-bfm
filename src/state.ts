@@ -1,4 +1,3 @@
-import { FIELD_STATE_DEFAULT, NAMESPACE_STATE_DEFAULT } from './constants/state-defaults'
 import {
   FieldNameType,
   FieldStateType,
@@ -8,6 +7,8 @@ import {
   SubscriberNamespaceCallbackType,
   UpdateFieldCallbackType,
 } from './common'
+import { FIELD_STATE_DEFAULT } from './constants/state-defaults'
+import { mapFieldValueAndError } from './helpers'
 
 interface StateType {
   [namespace: NamespaceType]: NamespaceStateType
@@ -30,8 +31,9 @@ interface SubscribersType {
 }
 
 export interface StateCreatorReturnType {
-  getFieldState: (namespace: NamespaceType, fieldName: FieldNameType) => FieldStateType
-  getNamespaceState: (namespace: NamespaceType) => NamespaceStateType
+  getFieldState: (namespace: NamespaceType, fieldName: FieldNameType) => FieldStateType | undefined
+  getNamespaceState: (namespace: NamespaceType) => NamespaceStateType | undefined
+  initFieldState: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => FieldStateType
   removeField: (namespace: NamespaceType, fieldName: FieldNameType) => void
   subscribeToField: (
     namespace: NamespaceType,
@@ -51,11 +53,10 @@ const stateCreator = (): StateCreatorReturnType => {
   const subscribers: SubscribersType = {}
   let idCounter = 0
 
-  const getFieldState = (namespace: NamespaceType, fieldName: FieldNameType): FieldStateType =>
-    state[namespace]?.[fieldName] || FIELD_STATE_DEFAULT
+  const getFieldState = (namespace: NamespaceType, fieldName: FieldNameType): FieldStateType | undefined =>
+    state[namespace]?.[fieldName]
 
-  const getNamespaceState = (namespace: NamespaceType): NamespaceStateType =>
-    state[namespace] || NAMESPACE_STATE_DEFAULT
+  const getNamespaceState = (namespace: NamespaceType): NamespaceStateType | undefined => state[namespace]
 
   const subscribe = ({ namespace, ...subscriber }: SubscriberNamespaceType) => {
     if (!subscribers[namespace]) {
@@ -85,14 +86,31 @@ const stateCreator = (): StateCreatorReturnType => {
       const namespaceState = getNamespaceState(namespace)
 
       namespaceSubscribers.forEach(({ fieldCallback, namespaceCallback, fieldName }: SubscriberType) => {
-        if (namespaceCallback && !fieldName) {
+        if (namespaceState && namespaceCallback && !fieldName) {
           namespaceCallback(namespaceState)
         }
-        if (fieldCallback && fieldName === _fieldName) {
+        if (fieldState && fieldCallback && fieldName === _fieldName) {
           fieldCallback(fieldState)
         }
       })
     }
+  }
+
+  const initFieldState = (
+    namespace: NamespaceType,
+    fieldName: FieldNameType,
+    value: any,
+    error: any,
+  ): FieldStateType => {
+    state[namespace] = {
+      ...state[namespace],
+      [fieldName]: {
+        ...FIELD_STATE_DEFAULT,
+        ...mapFieldValueAndError(value, error),
+      },
+    }
+
+    return state[namespace][fieldName]
   }
 
   const updateFieldStateWithCallback = (
@@ -100,16 +118,18 @@ const stateCreator = (): StateCreatorReturnType => {
     fieldName: FieldNameType,
     callback: UpdateFieldCallbackType,
   ) => {
-    const currentFieldState: FieldStateType = getFieldState(namespace, fieldName)
-    const update = callback(currentFieldState)
+    const currentFieldState = getFieldState(namespace, fieldName)
+    if (currentFieldState) {
+      const update = callback(currentFieldState)
 
-    if (update) {
-      state[namespace] = {
-        ...state[namespace],
-        [fieldName]: { ...currentFieldState, ...update },
+      if (update) {
+        state[namespace] = {
+          ...state[namespace],
+          [fieldName]: { ...currentFieldState, ...update },
+        }
+
+        triggerSubscribers(namespace, fieldName)
       }
-
-      triggerSubscribers(namespace, fieldName)
     }
   }
 
@@ -127,6 +147,7 @@ const stateCreator = (): StateCreatorReturnType => {
   return {
     getFieldState,
     getNamespaceState,
+    initFieldState,
     removeField,
     subscribeToField,
     subscribeToNamespace,
@@ -137,6 +158,7 @@ const stateCreator = (): StateCreatorReturnType => {
 export const {
   getFieldState,
   getNamespaceState,
+  initFieldState,
   removeField,
   subscribeToField,
   subscribeToNamespace,
