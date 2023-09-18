@@ -21,8 +21,8 @@ export const useFieldState = (namespace: NamespaceType, fieldName: FieldNameType
       throw new Error('Expected string with a minimal length of 1 for `fieldName`')
     }
   }
-  const { getFieldState, subscribeToField } = useContext(BFMHooksContext)
-  const [value, setValue] = useState(getFieldState(namespace, fieldName))
+  const { subscribeToField } = useContext(BFMHooksContext)
+  const [value, setValue] = useState<FieldStateType | undefined>()
 
   useEffect(
     () =>

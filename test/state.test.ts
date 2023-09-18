@@ -190,7 +190,7 @@ describe('subscribeToField', () => {
     }))
 
     expect(mockCallback1).toHaveBeenCalledTimes(2)
-    expect(mockCallback2).toHaveBeenCalledTimes(2)
+    expect(mockCallback2).toHaveBeenCalledTimes(3)
 
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
       ...FIELD_STATE_DEFAULT,
@@ -210,10 +210,10 @@ describe('subscribeToField', () => {
 
     expect(mockCallback2).toHaveBeenNthCalledWith(2, {
       ...FIELD_STATE_DEFAULT,
-      [FIELD_KEY_ERROR]: null,
+      [FIELD_KEY_ERROR]: 'barfoo',
       [FIELD_KEY_FOCUS]: true,
       [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: true,
+      [FIELD_KEY_VALID]: false,
     })
 
     expect(getFieldState('namespace1', 'foobar')).toEqual({
@@ -268,7 +268,7 @@ describe('subscribeToNamespace', () => {
     }))
 
     expect(mockCallback1).toHaveBeenCalledTimes(3)
-    expect(mockCallback2).toHaveBeenCalledTimes(4)
+    expect(mockCallback2).toHaveBeenCalledTimes(5)
 
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
       foobar1: {
@@ -303,8 +303,8 @@ describe('subscribeToNamespace', () => {
       },
       foobar2: {
         ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: 'barfoo',
-        [FIELD_KEY_FOCUS]: true,
+        [FIELD_KEY_ERROR]: null,
+        [FIELD_KEY_FOCUS]: false,
       },
     })
 

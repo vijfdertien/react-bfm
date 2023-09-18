@@ -74,10 +74,23 @@ const stateCreator = (): StateCreatorReturnType => {
     namespace: NamespaceType,
     fieldName: FieldNameType,
     fieldCallback: SubscriberFieldCallbackType,
-  ) => subscribe({ namespace, fieldName, fieldCallback })
+  ) => {
+    const unsubscribe = subscribe({ namespace, fieldName, fieldCallback })
+    const fieldState = getFieldState(namespace, fieldName)
+    if (fieldState) {
+      fieldCallback(fieldState)
+    }
+    return unsubscribe
+  }
 
-  const subscribeToNamespace = (namespace: NamespaceType, namespaceCallback: SubscriberNamespaceCallbackType) =>
-    subscribe({ namespace, namespaceCallback })
+  const subscribeToNamespace = (namespace: NamespaceType, namespaceCallback: SubscriberNamespaceCallbackType) => {
+    const unsubscribe = subscribe({ namespace, namespaceCallback })
+    const namespaceState = getNamespaceState(namespace)
+    if (namespaceState) {
+      namespaceCallback(namespaceState)
+    }
+    return unsubscribe
+  }
 
   const triggerSubscribers = (namespace: NamespaceType, _fieldName: FieldNameType) => {
     const namespaceSubscribers = subscribers[namespace]

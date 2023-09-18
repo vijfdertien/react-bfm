@@ -15,11 +15,13 @@ import { NAMESPACE_STATE_DEFAULT } from '../constants/state-defaults'
 
 export const useNamespaceState = (namespace: NamespaceType) => {
   if (process.env.NODE_ENV !== 'production') {
-    validateNamespace(namespace) || console.error('Expected string with a minimal length of 1 for `namespace`') // eslint-disable-line no-console
+    if (!validateNamespace(namespace)) {
+      throw new Error('Expected string with a minimal length of 1 for `namespace`')
+    }
   }
-  const { getNamespaceState, subscribeToNamespace } = useContext(BFMHooksContext)
+  const { subscribeToNamespace } = useContext(BFMHooksContext)
 
-  const [value, setValue] = useState(getNamespaceState(namespace))
+  const [value, setValue] = useState<NamespaceStateType | undefined>()
 
   useEffect(
     () =>

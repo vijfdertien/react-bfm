@@ -39,10 +39,10 @@ beforeEach(() => {
 })
 
 describe('useNamespaceState', () => {
-  it('should log a console error when namespace is too short', () => {
-    renderHook(() => useNamespaceState(''))
+  it('should throw error when namespace is too short', () => {
+    const { result } = renderHook(() => useNamespaceState(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return the default value if field key is not set', () => {
@@ -102,12 +102,10 @@ describe('useNamespaceState', () => {
 })
 
 describe('useNamespaceKeyIsEvery', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceKeyIsEvery('', FIELD_KEY_VALUE))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return undefined if namespace is not initialized', () => {
@@ -155,12 +153,10 @@ describe('useNamespaceKeyIsEvery', () => {
 })
 
 describe('useNamespaceKeyIsSome', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceKeyIsSome('', FIELD_KEY_VALUE))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return undefined if namespace is not initialized', () => {
@@ -215,12 +211,10 @@ describe('useNamespaceKeyIsSome', () => {
 })
 
 describe('useNamespaceErrors', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceErrors(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return undefined if namespace is not initialized', () => {
@@ -269,12 +263,10 @@ describe('useNamespaceErrors', () => {
 })
 
 describe('useNamespaceHasFocus', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceHasFocus(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return undefined if namespace is not initialized', () => {
@@ -332,12 +324,10 @@ describe('useNamespaceHasFocus', () => {
 })
 
 describe('useNamespaceIsDirty', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceIsDirty(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return undefined if namespace is not initialized', () => {
@@ -395,12 +385,10 @@ describe('useNamespaceIsDirty', () => {
 })
 
 describe('useNamespaceIsTouched', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceIsTouched(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return false if namespace is not initialized', () => {
@@ -461,12 +449,10 @@ describe('useNamespaceIsTouched', () => {
 })
 
 describe('useNamespaceIsValid', () => {
-  it('should log a console error when namespace is too short', () => {
+  it('should throw error when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceIsValid(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return true if namespace is not initialized', () => {
@@ -520,9 +506,7 @@ describe('useNamespaceValues', () => {
   it('should log a console value when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceValues(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return empty object if namespace is not initialized', () => {
@@ -576,9 +560,7 @@ describe('useNamespaceValuesOnFocus', () => {
   it('should log a console value when namespace is too short', () => {
     const { result } = renderHook(() => useNamespaceValuesOnFocus(''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
-
-    expect(result.current).not.toBeDefined()
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should return empty object if namespace is not initialized', () => {
