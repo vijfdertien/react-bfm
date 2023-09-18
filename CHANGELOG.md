@@ -1,3 +1,9 @@
+## [2.0.0-beta.10](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2023-09-18)
+
+### Bug Fixes
+
+- problem with init field and multiple triggers of mount/unmount ([0e20cec](https://github.com/vijfdertien/react-bfm/commit/0e20cecc120edba92aa9e37d0417b9ea9f897902))
+
 ## [2.0.0-beta.9](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2023-09-18)
 
 ### Features
