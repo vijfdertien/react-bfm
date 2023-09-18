@@ -50,15 +50,17 @@ const blurField = (namespace: NamespaceType, fieldName: FieldNameType) => {
   }))
 }
 
-const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any): FieldStateType => {
-  if (!validateNamespace(namespace)) {
-    throw new Error('Expected string with a minimal length of 1 for `namespace`')
-  }
-  if (!validateFieldName(fieldName)) {
-    throw new Error('Expected string with a minimal length of 1 for `fieldName`')
+const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (!validateNamespace(namespace)) {
+      throw new Error('Expected string with a minimal length of 1 for `namespace`')
+    }
+    if (!validateFieldName(fieldName)) {
+      throw new Error('Expected string with a minimal length of 1 for `fieldName`')
+    }
   }
 
-  return initFieldState(namespace, fieldName, value, error)
+  initFieldState(namespace, fieldName, value, error)
 }
 
 /**
@@ -100,7 +102,7 @@ export interface BFMHookContextType
   ) => void
   defaultValueField: (namespace: NamespaceType, fieldName: FieldNameType, defaultValue: any, error: any) => void
   focusField: (namespace: NamespaceType, fieldName: FieldNameType) => void
-  initField: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => FieldStateType
+  initField: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => void
 }
 
 export const BFMHooksContext = createContext<BFMHookContextType>({

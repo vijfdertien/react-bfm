@@ -14,9 +14,10 @@ import {
 import { SUPPORTED_VALUES, TEST_MAP_VALUE } from './constants'
 
 describe('defaultValueToInput', () => {
-  it('should always return the same value when converting state value to input value', () => {
+  it('should always return the same value when converting state value to input value, except undefined', () => {
     SUPPORTED_VALUES.forEach((value) => {
-      expect(defaultValueToInput(value)).toBe(value)
+      const expectedValue = value !== undefined ? value : ''
+      expect(defaultValueToInput(value)).toBe(expectedValue)
     })
   })
 })

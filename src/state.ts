@@ -33,7 +33,7 @@ interface SubscribersType {
 export interface StateCreatorReturnType {
   getFieldState: (namespace: NamespaceType, fieldName: FieldNameType) => FieldStateType | undefined
   getNamespaceState: (namespace: NamespaceType) => NamespaceStateType | undefined
-  initFieldState: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => FieldStateType
+  initFieldState: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => void
   removeField: (namespace: NamespaceType, fieldName: FieldNameType) => void
   subscribeToField: (
     namespace: NamespaceType,
@@ -96,12 +96,7 @@ const stateCreator = (): StateCreatorReturnType => {
     }
   }
 
-  const initFieldState = (
-    namespace: NamespaceType,
-    fieldName: FieldNameType,
-    value: any,
-    error: any,
-  ): FieldStateType => {
+  const initFieldState = (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => {
     state[namespace] = {
       ...state[namespace],
       [fieldName]: {
@@ -109,8 +104,6 @@ const stateCreator = (): StateCreatorReturnType => {
         ...mapFieldValueAndError(value, error),
       },
     }
-
-    return state[namespace][fieldName]
   }
 
   const updateFieldStateWithCallback = (

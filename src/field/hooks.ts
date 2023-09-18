@@ -14,8 +14,12 @@ import {
 
 export const useFieldState = (namespace: NamespaceType, fieldName: FieldNameType): FieldStateType | undefined => {
   if (process.env.NODE_ENV !== 'production') {
-    validateNamespace(namespace) || console.error('Expected string with a minimal length of 1 for `namespace`') // eslint-disable-line no-console
-    validateFieldName(fieldName) || console.error('Expected string with a minimal length of 1 for `fieldName`') // eslint-disable-line no-console
+    if (!validateNamespace(namespace)) {
+      throw new Error('Expected string with a minimal length of 1 for `namespace`')
+    }
+    if (!validateFieldName(fieldName)) {
+      throw new Error('Expected string with a minimal length of 1 for `fieldName`')
+    }
   }
   const { getFieldState, subscribeToField } = useContext(BFMHooksContext)
   const [value, setValue] = useState(getFieldState(namespace, fieldName))

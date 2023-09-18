@@ -27,19 +27,16 @@ beforeEach(() => {
 })
 
 describe('useFieldState', () => {
-  it('should log a console error when namespace is too short', () => {
-    global.console.error = jest.fn()
+  it('should throw error when namespace is too short', () => {
+    const { result } = renderHook(() => useFieldState('', 'nameField'))
 
-    renderHook(() => useFieldState('', 'nameField'))
-
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `namespace`')
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
   })
 
   it('should log a console error when fieldName is too short', () => {
-    global.console.error = jest.fn()
-    renderHook(() => useFieldState('spaceName', ''))
+    const { result } = renderHook(() => useFieldState('spaceName', ''))
 
-    expect(global.console.error).toHaveBeenCalledWith('Expected string with a minimal length of 1 for `fieldName`')
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `fieldName`')
   })
 
   it('should return the default value if field is not initialized', () => {

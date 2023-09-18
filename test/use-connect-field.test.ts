@@ -1,8 +1,15 @@
 import { ChangeEvent, FocusEvent } from 'react'
 import { act, renderHook } from '@testing-library/react-hooks'
-import { getFieldError, getFieldValue, getNamespaceState, hasFieldFocus, removeField, useConnectField } from '../src'
-import type { NamespaceStateType } from '../types'
-import { initFieldState } from '../src/state'
+import {
+  getFieldError,
+  getFieldValue,
+  getNamespaceState,
+  hasFieldFocus,
+  removeField,
+  useConnectField,
+  initFieldState,
+  NamespaceStateType,
+} from '../src'
 
 const TEST_FIELD_NAME = 'nameField'
 const TEST_FIELD_NAME_NEW = 'nameFieldNew'
@@ -162,7 +169,7 @@ describe('useConnectField', () => {
 
   it('should transform value to input', () => {
     // transform array to first string value
-    const transformValueToInput = (value: string[]) => value[0]
+    const transformValueToInput = (value?: string[]) => value?.[0] || ''
 
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {

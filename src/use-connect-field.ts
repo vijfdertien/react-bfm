@@ -7,7 +7,6 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
 } from 'react'
 import {
   DirtyCheckFunction,
@@ -17,6 +16,7 @@ import {
 } from './common'
 import { BFMHooksContext } from './context'
 import { defaultEventToValue, defaultValueToInput } from './helpers'
+import { useFieldValue } from './field/hooks'
 
 interface ConnectFieldEventHandlerProps<T = unknown> {
   onFocus: FocusEventHandler<T>
@@ -43,8 +43,7 @@ export type FactoryWithoutConnectFieldProps<P> = Omit<P, keyof ConnectFieldProps
 export const useConnectField = <P = unknown, T = HTMLInputElement>(
   props: ConnectFieldProps<T>,
 ): FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps<T> => {
-  const { blurField, changeField, defaultValueField, focusField, initField, removeField, subscribeToField } =
-    useContext(BFMHooksContext)
+  const { blurField, changeField, defaultValueField, focusField, initField, removeField } = useContext(BFMHooksContext)
   const {
     validator,
     dirtyCheck,
@@ -77,17 +76,14 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
 
   const getError = useCallback((_value: any) => validator && validator(_value, propsRef.current), [validator])
 
-  // init field and state on first rendering
-  const [{ value }, setFieldState] = useState(() =>
-    initField(namespace, fieldName, defaultValue, getError(defaultValue)),
-  )
+  const value = useFieldValue(namespace, fieldName)
 
   useEffect(() => {
-    const unsubscribe = subscribeToField(namespace, fieldName, setFieldState)
+    // init field on mount
+    initField(namespace, fieldName, defaultValue, getError(defaultValue))
 
-    // unsubscribe and remove field on unmount
+    // remove field on unmount
     return () => {
-      unsubscribe()
       removeField(namespace, fieldName)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
