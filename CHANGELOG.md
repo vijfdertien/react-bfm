@@ -1,3 +1,9 @@
+## [2.0.0-beta.12](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2023-09-18)
+
+### Bug Fixes
+
+- on hook subscribe initiate callback with latest state ([affc4fd](https://github.com/vijfdertien/react-bfm/commit/affc4fd03515c7accf5a106d8164eea777426814))
+
 ## [2.0.0-beta.11](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2023-09-18)
 
 ### Bug Fixes
