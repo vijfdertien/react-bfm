@@ -166,11 +166,7 @@ describe('subscribeToField', () => {
 
     const unsubscribe1 = subscribeToField('namespace1', 'foobar', mockCallback1)
 
-    initFieldState('namespace1', 'foobar', '', null)
-    updateFieldStateWithCallback('namespace1', 'foobar', () => ({
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: false,
-    }))
+    initFieldState('namespace1', 'foobar', 'foobar', 'field-is-not-valid')
 
     const unsubscribe2 = subscribeToField('namespace1', 'foobar', mockCallback2)
 
@@ -199,6 +195,7 @@ describe('subscribeToField', () => {
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
       ...FIELD_STATE_DEFAULT,
       [FIELD_KEY_VALUE]: 'foobar',
+      [FIELD_KEY_ERROR]: 'field-is-not-valid',
       [FIELD_KEY_VALID]: false,
     })
 
@@ -244,11 +241,7 @@ describe('subscribeToNamespace', () => {
 
     const unsubscribe1 = subscribeToNamespace('namespace1', mockCallback1)
 
-    initFieldState('namespace1', 'foobar1', '', null)
-    updateFieldStateWithCallback('namespace1', 'foobar1', () => ({
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: false,
-    }))
+    initFieldState('namespace1', 'foobar1', 'foobar', 'field-is-not-valid')
 
     const unsubscribe2 = subscribeToNamespace('namespace1', mockCallback2)
 
@@ -274,13 +267,14 @@ describe('subscribeToNamespace', () => {
       [FIELD_KEY_FOCUS]: false,
     }))
 
-    expect(mockCallback1).toHaveBeenCalledTimes(2)
-    expect(mockCallback2).toHaveBeenCalledTimes(2)
+    expect(mockCallback1).toHaveBeenCalledTimes(3)
+    expect(mockCallback2).toHaveBeenCalledTimes(4)
 
     expect(mockCallback1).toHaveBeenNthCalledWith(1, {
       foobar1: {
         ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
+        [FIELD_KEY_ERROR]: 'field-is-not-valid',
         [FIELD_KEY_VALID]: false,
       },
     })
@@ -289,12 +283,13 @@ describe('subscribeToNamespace', () => {
       foobar1: {
         ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
+        [FIELD_KEY_ERROR]: 'field-is-not-valid',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
         ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: 'barfoo',
-        [FIELD_KEY_FOCUS]: true,
+        [FIELD_KEY_ERROR]: null,
+        [FIELD_KEY_FOCUS]: false,
       },
     }
     expect(mockCallback1).toHaveBeenNthCalledWith(2, afterSecondUpdate)
@@ -303,6 +298,7 @@ describe('subscribeToNamespace', () => {
       foobar1: {
         ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
+        [FIELD_KEY_ERROR]: 'field-is-not-valid',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
@@ -310,18 +306,13 @@ describe('subscribeToNamespace', () => {
         [FIELD_KEY_ERROR]: 'barfoo',
         [FIELD_KEY_FOCUS]: true,
       },
-      foobar3: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: null,
-        [FIELD_KEY_FOCUS]: true,
-        [FIELD_KEY_VALID]: true,
-      },
     })
 
     expect(getNamespaceState('namespace1', 'foobar')).toEqual({
       foobar1: {
         ...FIELD_STATE_DEFAULT,
         [FIELD_KEY_VALUE]: 'foobar',
+        [FIELD_KEY_ERROR]: 'field-is-not-valid',
         [FIELD_KEY_VALID]: false,
       },
       foobar2: {
@@ -409,6 +400,6 @@ describe('updateFieldStateWithCallback', () => {
       [FIELD_KEY_ERROR]: 'error-text',
       [FIELD_KEY_VALID]: false,
     })
-    expect(mockCallback).toHaveBeenCalledTimes(1)
+    expect(mockCallback).toHaveBeenCalledTimes(2)
   })
 })

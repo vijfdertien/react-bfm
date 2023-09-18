@@ -104,6 +104,8 @@ const stateCreator = (): StateCreatorReturnType => {
         ...mapFieldValueAndError(value, error),
       },
     }
+
+    triggerSubscribers(namespace, fieldName)
   }
 
   const updateFieldStateWithCallback = (
