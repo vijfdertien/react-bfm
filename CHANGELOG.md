@@ -1,3 +1,9 @@
+## [2.0.0-beta.9](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2023-09-18)
+
+### Features
+
+- refactored getters and hooks to return undefined if fieldname and/or namespace is undefined ([753f6de](https://github.com/vijfdertien/react-bfm/commit/753f6de21d64398fa80a6266ce9951ed38b32144))
+
 ## [2.0.0-beta.8](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2023-09-16)
 
 ### Bug Fixes
