@@ -1,3 +1,9 @@
+## [2.0.0-beta.11](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2023-09-18)
+
+### Bug Fixes
+
+- init field should trigger subscribers ([538099f](https://github.com/vijfdertien/react-bfm/commit/538099fdd5de44303c0ac3872943cda75ee65665))
+
 ## [2.0.0-beta.10](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2023-09-18)
 
 ### Bug Fixes
