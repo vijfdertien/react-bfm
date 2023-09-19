@@ -1,3 +1,9 @@
+## [2.0.0-beta.13](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2023-09-19)
+
+### Features
+
+- allow multiple arguments in on change handlers and transform ([f623a77](https://github.com/vijfdertien/react-bfm/commit/f623a772619b9bba94686aafe7850c158f1a7653))
+
 ## [2.0.0-beta.12](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2023-09-18)
 
 ### Bug Fixes
