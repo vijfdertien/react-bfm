@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import {
   FIELD_KEY_DEFAULT_VALUE,
   FIELD_KEY_DEFAULT_VALUE_ERROR,
@@ -38,10 +37,12 @@ export type SubscriberNamespaceCallbackType = (state: NamespaceStateType) => voi
 export type SubscriberFieldCallbackType = (state: FieldStateType) => void
 export type UpdateFieldCallbackType = (state: FieldStateType) => Partial<FieldStateType>
 
+export type ConnectFieldChangeHandler = (arg1: any, arg2?: any, arg3?: any, arg4?: any, arg5?: any) => void
+
 // callback functions
 export type ValidatorFunction = (value?: any, props?: object) => any
 export type DirtyCheckFunction = (newValue: any, valueOnFocus: any) => boolean
-export type TransformEventToValueFunction<T = HTMLInputElement> = (event: ChangeEvent<T>) => any
+export type TransformEventToValueFunction = (arg1: any, arg2?: any, arg3?: any, arg4?: any, arg5?: any) => any
 export type TransformValueToInputFunction = (value: any) => any
 
 // others

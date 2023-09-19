@@ -1,14 +1,6 @@
+import { FocusEventHandler, HTMLAttributes, useCallback, useContext, useEffect, useRef } from 'react'
 import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FocusEventHandler,
-  HTMLAttributes,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react'
-import {
+  ConnectFieldChangeHandler,
   DirtyCheckFunction,
   TransformEventToValueFunction,
   TransformValueToInputFunction,
@@ -20,7 +12,7 @@ import { useFieldValue } from './field/hooks'
 
 interface ConnectFieldEventHandlerProps<T = unknown> {
   onFocus: FocusEventHandler<T>
-  onChange: ChangeEventHandler<T>
+  onChange: ConnectFieldChangeHandler
   onBlur: FocusEventHandler<T>
 }
 export interface ConnectFieldReturnProps<T = HTMLInputElement> extends ConnectFieldEventHandlerProps<T> {
@@ -35,7 +27,7 @@ export interface ConnectFieldProps<T = HTMLInputElement>
   validator?: ValidatorFunction
   dirtyCheck?: DirtyCheckFunction
   transformValueToInput?: TransformValueToInputFunction
-  transformEventToValue?: TransformEventToValueFunction<T>
+  transformEventToValue?: TransformEventToValueFunction
 }
 
 export type FactoryWithoutConnectFieldProps<P> = Omit<P, keyof ConnectFieldProps>
@@ -101,14 +93,14 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
     [fieldName, namespace, onFocus, focusField],
   )
 
-  const handleChange = useCallback<ChangeEventHandler<T>>(
-    (event) => {
+  const handleChange = useCallback<ConnectFieldChangeHandler>(
+    (arg1, arg2, arg3, arg4, arg5) => {
       const value = transformEventToValue
-        ? transformEventToValue(event)
-        : defaultEventToValue(event as ChangeEvent<HTMLInputElement>)
+        ? transformEventToValue(arg1, arg2, arg3, arg4, arg5)
+        : defaultEventToValue(arg1)
       const error = getError(value)
       changeField(namespace, fieldName, value, error, dirtyCheck)
-      onChange && onChange(event)
+      onChange && onChange(arg1, arg2, arg3, arg4, arg5)
     },
     [transformEventToValue, getError, changeField, namespace, fieldName, dirtyCheck, onChange],
   )

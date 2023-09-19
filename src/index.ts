@@ -80,33 +80,34 @@ export {
   isNamespaceValid,
 } from './namespace/getters'
 export {
+  ConnectFieldChangeHandler,
   FieldNameType,
   FieldStateType,
-  NamespaceType,
   DirtyCheckFunction,
   FieldStateKeyType,
-  NamespaceStateType,
   GetNamespaceType,
+  NamespaceStateType,
+  NamespaceType,
   SubscriberFieldCallbackType,
+  SubscriberNamespaceCallbackType,
   TransformEventToValueFunction,
   TransformValueToInputFunction,
-  ValidatorFunction,
-  SubscriberNamespaceCallbackType,
   UpdateFieldCallbackType,
+  ValidatorFunction,
 } from './common'
 export {
   getFieldState,
   getNamespaceState,
   initFieldState,
   removeField,
+  StateCreatorReturnType,
   subscribeToField,
   subscribeToNamespace,
   updateFieldStateWithCallback,
-  StateCreatorReturnType,
 } from './state'
 export {
-  useConnectField,
   ConnectFieldProps,
   ConnectFieldReturnProps,
   FactoryWithoutConnectFieldProps,
+  useConnectField,
 } from './use-connect-field'

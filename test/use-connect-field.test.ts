@@ -272,7 +272,7 @@ describe('useConnectField', () => {
     act(() => result.current.onChange(mockEvent))
 
     expect(onChangeProp).toHaveBeenCalledTimes(1)
-    expect(onChangeProp).toHaveBeenCalledWith(mockEvent)
+    expect(onChangeProp).toHaveBeenCalledWith(mockEvent, undefined, undefined, undefined, undefined)
   })
 
   it('should update the field state after blur', () => {
