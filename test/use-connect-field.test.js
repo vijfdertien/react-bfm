@@ -111,19 +111,17 @@ describe('useConnectField', () => {
     expect(result.current.value).toBe('foobar')
   })
 
-  it('should not update the defaultValue when field is touched', () => {
+  it('should not update the defaultValue when field is dirty', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
     })
 
     expect(result.current.value).toBe('foobar')
-    act(() => result.current.onFocus({}))
-    expect(result.current.focus).toBe(true)
-    act(() => result.current.onBlur({}))
-    expect(result.current.focus).toBe(false)
+    act(() => result.current.onChange({ target: { value: 'foobar' } }))
+    expect(result.current.dirty).toBe(true)
 
     rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
-    expect(result.current.focus).toBe(false)
+    expect(result.current.dirty).toBe(true)
 
     expect(result.current.value).toBe('foobar')
   })
@@ -309,15 +307,27 @@ describe('useConnectField', () => {
   })
 
   it('should not remove field from state on unmount when prop keepFieldStateOnUnmount is true', () => {
-    const { unmount } = renderHook(() =>
+    const { unmount, result } = renderHook(() =>
       useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, keepFieldStateOnUnmount: true })
     )
 
+    act(() => result.current.onChange({ target: { value: 'foobar' } }))
+
+    expect(result.current.value).toBe('foobar')
     expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
     expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
 
     unmount()
 
+    expect(result.current.value).toBe('foobar')
+    expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
+    expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
+
+    const { result: result2 } = renderHook(() =>
+      useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, keepFieldStateOnUnmount: true })
+    )
+
+    expect(result2.current.value).toBe('foobar')
     expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
     expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
   })

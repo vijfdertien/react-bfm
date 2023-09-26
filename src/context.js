@@ -94,11 +94,9 @@ const initField = (namespace, fieldName, value, error) => {
  */
 const defaultValueField = (namespace, fieldName, defaultValue, error) =>
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
-    // only update value and error when field is not touched or has focus
+    // only update value and error when field is not dirty or has focus
     const updateState =
-      !currentState[FIELD_KEY_TOUCHED] &&
-      !currentState[FIELD_KEY_FOCUS] &&
-      currentState[FIELD_KEY_VALUE] !== defaultValue
+      !currentState[FIELD_KEY_DIRTY] && !currentState[FIELD_KEY_FOCUS] && currentState[FIELD_KEY_VALUE] !== defaultValue
         ? mapFieldValueAndError(defaultValue, error)
         : {}
 

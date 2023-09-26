@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { BFMHooksContext } from './context'
 import { defaultEventToValue, defaultValueToInput } from './helpers'
+import { getFieldState } from './state'
 
 /**
  * Helper function to omit keys from a object.
@@ -102,9 +103,13 @@ export const useConnectField = (props, omitProps) => {
   const getError = useCallback((_value) => validator && validator(_value, propsRef.current), [validator])
 
   // init field and state on first rendering
-  const [{ value, ...fieldProps }, setFieldState] = useState(() =>
-    initField(namespace, fieldName, defaultValue, getError(defaultValue))
-  )
+  const [{ value, ...fieldProps }, setFieldState] = useState(() => {
+    const fieldState = getFieldState(namespace, fieldName)
+    if (keepFieldStateOnUnmount && Object.keys(fieldState).length > 0) {
+      return fieldState
+    }
+    return initField(namespace, fieldName, defaultValue, getError(defaultValue))
+  })
 
   useEffect(() => {
     const unsubscribe = subscribeToField(namespace, fieldName, setFieldState)
