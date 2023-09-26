@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/vijfdertien/react-bfm/compare/v1.1.0...v1.2.0) (2023-09-26)
+
+### Features
+
+- keep field state on unmount with prop `keepFieldStateOnUnmount` ([8d4d260](https://github.com/vijfdertien/react-bfm/commit/8d4d260d66f06cea101badd764d2aded6eeaabc8))
+
 ## [1.1.0](https://github.com/vijfdertien/react-bfm/compare/v1.0.1...v1.1.0) (2023-01-22)
 
 ### Miscellaneous Chores
