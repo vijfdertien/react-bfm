@@ -44,6 +44,7 @@ const omitKeys = (original, keysToOmit) =>
  * @param {object} props
  * @param {string} props.namespace - The form namespace
  * @param {string} props.fieldName - The unique input field name within the namespace
+ * @param {boolean} props.keepFieldStateOnUnmount - When true, the field state will not be cleared from the state on unmount
  * @param {string} [props.defaultValue] - The default starting value of the field.
  * @param {validatorCallback} [props.validator]
  * @param {dirtyCheckCallback} [props.dirtyCheck]
@@ -75,6 +76,7 @@ export const useConnectField = (props, omitProps) => {
     onChange,
     onFocus,
     onBlur,
+    keepFieldStateOnUnmount,
     ...staticProps
   } = props
 
@@ -110,7 +112,9 @@ export const useConnectField = (props, omitProps) => {
     // unsubscribe and remove field on unmount
     return () => {
       unsubscribe()
-      removeField(namespace, fieldName)
+      if (!keepFieldStateOnUnmount) {
+        removeField(namespace, fieldName)
+      }
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

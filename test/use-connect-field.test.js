@@ -307,4 +307,18 @@ describe('useConnectField', () => {
     expect(getNamespaceState(TEST_NAMESPACE)).not.toHaveProperty(TEST_FIELD_NAME)
     expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(0)
   })
+
+  it('should not remove field from state on unmount when prop keepFieldStateOnUnmount is true', () => {
+    const { unmount } = renderHook(() =>
+      useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, keepFieldStateOnUnmount: true })
+    )
+
+    expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
+    expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
+
+    unmount()
+
+    expect(getNamespaceState(TEST_NAMESPACE)).toHaveProperty(TEST_FIELD_NAME)
+    expect(Object.keys(getNamespaceState(TEST_NAMESPACE))).toHaveLength(1)
+  })
 })
