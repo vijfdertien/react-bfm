@@ -1,3 +1,9 @@
+### [1.2.1](https://github.com/vijfdertien/react-bfm/compare/v1.2.0...v1.2.1) (2023-09-26)
+
+### Bug Fixes
+
+- keep field state not working ([e2d7117](https://github.com/vijfdertien/react-bfm/commit/e2d7117bcbf1d61aecda21fb10e8493fcd894338))
+
 ## [1.2.0](https://github.com/vijfdertien/react-bfm/compare/v1.1.0...v1.2.0) (2023-09-26)
 
 ### Features
