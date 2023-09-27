@@ -1,3 +1,9 @@
+## [2.0.0-beta.14](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2023-09-27)
+
+### Features
+
+- renamed defaultValue to initialValue ([4216a6b](https://github.com/vijfdertien/react-bfm/commit/4216a6bfdab5e25fafc52c8f4cd3b2bd540deba4))
+
 ## [2.0.0-beta.13](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2023-09-19)
 
 ### Features
