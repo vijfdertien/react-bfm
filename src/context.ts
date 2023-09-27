@@ -12,8 +12,8 @@ import {
 } from './state'
 import { DirtyCheckFunction, FieldNameType, FieldStateType, NamespaceType } from './common'
 import {
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_KEY_INITIAL_VALUE,
+  FIELD_KEY_INITIAL_VALUE_ERROR,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -67,26 +67,26 @@ const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: an
  * sets default value only when the field is not touched or has focus
  * this way you can still change the input value after first rendering
  */
-const defaultValueField = (namespace: NamespaceType, fieldName: FieldNameType, defaultValue: any, error: any) =>
+const initialValueField = (namespace: NamespaceType, fieldName: FieldNameType, initialValue: any, error: any) =>
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
     // only update value and error when field is not touched or has focus
     const updateState: Partial<FieldStateType> =
       !currentState[FIELD_KEY_TOUCHED] &&
       !currentState[FIELD_KEY_FOCUS] &&
-      currentState[FIELD_KEY_VALUE] !== defaultValue
-        ? mapFieldValueAndError(defaultValue, error)
+      currentState[FIELD_KEY_VALUE] !== initialValue
+        ? mapFieldValueAndError(initialValue, error)
         : {}
 
     // update error if value is still default
-    if (currentState[FIELD_KEY_VALUE] === defaultValue && currentState[FIELD_KEY_ERROR] !== error) {
+    if (currentState[FIELD_KEY_VALUE] === initialValue && currentState[FIELD_KEY_ERROR] !== error) {
       updateState.error = error
       updateState.valid = !error
     }
 
     return {
       ...updateState,
-      [FIELD_KEY_DEFAULT_VALUE]: defaultValue,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: error,
+      [FIELD_KEY_INITIAL_VALUE]: initialValue,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: error,
     }
   })
 
@@ -100,7 +100,7 @@ export interface BFMHookContextType
     error: any,
     dirtyCheck?: DirtyCheckFunction,
   ) => void
-  defaultValueField: (namespace: NamespaceType, fieldName: FieldNameType, defaultValue: any, error: any) => void
+  initialValueField: (namespace: NamespaceType, fieldName: FieldNameType, initialValue: any, error: any) => void
   focusField: (namespace: NamespaceType, fieldName: FieldNameType) => void
   initField: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => void
 }
@@ -108,7 +108,7 @@ export interface BFMHookContextType
 export const BFMHooksContext = createContext<BFMHookContextType>({
   blurField,
   changeField,
-  defaultValueField,
+  initialValueField,
   focusField,
   getFieldState,
   getNamespaceState,

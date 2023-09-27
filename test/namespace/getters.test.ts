@@ -3,7 +3,7 @@ import {
   FIELD_DEFAULT_ERROR,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
-  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -12,7 +12,7 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
   FIELD_STATE_DEFAULT,
-  getNamespaceDefaultValues,
+  getNamespaceInitialValues,
   getNamespaceErrors,
   getNamespaceKeyIsEvery,
   getNamespaceKeyIsSome,
@@ -84,10 +84,10 @@ describe('creatorIsEveryNamespace', () => {
 describe('getNamespaceDefaultValues', () => {
   it('should return the correct value per field', () => {
     mocked(getNamespaceState).mockReturnValueOnce({
-      field1: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_DEFAULT_VALUE]: 'correct-value' },
+      field1: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_INITIAL_VALUE]: 'correct-value' },
       field2: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_VALUE]: 'other-value' },
     })
-    const values = getNamespaceDefaultValues('spaceName')
+    const values = getNamespaceInitialValues('spaceName')
     expect(values?.field1).toBe('correct-value')
     expect(values?.field2).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
   })

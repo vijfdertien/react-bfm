@@ -62,7 +62,7 @@ describe('useConnectField', () => {
 
   it('should use the defaultValue', () => {
     const { result } = renderHook(({ props }) => useConnectField(props), {
-      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
+      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar' } },
     })
 
     expect(result.current.value).toBe('foobar')
@@ -70,12 +70,12 @@ describe('useConnectField', () => {
 
   it('should be able to update the defaultValue when field is not touched or has focus', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
-      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
+      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar' } },
     })
 
     expect(result.current.value).toBe('foobar')
 
-    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
+    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'barfoo' } })
 
     expect(result.current.value).toBe('barfoo')
   })
@@ -86,7 +86,7 @@ describe('useConnectField', () => {
         props: {
           namespace: TEST_NAMESPACE,
           fieldName: TEST_FIELD_NAME,
-          defaultValue: 'foobar',
+          initialValue: 'foobar',
           validator: (): string => 'first error',
         },
       },
@@ -98,7 +98,7 @@ describe('useConnectField', () => {
       props: {
         namespace: TEST_NAMESPACE,
         fieldName: TEST_FIELD_NAME,
-        defaultValue: 'foobar',
+        initialValue: 'foobar',
         validator: (): string => 'second error',
       },
     })
@@ -108,14 +108,14 @@ describe('useConnectField', () => {
 
   it('should not update the defaultValue when field has focus', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
-      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
+      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar' } },
     })
 
     expect(result.current.value).toBe('foobar')
     act(() => result.current.onFocus({ target: {} } as FocusEvent<HTMLInputElement>))
     expect(hasFieldFocus(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe(true)
 
-    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
+    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'barfoo' } })
     expect(hasFieldFocus(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe(true)
 
     expect(result.current.value).toBe('foobar')
@@ -123,7 +123,7 @@ describe('useConnectField', () => {
 
   it('should not update the defaultValue when field is touched', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
-      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar' } },
+      initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar' } },
     })
 
     expect(result.current.value).toBe('foobar')
@@ -132,7 +132,7 @@ describe('useConnectField', () => {
     act(() => result.current.onBlur({} as FocusEvent<HTMLInputElement>))
     expect(hasFieldFocus(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe(false)
 
-    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo' } })
+    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'barfoo' } })
     expect(hasFieldFocus(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe(false)
 
     expect(result.current.value).toBe('foobar')
@@ -143,14 +143,14 @@ describe('useConnectField', () => {
 
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {
-        props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'foobar', validator },
+        props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar', validator },
       },
     })
 
     expect(result.current.value).toBe('foobar')
     expect(getFieldError(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe('not-valid')
 
-    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: 'barfoo', validator } })
+    rerender({ props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'barfoo', validator } })
 
     expect(result.current.value).toBe('barfoo')
     expect(getFieldError(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe('valid')
@@ -160,7 +160,7 @@ describe('useConnectField', () => {
     const value = ['should-not-change']
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {
-        props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, defaultValue: value },
+        props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: value },
       },
     })
 
@@ -176,7 +176,7 @@ describe('useConnectField', () => {
         props: {
           namespace: TEST_NAMESPACE,
           fieldName: TEST_FIELD_NAME,
-          defaultValue: ['foobar'],
+          initialValue: ['foobar'],
           transformValueToInput,
         },
       },

@@ -1,7 +1,7 @@
 import { getFieldState } from '../state'
 import { FieldNameType, NamespaceType } from '../common'
 import {
-  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -23,10 +23,10 @@ export const getFieldValue = <T = any>(namespace: NamespaceType, fieldName: Fiel
   return fieldState?.[FIELD_KEY_VALUE]
 }
 
-export const getFieldDefaultValue = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
+export const getFieldInitialValue = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
   const fieldState = getFieldState(namespace, fieldName)
 
-  return fieldState?.[FIELD_KEY_DEFAULT_VALUE]
+  return fieldState?.[FIELD_KEY_INITIAL_VALUE]
 }
 
 export const getFieldValueOnFocus = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {

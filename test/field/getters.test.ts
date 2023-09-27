@@ -7,7 +7,7 @@ import {
   FIELD_DEFAULT_VALID,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
-  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -16,7 +16,7 @@ import {
   FIELD_KEY_VALUE,
   FIELD_KEY_VALUE_ON_FOCUS,
   FIELD_STATE_DEFAULT,
-  getFieldDefaultValue,
+  getFieldInitialValue,
   getFieldError,
   getFieldState,
   getFieldValue,
@@ -32,13 +32,13 @@ jest.mock('../../src/state')
 
 describe('getFieldDefaultValue', () => {
   it('should return the value', () => {
-    mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_DEFAULT_VALUE]: 'foobar' })
-    expect(getFieldDefaultValue('spaceName', 'nameField')).toBe('foobar')
+    mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_INITIAL_VALUE]: 'foobar' })
+    expect(getFieldInitialValue('spaceName', 'nameField')).toBe('foobar')
   })
   it('should return the default value', () => {
     mocked(getFieldState).mockReturnValue({
-      defaultValue: undefined,
-      defaultValueError: undefined,
+      initialValue: undefined,
+      initialValueError: undefined,
       dirty: false,
       error: undefined,
       focus: false,
@@ -47,7 +47,7 @@ describe('getFieldDefaultValue', () => {
       value: undefined,
       valueOnFocus: undefined,
     })
-    expect(getFieldDefaultValue('spaceName', 'nameField')).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
+    expect(getFieldInitialValue('spaceName', 'nameField')).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
   })
 })
 

@@ -1,4 +1,4 @@
-import { FocusEventHandler, HTMLAttributes, useCallback, useContext, useEffect, useRef } from 'react'
+import { FocusEventHandler, useCallback, useContext, useEffect, useRef } from 'react'
 import {
   ConnectFieldChangeHandler,
   DirtyCheckFunction,
@@ -19,11 +19,10 @@ export interface ConnectFieldReturnProps<T = HTMLInputElement> extends ConnectFi
   readonly value: any
 }
 
-export interface ConnectFieldProps<T = HTMLInputElement>
-  extends Partial<ConnectFieldEventHandlerProps<T>>,
-    Pick<HTMLAttributes<T>, 'defaultValue'> {
+export interface ConnectFieldProps<T = HTMLInputElement> extends Partial<ConnectFieldEventHandlerProps<T>> {
   namespace: string
   fieldName: string
+  initialValue?: any
   validator?: ValidatorFunction
   dirtyCheck?: DirtyCheckFunction
   transformValueToInput?: TransformValueToInputFunction
@@ -35,7 +34,7 @@ export type FactoryWithoutConnectFieldProps<P> = Omit<P, keyof ConnectFieldProps
 export const useConnectField = <P = unknown, T = HTMLInputElement>(
   props: ConnectFieldProps<T>,
 ): FactoryWithoutConnectFieldProps<P> & ConnectFieldReturnProps<T> => {
-  const { blurField, changeField, defaultValueField, focusField, initField, removeField } = useContext(BFMHooksContext)
+  const { blurField, changeField, initialValueField, focusField, initField, removeField } = useContext(BFMHooksContext)
   const {
     validator,
     dirtyCheck,
@@ -51,7 +50,7 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
   const propsRef = useRef<object>({})
 
   // Hook specific props.
-  const { namespace, fieldName, defaultValue = '', ...otherProps } = staticProps
+  const { namespace, fieldName, initialValue = '', ...otherProps } = staticProps
 
   // Throw an error if namespace and/or fieldName changes after first rendering, because it's not supported
   // Dynamically changing these values can result in strange side effects. It's better to render a new component.
@@ -72,7 +71,7 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
 
   useEffect(() => {
     // init field on mount
-    initField(namespace, fieldName, defaultValue, getError(defaultValue))
+    initField(namespace, fieldName, initialValue, getError(initialValue))
 
     // remove field on unmount
     return () => {
@@ -80,10 +79,10 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // update defaultValue on change, see `defaultValueField` function for more info
+  // update initialValue on change, see `initialValueField` function for more info
   useEffect(() => {
-    defaultValueField(namespace, fieldName, defaultValue, getError(defaultValue))
-  }, [defaultValue, defaultValueField, fieldName, getError, namespace])
+    initialValueField(namespace, fieldName, initialValue, getError(initialValue))
+  }, [initialValueField, fieldName, getError, initialValue, namespace])
 
   const handleFocus = useCallback<FocusEventHandler<T>>(
     (event) => {

@@ -1,7 +1,7 @@
 import { getNamespaceState } from '../state'
 import { FieldStateType, NamespaceType, FieldStateKeyType, GetNamespaceType } from '../common'
 import {
-  FIELD_KEY_DEFAULT_VALUE,
+  FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -36,8 +36,8 @@ export const getNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateK
 
   return namespaceState && Object.values(namespaceState).some((fieldState) => fieldState[key] || false)
 }
-export const getNamespaceDefaultValues = <T = GetNamespaceType>(namespace: NamespaceType) =>
-  getNamespaceKeyValues<T>(namespace, FIELD_KEY_DEFAULT_VALUE)
+export const getNamespaceInitialValues = <T = GetNamespaceType>(namespace: NamespaceType) =>
+  getNamespaceKeyValues<T>(namespace, FIELD_KEY_INITIAL_VALUE)
 
 export const getNamespaceErrors = <T = GetNamespaceType>(namespace: NamespaceType) =>
   getNamespaceKeyValues<T>(namespace, FIELD_KEY_ERROR)

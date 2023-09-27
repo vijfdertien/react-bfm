@@ -1,7 +1,7 @@
 export { BFMHooksContext, BFMHookContextType } from './context'
 export {
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_KEY_INITIAL_VALUE,
+  FIELD_KEY_INITIAL_VALUE_ERROR,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -24,7 +24,7 @@ export {
 export { FIELD_STATE_DEFAULT, NAMESPACE_STATE_DEFAULT } from './constants/state-defaults'
 export { clearField, resetField } from './field/actions'
 export {
-  getFieldDefaultValue,
+  getFieldInitialValue,
   getFieldError,
   getFieldValue,
   getFieldValueOnFocus,
@@ -67,7 +67,7 @@ export {
   useNamespaceValuesOnFocus,
 } from './namespace/hooks'
 export {
-  getNamespaceDefaultValues,
+  getNamespaceInitialValues,
   getNamespaceErrors,
   getNamespaceKeyIsEvery,
   getNamespaceKeyIsSome,

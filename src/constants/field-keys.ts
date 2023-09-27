@@ -1,6 +1,6 @@
 // keys
-export const FIELD_KEY_DEFAULT_VALUE = 'defaultValue'
-export const FIELD_KEY_DEFAULT_VALUE_ERROR = 'defaultValueError'
+export const FIELD_KEY_INITIAL_VALUE = 'initialValue'
+export const FIELD_KEY_INITIAL_VALUE_ERROR = 'initialValueError'
 export const FIELD_KEY_DIRTY = 'dirty'
 export const FIELD_KEY_ERROR = 'error'
 export const FIELD_KEY_FOCUS = 'focus'

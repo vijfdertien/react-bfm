@@ -8,8 +8,8 @@ import {
   FIELD_DEFAULT_VALID,
   FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_KEY_INITIAL_VALUE,
+  FIELD_KEY_INITIAL_VALUE_ERROR,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
   FIELD_KEY_FOCUS,
@@ -40,8 +40,8 @@ describe('clearNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
   })
 
@@ -56,16 +56,16 @@ describe('clearNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should clear a field with default value and no error', () => {
     initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: false,
     }))
 
     clearNamespace('spaceName')
@@ -77,16 +77,16 @@ describe('clearNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should clear a field with default value and error', () => {
     initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: 'error-string',
     }))
 
     clearNamespace('spaceName')
@@ -98,8 +98,8 @@ describe('clearNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 })
@@ -117,8 +117,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
     updateFieldStateWithCallback('spaceName1', 'nameField2', () => ({
       [FIELD_KEY_DIRTY]: true,
@@ -128,8 +128,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
     updateFieldStateWithCallback('spaceName2', 'nameField3', () => ({
       [FIELD_KEY_DIRTY]: true,
@@ -139,8 +139,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
   })
 
@@ -154,8 +154,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName1', 'nameField2')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
@@ -165,8 +165,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName2', 'nameField3')).toStrictEqual({
       [FIELD_KEY_DIRTY]: true,
@@ -176,15 +176,15 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     })
   })
 
   it('should reset a field with default value and no error', () => {
     updateFieldStateWithCallback('spaceName1', 'nameField2', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: false,
     }))
 
     resetNamespace('spaceName1')
@@ -196,8 +196,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName1', 'nameField2')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
@@ -207,8 +207,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName2', 'nameField3')).toStrictEqual({
       [FIELD_KEY_DIRTY]: true,
@@ -218,15 +218,15 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     })
   })
 
   it('should reset a field with default value and error', () => {
     updateFieldStateWithCallback('spaceName1', 'nameField2', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: 'error-string',
     }))
 
     resetNamespace('spaceName1')
@@ -238,8 +238,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName1', 'nameField2')).toStrictEqual({
       [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
@@ -249,8 +249,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
     expect(getFieldState('spaceName2', 'nameField3')).toStrictEqual({
       [FIELD_KEY_DIRTY]: true,
@@ -260,8 +260,8 @@ describe('resetNamespace', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     })
   })
 })

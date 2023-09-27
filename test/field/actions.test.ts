@@ -15,8 +15,8 @@ import {
   FIELD_KEY_VALUE_ON_FOCUS,
   getFieldState,
   updateFieldStateWithCallback,
-  FIELD_KEY_DEFAULT_VALUE,
-  FIELD_KEY_DEFAULT_VALUE_ERROR,
+  FIELD_KEY_INITIAL_VALUE,
+  FIELD_KEY_INITIAL_VALUE_ERROR,
   resetField,
   removeField,
   FIELD_DEFAULT_DEFAULT_VALUE,
@@ -40,8 +40,8 @@ describe('clearField', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
   })
 
@@ -56,16 +56,16 @@ describe('clearField', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should clear a field with default value and no error', () => {
     initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: false,
     }))
 
     clearField('spaceName', 'nameField')
@@ -77,16 +77,16 @@ describe('clearField', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should clear a field with default value and error', () => {
     initFieldState('spaceName', 'nameField', '', null)
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: 'error-string',
     }))
 
     clearField('spaceName', 'nameField')
@@ -98,8 +98,8 @@ describe('clearField', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 })
@@ -115,8 +115,8 @@ describe('resetField', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: 'barfoo',
-      [FIELD_KEY_DEFAULT_VALUE]: undefined,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: undefined,
+      [FIELD_KEY_INITIAL_VALUE]: undefined,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: undefined,
     }))
   })
 
@@ -130,15 +130,15 @@ describe('resetField', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: FIELD_DEFAULT_VALUE,
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should reset a field with default value and no error', () => {
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: false,
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: false,
     }))
 
     resetField('spaceName', 'nameField')
@@ -150,15 +150,15 @@ describe('resetField', () => {
       [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 
   it('should reset a field with default value and error', () => {
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
-      [FIELD_KEY_DEFAULT_VALUE]: 'foobar',
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: 'error-string',
+      [FIELD_KEY_INITIAL_VALUE]: 'foobar',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: 'error-string',
     }))
 
     resetField('spaceName', 'nameField')
@@ -170,8 +170,8 @@ describe('resetField', () => {
       [FIELD_KEY_VALID]: false,
       [FIELD_KEY_VALUE]: 'foobar',
       [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
-      [FIELD_KEY_DEFAULT_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
-      [FIELD_KEY_DEFAULT_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
     })
   })
 })
