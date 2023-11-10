@@ -1,3 +1,9 @@
+### [1.2.2](https://github.com/vijfdertien/react-bfm/compare/v1.2.1...v1.2.2) (2023-11-10)
+
+### Miscellaneous Chores
+
+- update dependencies ([9246ecb](https://github.com/vijfdertien/react-bfm/commit/9246ecbbd074723fc1623eb1636efc52e38d514b))
+
 ### [1.2.1](https://github.com/vijfdertien/react-bfm/compare/v1.2.0...v1.2.1) (2023-09-26)
 
 ### Bug Fixes
