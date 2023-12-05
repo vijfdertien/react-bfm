@@ -1,3 +1,9 @@
+## [2.0.0-beta.15](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2023-12-05)
+
+### Features
+
+- refactor hooks and state to use hook useSyncExternalStore ([819535d](https://github.com/vijfdertien/react-bfm/commit/819535d41e04df4b15d46197ffc58bc1568f0b4b))
+
 ## [2.0.0-beta.14](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2023-09-27)
 
 ### Features
