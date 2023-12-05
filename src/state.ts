@@ -1,12 +1,4 @@
-import {
-  FieldNameType,
-  FieldStateType,
-  NamespaceStateType,
-  NamespaceType,
-  SubscriberFieldCallbackType,
-  SubscriberNamespaceCallbackType,
-  UpdateFieldCallbackType,
-} from './common'
+import { FieldNameType, FieldStateType, NamespaceStateType, NamespaceType, UpdateFieldCallbackType } from './common'
 import { FIELD_STATE_DEFAULT } from './constants/state-defaults'
 import { mapFieldValueAndError } from './helpers'
 
@@ -14,14 +6,11 @@ interface StateType {
   [namespace: NamespaceType]: NamespaceStateType
 }
 
-interface SubscriberType {
-  fieldName?: FieldNameType
-  fieldCallback?: SubscriberFieldCallbackType
-  namespaceCallback?: SubscriberNamespaceCallbackType
-}
+type SubscriberListener = () => void
 
-interface SubscriberNamespaceType extends SubscriberType {
-  namespace: string
+interface SubscriberType {
+  listener: SubscriberListener
+  fieldName?: FieldNameType
 }
 
 type SubscribersMapType = Map<number, SubscriberType>
@@ -35,12 +24,13 @@ export interface StateCreatorReturnType {
   getNamespaceState: (namespace: NamespaceType) => NamespaceStateType | undefined
   initFieldState: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => void
   removeField: (namespace: NamespaceType, fieldName: FieldNameType) => void
-  subscribeToField: (
+  createGetSnapshotFieldState: (namespace: NamespaceType, fieldName: FieldNameType) => () => FieldStateType | undefined
+  createGetSnapshotNamespaceState: (namespace: NamespaceType) => () => NamespaceStateType | undefined
+  createSubscribeToField: (
     namespace: NamespaceType,
     fieldName: FieldNameType,
-    fieldCallback: SubscriberFieldCallbackType,
-  ) => () => void
-  subscribeToNamespace: (namespace: NamespaceType, namespaceCallback: SubscriberNamespaceCallbackType) => () => void
+  ) => (listener: SubscriberListener) => () => void
+  createSubscribeToNamespace: (namespace: NamespaceType) => (listener: SubscriberListener) => () => void
   updateFieldStateWithCallback: (
     namespace: NamespaceType,
     fieldName: FieldNameType,
@@ -58,52 +48,38 @@ const stateCreator = (): StateCreatorReturnType => {
 
   const getNamespaceState = (namespace: NamespaceType): NamespaceStateType | undefined => state[namespace]
 
-  const subscribe = ({ namespace, ...subscriber }: SubscriberNamespaceType) => {
+  const createGetSnapshotFieldState = (namespace: NamespaceType, fieldName: FieldNameType) => () =>
+    getFieldState(namespace, fieldName)
+  const createGetSnapshotNamespaceState = (namespace: NamespaceType) => () => getNamespaceState(namespace)
+
+  const subscribe = (listener: any, namespace: NamespaceType, fieldName?: FieldNameType) => {
     if (!subscribers[namespace]) {
       subscribers[namespace] = new Map()
     }
     const id = ++idCounter
-    subscribers[namespace].set(id, subscriber)
+    subscribers[namespace].set(id, { listener, fieldName })
 
     return () => {
       subscribers[namespace] && subscribers[namespace].has(id) && subscribers[namespace].delete(id)
     }
   }
 
-  const subscribeToField = (
-    namespace: NamespaceType,
-    fieldName: FieldNameType,
-    fieldCallback: SubscriberFieldCallbackType,
-  ) => {
-    const unsubscribe = subscribe({ namespace, fieldName, fieldCallback })
-    const fieldState = getFieldState(namespace, fieldName)
-    if (fieldState) {
-      fieldCallback(fieldState)
-    }
-    return unsubscribe
-  }
+  const createSubscribeToField =
+    (namespace: NamespaceType, fieldName: FieldNameType) => (listener: SubscriberListener) =>
+      subscribe(listener, namespace, fieldName)
 
-  const subscribeToNamespace = (namespace: NamespaceType, namespaceCallback: SubscriberNamespaceCallbackType) => {
-    const unsubscribe = subscribe({ namespace, namespaceCallback })
-    const namespaceState = getNamespaceState(namespace)
-    if (namespaceState) {
-      namespaceCallback(namespaceState)
-    }
-    return unsubscribe
-  }
+  const createSubscribeToNamespace = (namespace: NamespaceType) => (listener: SubscriberListener) =>
+    subscribe(listener, namespace)
 
   const triggerSubscribers = (namespace: NamespaceType, _fieldName: FieldNameType) => {
     const namespaceSubscribers = subscribers[namespace]
     if (namespaceSubscribers) {
-      const fieldState = getFieldState(namespace, _fieldName)
-      const namespaceState = getNamespaceState(namespace)
-
-      namespaceSubscribers.forEach(({ fieldCallback, namespaceCallback, fieldName }: SubscriberType) => {
-        if (namespaceState && namespaceCallback && !fieldName) {
-          namespaceCallback(namespaceState)
+      namespaceSubscribers.forEach(({ listener, fieldName }: SubscriberType) => {
+        if (!fieldName) {
+          listener()
         }
-        if (fieldState && fieldCallback && fieldName === _fieldName) {
-          fieldCallback(fieldState)
+        if (fieldName === _fieldName) {
+          listener()
         }
       })
     }
@@ -157,8 +133,10 @@ const stateCreator = (): StateCreatorReturnType => {
     getNamespaceState,
     initFieldState,
     removeField,
-    subscribeToField,
-    subscribeToNamespace,
+    createGetSnapshotFieldState,
+    createGetSnapshotNamespaceState,
+    createSubscribeToField,
+    createSubscribeToNamespace,
     updateFieldStateWithCallback,
   }
 }
@@ -168,7 +146,9 @@ export const {
   getNamespaceState,
   initFieldState,
   removeField,
-  subscribeToField,
-  subscribeToNamespace,
+  createGetSnapshotFieldState,
+  createGetSnapshotNamespaceState,
+  createSubscribeToField,
+  createSubscribeToNamespace,
   updateFieldStateWithCallback,
 } = stateCreator()

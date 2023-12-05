@@ -101,8 +101,10 @@ export {
   initFieldState,
   removeField,
   StateCreatorReturnType,
-  subscribeToField,
-  subscribeToNamespace,
+  createGetSnapshotFieldState,
+  createGetSnapshotNamespaceState,
+  createSubscribeToField,
+  createSubscribeToNamespace,
   updateFieldStateWithCallback,
 } from './state'
 export {

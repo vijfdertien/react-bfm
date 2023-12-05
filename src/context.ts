@@ -6,8 +6,10 @@ import {
   initFieldState,
   removeField,
   StateCreatorReturnType,
-  subscribeToField,
-  subscribeToNamespace,
+  createGetSnapshotFieldState,
+  createGetSnapshotNamespaceState,
+  createSubscribeToField,
+  createSubscribeToNamespace,
   updateFieldStateWithCallback,
 } from './state'
 import { DirtyCheckFunction, FieldNameType, FieldStateType, NamespaceType } from './common'
@@ -114,6 +116,8 @@ export const BFMHooksContext = createContext<BFMHookContextType>({
   getNamespaceState,
   initField,
   removeField,
-  subscribeToField,
-  subscribeToNamespace,
+  createGetSnapshotFieldState,
+  createGetSnapshotNamespaceState,
+  createSubscribeToField,
+  createSubscribeToNamespace,
 })

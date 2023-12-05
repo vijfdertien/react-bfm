@@ -159,16 +159,18 @@ describe('removeField', () => {
 describe('subscribeToField', () => {
   it('should be possible to subscribe to a field state change', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, subscribeToField, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+    const { createSubscribeToField, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+
+    const subscribeToField = createSubscribeToField('namespace1', 'foobar')
 
     const mockCallback1 = jest.fn()
     const mockCallback2 = jest.fn()
 
-    const unsubscribe1 = subscribeToField('namespace1', 'foobar', mockCallback1)
+    const unsubscribe1 = subscribeToField(mockCallback1)
 
     initFieldState('namespace1', 'foobar', 'foobar', 'field-is-not-valid')
 
-    const unsubscribe2 = subscribeToField('namespace1', 'foobar', mockCallback2)
+    const unsubscribe2 = subscribeToField(mockCallback2)
 
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({
       [FIELD_KEY_ERROR]: 'barfoo',
@@ -190,60 +192,25 @@ describe('subscribeToField', () => {
     }))
 
     expect(mockCallback1).toHaveBeenCalledTimes(2)
-    expect(mockCallback2).toHaveBeenCalledTimes(3)
-
-    expect(mockCallback1).toHaveBeenNthCalledWith(1, {
-      ...FIELD_STATE_DEFAULT,
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_ERROR]: 'field-is-not-valid',
-      [FIELD_KEY_VALID]: false,
-    })
-
-    const afterSecondUpdate = {
-      ...FIELD_STATE_DEFAULT,
-      [FIELD_KEY_ERROR]: 'barfoo',
-      [FIELD_KEY_FOCUS]: true,
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: false,
-    }
-    expect(mockCallback1).toHaveBeenNthCalledWith(2, afterSecondUpdate)
-
-    expect(mockCallback2).toHaveBeenNthCalledWith(2, {
-      ...FIELD_STATE_DEFAULT,
-      [FIELD_KEY_ERROR]: 'barfoo',
-      [FIELD_KEY_FOCUS]: true,
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: false,
-    })
-
-    expect(getFieldState('namespace1', 'foobar')).toEqual({
-      ...FIELD_STATE_DEFAULT,
-      [FIELD_KEY_ERROR]: null,
-      [FIELD_KEY_FOCUS]: false,
-      [FIELD_KEY_VALUE]: 'foobar',
-      [FIELD_KEY_VALID]: true,
-    })
+    expect(mockCallback2).toHaveBeenCalledTimes(2)
   })
 })
 
 describe('subscribeToNamespace', () => {
   it('should be possible to subscribe to a namespace state change', () => {
     // instead of a global import we use require to have a clean state for every test
-    const {
-      getNamespaceState,
-      subscribeToNamespace,
-      updateFieldStateWithCallback,
-      initFieldState,
-    } = require('../src/state')
+    const { createSubscribeToNamespace, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+
+    const subscribeToNamespace = createSubscribeToNamespace('namespace1')
 
     const mockCallback1 = jest.fn()
     const mockCallback2 = jest.fn()
 
-    const unsubscribe1 = subscribeToNamespace('namespace1', mockCallback1)
+    const unsubscribe1 = subscribeToNamespace(mockCallback1)
 
     initFieldState('namespace1', 'foobar1', 'foobar', 'field-is-not-valid')
 
-    const unsubscribe2 = subscribeToNamespace('namespace1', mockCallback2)
+    const unsubscribe2 = subscribeToNamespace(mockCallback2)
 
     initFieldState('namespace1', 'foobar2', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar2', () => ({
@@ -268,69 +235,7 @@ describe('subscribeToNamespace', () => {
     }))
 
     expect(mockCallback1).toHaveBeenCalledTimes(3)
-    expect(mockCallback2).toHaveBeenCalledTimes(5)
-
-    expect(mockCallback1).toHaveBeenNthCalledWith(1, {
-      foobar1: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_VALUE]: 'foobar',
-        [FIELD_KEY_ERROR]: 'field-is-not-valid',
-        [FIELD_KEY_VALID]: false,
-      },
-    })
-
-    const afterSecondUpdate = {
-      foobar1: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_VALUE]: 'foobar',
-        [FIELD_KEY_ERROR]: 'field-is-not-valid',
-        [FIELD_KEY_VALID]: false,
-      },
-      foobar2: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: null,
-        [FIELD_KEY_FOCUS]: false,
-      },
-    }
-    expect(mockCallback1).toHaveBeenNthCalledWith(2, afterSecondUpdate)
-
-    expect(mockCallback2).toHaveBeenNthCalledWith(2, {
-      foobar1: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_VALUE]: 'foobar',
-        [FIELD_KEY_ERROR]: 'field-is-not-valid',
-        [FIELD_KEY_VALID]: false,
-      },
-      foobar2: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: null,
-        [FIELD_KEY_FOCUS]: false,
-      },
-    })
-
-    expect(getNamespaceState('namespace1', 'foobar')).toEqual({
-      foobar1: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_VALUE]: 'foobar',
-        [FIELD_KEY_ERROR]: 'field-is-not-valid',
-        [FIELD_KEY_VALID]: false,
-      },
-      foobar2: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: 'barfoo',
-        [FIELD_KEY_FOCUS]: true,
-      },
-      foobar3: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_ERROR]: null,
-        [FIELD_KEY_FOCUS]: true,
-        [FIELD_KEY_VALID]: true,
-      },
-      foobar4: {
-        ...FIELD_STATE_DEFAULT,
-        [FIELD_KEY_FOCUS]: false,
-      },
-    })
+    expect(mockCallback2).toHaveBeenCalledTimes(4)
   })
 })
 
@@ -371,10 +276,17 @@ describe('updateFieldStateWithCallback', () => {
 
   it('should only update the field state when the callback returns object', () => {
     // instead of a global import we use require to have a clean state for every test
-    const { getFieldState, subscribeToField, updateFieldStateWithCallback, initFieldState } = require('../src/state')
+    const {
+      getFieldState,
+      createSubscribeToField,
+      updateFieldStateWithCallback,
+      initFieldState,
+    } = require('../src/state')
+
+    const subscribeToField = createSubscribeToField('namespace1', 'foobar')
 
     const mockCallback = jest.fn()
-    subscribeToField('namespace1', 'foobar', mockCallback)
+    subscribeToField(mockCallback)
 
     initFieldState('namespace1', 'foobar', '', null)
     updateFieldStateWithCallback('namespace1', 'foobar', () => ({

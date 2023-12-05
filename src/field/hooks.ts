@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useMemo, useSyncExternalStore } from 'react'
 import { BFMHooksContext } from '../context'
 import { validateFieldName, validateNamespace } from '../helpers'
 import { FieldNameType, FieldStateType, NamespaceType } from '../common'
@@ -21,18 +21,18 @@ export const useFieldState = (namespace: NamespaceType, fieldName: FieldNameType
       throw new Error('Expected string with a minimal length of 1 for `fieldName`')
     }
   }
-  const { subscribeToField } = useContext(BFMHooksContext)
-  const [value, setValue] = useState<FieldStateType | undefined>()
+  const { createSubscribeToField, createGetSnapshotFieldState } = useContext(BFMHooksContext)
 
-  useEffect(
-    () =>
-      subscribeToField(namespace, fieldName, (fieldState: FieldStateType) => {
-        setValue(fieldState)
-      }),
-    [fieldName, namespace, subscribeToField],
+  const subscribe = useMemo(
+    () => createSubscribeToField(namespace, fieldName),
+    [createSubscribeToField, fieldName, namespace],
+  )
+  const getSnapshot = useMemo(
+    () => createGetSnapshotFieldState(namespace, fieldName),
+    [createGetSnapshotFieldState, fieldName, namespace],
   )
 
-  return value
+  return useSyncExternalStore(subscribe, getSnapshot)
 }
 
 export const useFieldError = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {

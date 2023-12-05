@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useMemo, useSyncExternalStore } from 'react'
 import { BFMHooksContext } from '../context'
 import { validateNamespace } from '../helpers'
-import { FieldStateKeyType, FieldStateType, GetNamespaceType, NamespaceStateType, NamespaceType } from '../common'
+import { FieldStateKeyType, FieldStateType, GetNamespaceType, NamespaceType } from '../common'
 import {
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
@@ -19,19 +19,15 @@ export const useNamespaceState = (namespace: NamespaceType) => {
       throw new Error('Expected string with a minimal length of 1 for `namespace`')
     }
   }
-  const { subscribeToNamespace } = useContext(BFMHooksContext)
+  const { createSubscribeToNamespace, createGetSnapshotNamespaceState } = useContext(BFMHooksContext)
 
-  const [value, setValue] = useState<NamespaceStateType | undefined>()
-
-  useEffect(
-    () =>
-      subscribeToNamespace(namespace, (namespaceState: NamespaceStateType) => {
-        setValue(namespaceState)
-      }),
-    [namespace, subscribeToNamespace],
+  const subscribe = useMemo(() => createSubscribeToNamespace(namespace), [createSubscribeToNamespace, namespace])
+  const getSnapshot = useMemo(
+    () => createGetSnapshotNamespaceState(namespace),
+    [createGetSnapshotNamespaceState, namespace],
   )
 
-  return value
+  return useSyncExternalStore(subscribe, getSnapshot)
 }
 
 export const useNamespaceKeyValues = (
