@@ -120,6 +120,8 @@ const stateCreator = (): StateCreatorReturnType => {
   const removeField = (namespace: NamespaceType, fieldName: FieldNameType) => {
     if (state[namespace]?.[fieldName]) {
       delete state[namespace][fieldName]
+      // immutable state
+      state[namespace] = { ...state[namespace] }
       if (Object.keys(state[namespace]).length === 0) {
         delete state[namespace]
       }
