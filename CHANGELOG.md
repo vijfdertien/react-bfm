@@ -1,3 +1,9 @@
+## [2.0.0-beta.16](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2023-12-05)
+
+### Bug Fixes
+
+- make namespace state immutable when removing a field ([f00302c](https://github.com/vijfdertien/react-bfm/commit/f00302cadf593abc1628add0e502094d8e864586))
+
 ## [2.0.0-beta.15](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2023-12-05)
 
 ### Features
