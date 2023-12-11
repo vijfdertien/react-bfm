@@ -46,7 +46,7 @@ describe('useNamespaceState', () => {
   })
 
   it('should return the default value if field key is not set', () => {
-    initFieldState('spaceName', 'nameField1', '', null)
+    initFieldState('spaceName', 'nameField1', undefined, null)
 
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
@@ -515,7 +515,7 @@ describe('useNamespaceValues', () => {
   })
 
   it('should return the default value if field key is not set', () => {
-    initFieldState('spaceName', 'nameField1', '', null)
+    initFieldState('spaceName', 'nameField1', undefined, null)
 
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 

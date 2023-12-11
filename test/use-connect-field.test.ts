@@ -242,7 +242,7 @@ describe('useConnectField', () => {
   it('should validate transformed value on change', () => {
     // transform value to array
     const transformEventToValue = (event: ChangeEvent<HTMLInputElement>) => [event.target.value]
-    const validator = (value: string[]) => (value[0] === 'barfoo' ? 'valid' : 'not-valid')
+    const validator = (value: string[]) => (value?.[0] === 'barfoo' ? 'valid' : 'not-valid')
 
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {

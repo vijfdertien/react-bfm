@@ -50,7 +50,7 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
   const propsRef = useRef<object>({})
 
   // Hook specific props.
-  const { namespace, fieldName, initialValue = '', ...otherProps } = staticProps
+  const { namespace, fieldName, initialValue, ...otherProps } = staticProps
 
   // Throw an error if namespace and/or fieldName changes after first rendering, because it's not supported
   // Dynamically changing these values can result in strange side effects. It's better to render a new component.
