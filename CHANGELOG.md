@@ -1,3 +1,9 @@
+## [2.0.0-beta.17](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2023-12-11)
+
+### Features
+
+- make default field value undefined ([37c0cc7](https://github.com/vijfdertien/react-bfm/commit/37c0cc7a6de5b7369e9e8d0d1d75b1368b870edc))
+
 ## [2.0.0-beta.16](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2023-12-05)
 
 ### Bug Fixes
