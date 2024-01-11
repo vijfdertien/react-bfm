@@ -1,3 +1,9 @@
+## [2.0.0-beta.18](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2024-01-11)
+
+### Bug Fixes
+
+- added getServerSnapshot which is required for server side rendering (NextJS, etc.) ([26ad05f](https://github.com/vijfdertien/react-bfm/commit/26ad05fefd8c7b2ead0dba29d2322714fd2b05d4))
+
 ## [2.0.0-beta.17](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2023-12-11)
 
 ### Features
