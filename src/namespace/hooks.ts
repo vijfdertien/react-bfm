@@ -13,6 +13,8 @@ import {
 } from '../constants/field-keys'
 import { NAMESPACE_STATE_DEFAULT } from '../constants/state-defaults'
 
+const getServerSnapshot = () => undefined
+
 export const useNamespaceState = (namespace: NamespaceType) => {
   if (process.env.NODE_ENV !== 'production') {
     if (!validateNamespace(namespace)) {
@@ -27,7 +29,7 @@ export const useNamespaceState = (namespace: NamespaceType) => {
     [createGetSnapshotNamespaceState, namespace],
   )
 
-  return useSyncExternalStore(subscribe, getSnapshot)
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
 export const useNamespaceKeyValues = (

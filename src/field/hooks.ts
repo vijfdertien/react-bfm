@@ -12,6 +12,8 @@ import {
   FIELD_KEY_VALUE_ON_FOCUS,
 } from '../constants/field-keys'
 
+const getServerSnapshot = () => undefined
+
 export const useFieldState = (namespace: NamespaceType, fieldName: FieldNameType): FieldStateType | undefined => {
   if (process.env.NODE_ENV !== 'production') {
     if (!validateNamespace(namespace)) {
@@ -32,7 +34,7 @@ export const useFieldState = (namespace: NamespaceType, fieldName: FieldNameType
     [createGetSnapshotFieldState, fieldName, namespace],
   )
 
-  return useSyncExternalStore(subscribe, getSnapshot)
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
 export const useFieldError = <T = any>(namespace: NamespaceType, fieldName: FieldNameType): T | undefined => {
