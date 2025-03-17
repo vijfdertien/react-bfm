@@ -59,10 +59,13 @@ export {
   useNamespaceIsDirty,
   useNamespaceIsTouched,
   useNamespaceIsValid,
+  useNamespacesIsValid,
   useNamespaceKeyIsEvery,
+  useNamespacesKeyIsEvery,
   useNamespaceKeyIsSome,
   useNamespaceKeyValues,
   useNamespaceState,
+  useNamespacesState,
   useNamespaceValues,
   useNamespaceValuesOnFocus,
 } from './namespace/hooks'

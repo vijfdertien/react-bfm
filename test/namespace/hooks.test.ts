@@ -19,10 +19,12 @@ import {
   useNamespaceIsTouched,
   useNamespaceIsValid,
   useNamespaceKeyIsEvery,
+  useNamespacesKeyIsEvery,
   useNamespaceKeyIsSome,
   useNamespaceState,
   useNamespaceValues,
   useNamespaceValuesOnFocus,
+  useNamespacesState,
 } from '../../src'
 import { initFieldState } from '../../src/state'
 
@@ -51,6 +53,69 @@ describe('useNamespaceState', () => {
     updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
 
     const { result } = renderHook(() => useNamespaceState('spaceName'))
+    expect(result.current).toStrictEqual({
+      nameField1: FIELD_STATE_DEFAULT,
+    })
+  })
+
+  it('should return the current state on initial render', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
+    updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
+      [FIELD_KEY_VALUE]: 'foobar',
+    }))
+
+    const { result } = renderHook(() => useNamespaceState('spaceName'))
+    expect(result.current).toStrictEqual({
+      nameField1: {
+        ...FIELD_STATE_DEFAULT,
+        value: 'foobar',
+      },
+    })
+  })
+
+  it('should return the state and renders the component when the state updates', async () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+
+    updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
+      [FIELD_KEY_VALUE]: 'foobar',
+    }))
+
+    const { result } = renderHook(() => useNamespaceState('spaceName'))
+    expect(result.current).toStrictEqual({
+      nameField1: {
+        ...FIELD_STATE_DEFAULT,
+        value: 'foobar',
+      },
+    })
+    act(() =>
+      updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
+        [FIELD_KEY_VALUE]: 'barfoo',
+      })),
+    )
+
+    expect(result.current).toStrictEqual({
+      nameField1: {
+        ...FIELD_STATE_DEFAULT,
+        value: 'barfoo',
+      },
+    })
+  })
+})
+
+describe('useNamespacesState', () => {
+  it('should throw error when namespace is too short', () => {
+    const { result } = renderHook(() => useNamespacesState(['']))
+
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
+  })
+
+  it('should return the default value if field key is not set', () => {
+    initFieldState('spaceName', 'nameField1', undefined, null)
+
+    updateFieldStateWithCallback('spaceName', 'nameField1', () => ({}))
+
+    const { result } = renderHook(() => useNamespacesState(['spaceName']))
     expect(result.current).toStrictEqual({
       nameField1: FIELD_STATE_DEFAULT,
     })
@@ -150,6 +215,59 @@ describe('useNamespaceKeyIsEvery', () => {
 
     expect(result.current).toEqual(false)
   })
+})
+
+describe('useNamespacesKeyIsEvery', () => {
+  it('should throw error when one of the namespaces is too short', () => {
+    const { result } = renderHook(() => useNamespacesKeyIsEvery(['valid', ''], FIELD_KEY_VALUE))
+
+    expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `namespace`')
+  })
+
+  it('should return false if one of the namespaces is not initialized', () => {
+    initFieldState('spaceName', 'nameField1', '', null)
+    const namespaces = ['spaceName', 'notInitializedNamespace']
+    const { result } = renderHook(() => useNamespacesKeyIsEvery(namespaces, FIELD_KEY_VALUE))
+    expect(result.current).toEqual(false)
+  })
+
+  // it('should return the current state on initial render', () => {
+  //   initFieldState('spaceName', 'nameField1', '', null)
+  //   updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
+  //     [FIELD_KEY_VALUE]: true,
+  //   }))
+  //
+  //   const { result: result1 } = renderHook(() => useNamespacesKeyIsEvery(['spaceName'], FIELD_KEY_VALUE))
+  //   expect(result1.current).toEqual(true)
+  //
+  //   initFieldState('spaceName', 'nameField2', '', null)
+  //   updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
+  //     [FIELD_KEY_VALUE]: false,
+  //   }))
+  //
+  //   const { result: result2 } = renderHook(() => useNamespacesKeyIsEvery(['spaceName'], FIELD_KEY_VALUE))
+  //   expect(result2.current).toEqual(false)
+  // })
+  //
+  // it('should return the state and renders the component when the state updates', async () => {
+  //   initFieldState('spaceName', 'nameField1', '', null)
+  //   updateFieldStateWithCallback('spaceName', 'nameField1', () => ({
+  //     [FIELD_KEY_VALUE]: true,
+  //   }))
+  //
+  //   const { result } = renderHook(() => useNamespacesKeyIsEvery(['spaceName'], FIELD_KEY_VALUE))
+  //   expect(result.current).toEqual(true)
+  //
+  //   initFieldState('spaceName', 'nameField2', '', null)
+  //
+  //   act(() =>
+  //     updateFieldStateWithCallback('spaceName', 'nameField2', () => ({
+  //       [FIELD_KEY_VALUE]: false,
+  //     })),
+  //   )
+  //
+  //   expect(result.current).toEqual(false)
+  // })
 })
 
 describe('useNamespaceKeyIsSome', () => {

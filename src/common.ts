@@ -33,6 +33,10 @@ export interface NamespaceStateType {
   [fieldName: FieldNameType]: FieldStateType
 }
 
+export interface NamespacesStateType {
+  [namespace: NamespaceType]: NamespaceStateType | undefined
+}
+
 export type SubscriberNamespaceCallbackType = (state: NamespaceStateType) => void
 export type SubscriberFieldCallbackType = (state: FieldStateType) => void
 export type UpdateFieldCallbackType = (state: FieldStateType) => Partial<FieldStateType>

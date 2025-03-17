@@ -32,6 +32,25 @@ export const useNamespaceState = (namespace: NamespaceType) => {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
+export const useNamespacesState = (namespaces: NamespaceType[]) => {
+  if (process.env.NODE_ENV !== 'production') {
+    namespaces.forEach((namespace) => {
+      if (!validateNamespace(namespace)) {
+        throw new Error('Expected string with a minimal length of 1 for `namespace`')
+      }
+    })
+  }
+  const { createSubscribeToNamespaces, createGetSnapshotNamespacesState } = useContext(BFMHooksContext)
+
+  const subscribe = useMemo(() => createSubscribeToNamespaces(namespaces), [createSubscribeToNamespaces, namespaces])
+  const getSnapshot = useMemo(
+    () => createGetSnapshotNamespacesState(namespaces),
+    [createGetSnapshotNamespacesState, namespaces],
+  )
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+}
+
 export const useNamespaceKeyValues = (
   namespace: NamespaceType,
   key: FieldStateKeyType,
@@ -57,6 +76,21 @@ export const useNamespaceKeyIsEvery = (namespace: NamespaceType, key: FieldState
     )
   )
 }
+
+export const useNamespacesKeyIsEvery = (namespaces: NamespaceType[], key: FieldStateKeyType): boolean | undefined => {
+  const namespacesState = useNamespacesState(namespaces)
+
+  const namespacesStateValues = namespacesState ? Object.values(namespacesState) : []
+
+  return Boolean(namespacesStateValues && key)
+
+  // return namespacesStateValues.every((namespaceState) =>
+  //   Object.values(namespaceState || NAMESPACE_STATE_DEFAULT).every(
+  //     (fieldState: FieldStateType) => fieldState[key] || false,
+  //   ),
+  // )
+}
+
 export const useNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateKeyType): boolean | undefined => {
   const namespaceState = useNamespaceState(namespace)
 
@@ -85,3 +119,6 @@ export const useNamespaceValues = (namespace: NamespaceType) => useNamespaceKeyV
 
 export const useNamespaceValuesOnFocus = (namespace: NamespaceType) =>
   useNamespaceKeyValues(namespace, FIELD_KEY_VALUE_ON_FOCUS)
+
+export const useNamespacesIsValid = (namespaces: NamespaceType[]) =>
+  useNamespacesKeyIsEvery(namespaces, FIELD_KEY_VALID)
