@@ -1,4 +1,5 @@
-export { BFMHooksContext, BFMHookContextType } from './context'
+export { BFMHooksContext } from './context'
+export type { BFMHookContextType } from './context'
 export {
   FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_INITIAL_VALUE_ERROR,
@@ -79,7 +80,7 @@ export {
   isNamespaceTouched,
   isNamespaceValid,
 } from './namespace/getters'
-export {
+export type {
   ConnectFieldChangeHandler,
   FieldNameType,
   FieldStateType,
@@ -100,16 +101,12 @@ export {
   getNamespaceState,
   initFieldState,
   removeField,
-  StateCreatorReturnType,
   createGetSnapshotFieldState,
   createGetSnapshotNamespaceState,
   createSubscribeToField,
   createSubscribeToNamespace,
   updateFieldStateWithCallback,
 } from './state'
-export {
-  ConnectFieldProps,
-  ConnectFieldReturnProps,
-  FactoryWithoutConnectFieldProps,
-  useConnectField,
-} from './use-connect-field'
+export type { StateCreatorReturnType } from './state'
+export { useConnectField } from './use-connect-field'
+export type { ConnectFieldProps, ConnectFieldReturnProps, FactoryWithoutConnectFieldProps } from './use-connect-field'

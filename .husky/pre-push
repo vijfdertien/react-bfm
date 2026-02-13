@@ -1,1 +1,1 @@
-bun eslint-check && bun prettier-check && bun test
+bun eslint-check && bun prettier-check && bun run test

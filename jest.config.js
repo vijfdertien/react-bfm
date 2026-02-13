@@ -1,11 +1,9 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: 'ts-jest',
   clearMocks: true,
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
   transform: {
-    '^.+\\.ts?$': 'ts-jest',
+    '^.+\\.[tj]sx?$': 'babel-jest',
   },
   transformIgnorePatterns: ['node_modules/'],
 }
