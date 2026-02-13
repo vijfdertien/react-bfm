@@ -1,12 +1,5 @@
 .DS_store
 .idea/
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versionsdist/
 build/
 dist/
 es/

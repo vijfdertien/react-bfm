@@ -92,8 +92,10 @@ const initialValueField = (namespace: NamespaceType, fieldName: FieldNameType, i
     }
   })
 
-export interface BFMHookContextType
-  extends Omit<StateCreatorReturnType, 'updateFieldStateWithCallback' | 'initFieldState'> {
+export interface BFMHookContextType extends Omit<
+  StateCreatorReturnType,
+  'updateFieldStateWithCallback' | 'initFieldState'
+> {
   blurField: (namespace: NamespaceType, fieldName: FieldNameType) => void
   changeField: (
     namespace: NamespaceType,

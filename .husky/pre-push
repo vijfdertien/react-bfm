@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn eslint-check && yarn prettier-check && yarn test
+bun eslint-check && bun prettier-check && bun test

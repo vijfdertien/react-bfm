@@ -30,7 +30,7 @@
   ],
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "yarn build-ts && yarn build-commonjs && yarn build-es && yarn build-umd && yarn build-umd-min",
+    "build": "bun build-ts && bun build-commonjs && bun build-es && bun build-umd && bun build-umd-min",
     "build-ts": "tsc",
     "build-commonjs": "BABEL_ENV=commonjs babel build --out-dir lib",
     "build-es": "babel build --out-dir es",
@@ -40,11 +40,11 @@
     "eslint-check": "eslint . --ext .ts,.js",
     "eslint-fix": "eslint --fix .",
     "prepare": " husky install",
-    "prepublishOnly": "yarn clean && yarn build",
+    "prepublishOnly": "bun clean && bun build",
     "prettier-check": "prettier --check .",
     "prettier-fix": "prettier --write .",
     "test": "jest",
-    "check": "yarn prettier-check && yarn eslint-check && tsc --noEmit --project tsconfig.check.json",
+    "check": "bun prettier-check && bun eslint-check && tsc --noEmit --project tsconfig.check.json",
     "version": "conventional-changelog --config ./changelog-config.js --infile CHANGELOG.md --same-file && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "dependencies": {
@@ -102,6 +102,5 @@
   "directories": {
     "lib": "lib",
     "test": "test"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }
