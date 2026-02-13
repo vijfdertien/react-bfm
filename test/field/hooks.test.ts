@@ -39,7 +39,7 @@ describe('useFieldState', () => {
     expect(result.error?.message).toBe('Expected string with a minimal length of 1 for `fieldName`')
   })
 
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldState('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -85,7 +85,7 @@ describe('useFieldState', () => {
 })
 
 describe('useFieldError', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldError('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -122,7 +122,7 @@ describe('useFieldError', () => {
 })
 
 describe('useFieldHasFocus', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldHasFocus('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -159,7 +159,7 @@ describe('useFieldHasFocus', () => {
 })
 
 describe('useFieldIsDirty', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldIsDirty('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -231,7 +231,7 @@ describe('useFieldIsTouched', () => {
 })
 
 describe('useFieldIsValid', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldIsValid('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -268,7 +268,7 @@ describe('useFieldIsValid', () => {
 })
 
 describe('useFieldValue', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldValue('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })
@@ -305,7 +305,7 @@ describe('useFieldValue', () => {
 })
 
 describe('useFieldValueOnFocus', () => {
-  it('should return the default value if field is not initialized', () => {
+  it('should return undefined if field is not initialized', () => {
     const { result } = renderHook(() => useFieldValueOnFocus('spaceName', 'nameField'))
     expect(result.current).not.toBeDefined()
   })

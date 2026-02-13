@@ -68,7 +68,7 @@ describe('useConnectField', () => {
     expect(result.current.value).toBe('foobar')
   })
 
-  it('should be able to update the defaultValue when field is not touched or has focus', () => {
+  it('should be able to update the defaultValue when field is not touched and not focused', () => {
     const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
       initialProps: { props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, initialValue: 'foobar' } },
     })
@@ -156,7 +156,7 @@ describe('useConnectField', () => {
     expect(getFieldError(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe('valid')
   })
 
-  it('should use the default the transform value to input', () => {
+  it('should use the default transform value to input', () => {
     const value = ['should-not-change']
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {
@@ -214,7 +214,7 @@ describe('useConnectField', () => {
     expect(onFocusProp).toHaveBeenCalledWith(mockEvent)
   })
 
-  it('should use the default the transform event to value', () => {
+  it('should use the default transform event to value', () => {
     const { result } = renderHook(({ props }) => useConnectField(props), {
       initialProps: {
         props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME },
@@ -304,6 +304,92 @@ describe('useConnectField', () => {
 
     expect(onBlurProp).toHaveBeenCalledTimes(1)
     expect(onBlurProp).toHaveBeenCalledWith(mockEvent)
+  })
+
+  it('should use the latest static props in validator callbacks', () => {
+    const validator = (value: string, props?: { minLength?: number }) =>
+      (value?.length || 0) < (props?.minLength || 0) ? 'too-short' : null
+
+    const { result, rerender } = renderHook(({ props }) => useConnectField(props), {
+      initialProps: {
+        props: {
+          namespace: TEST_NAMESPACE,
+          fieldName: TEST_FIELD_NAME,
+          validator,
+          minLength: 5,
+        },
+      },
+    })
+
+    act(() => result.current.onChange({ target: { value: 'foo' } } as ChangeEvent<HTMLInputElement>))
+    expect(getFieldError(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe('too-short')
+
+    act(() =>
+      rerender({
+        props: {
+          namespace: TEST_NAMESPACE,
+          fieldName: TEST_FIELD_NAME,
+          validator,
+          minLength: 2,
+        },
+      }),
+    )
+
+    act(() => result.current.onChange({ target: { value: 'foo' } } as ChangeEvent<HTMLInputElement>))
+    expect(getFieldError(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe(null)
+  })
+
+  it('should pass all arguments to transformEventToValue', () => {
+    const transformEventToValue = (arg1: string, arg2: string, arg3: string, arg4: string, arg5: string) =>
+      [arg1, arg2, arg3, arg4, arg5].join('|')
+
+    const { result } = renderHook(({ props }) => useConnectField(props), {
+      initialProps: {
+        props: { namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME, transformEventToValue },
+      },
+    })
+
+    act(() => result.current.onChange('a', 'b', 'c', 'd', 'e'))
+    expect(getFieldValue(TEST_NAMESPACE, TEST_FIELD_NAME)).toBe('a|b|c|d|e')
+  })
+
+  it('should allow transformValueToInput to handle falsy values', () => {
+    const transformValueToInput = (value?: number) => (value === 0 ? 'zero' : String(value))
+
+    const { result } = renderHook(({ props }) => useConnectField(props), {
+      initialProps: {
+        props: {
+          namespace: TEST_NAMESPACE,
+          fieldName: TEST_FIELD_NAME,
+          initialValue: 0,
+          transformValueToInput,
+        },
+      },
+    })
+
+    expect(result.current.value).toBe('zero')
+  })
+
+  it('should keep other fields when unmounting one hook', () => {
+    const { unmount: unmount1 } = renderHook(() =>
+      useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME }),
+    )
+    const { unmount: unmount2 } = renderHook(() =>
+      useConnectField({ namespace: TEST_NAMESPACE, fieldName: TEST_FIELD_NAME_NEW }),
+    )
+
+    const namespace1: NamespaceStateType = getNamespaceState(TEST_NAMESPACE)!
+    expect(namespace1).toHaveProperty(TEST_FIELD_NAME)
+    expect(namespace1).toHaveProperty(TEST_FIELD_NAME_NEW)
+
+    unmount1()
+
+    const namespace2: NamespaceStateType = getNamespaceState(TEST_NAMESPACE)!
+    expect(namespace2).not.toHaveProperty(TEST_FIELD_NAME)
+    expect(namespace2).toHaveProperty(TEST_FIELD_NAME_NEW)
+
+    unmount2()
+    expect(getNamespaceState(TEST_NAMESPACE)).not.toBeDefined()
   })
 
   it('should remove field from state on unmount', () => {

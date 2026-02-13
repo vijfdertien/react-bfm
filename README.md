@@ -1,8 +1,8 @@
-**THE DOCUMENTATION FOR THIS LIBRARY IS STILL WORK IN PROGRESS**
-
 # React BFM
 
 A basic field (or form) state manager for React using hooks.
+
+Version 1.x is no longer maintained. Please upgrade to version 2.x; it is compatible with React 18.2 and above.
 
 # Features
 
@@ -22,6 +22,8 @@ Installing is simple:
 $ yarn add react-bfm
 # or
 $ npm install react-bfm
+# or
+$ bun add react-bfm
 ```
 
 Now you can import the most important hook and create your forms: `useConnectField()`
@@ -30,18 +32,17 @@ Now you can import the most important hook and create your forms: `useConnectFie
 
 ## Hooks / Functions
 
-**useConnectField( props, [omitProps] )**  
+**useConnectField( props )**  
 Connects a field to a form namespace. The `props` object must include `namespace` and `fieldName`.
 
 Extended `props` are returned by the hook, with the following remarks:
 
-- Excluded are props only used for the hook: `namespace`, `fieldName`, `defaultValue`, `validator`, `dirtyCheck`, `transformValueToInput` and `transformEventToValue`
-- Excluded are keys given by the omitProps.
+- Excluded are props only used for the hook: `namespace`, `fieldName`, `initialValue`, `validator`, `dirtyCheck`, `transformValueToInput` and `transformEventToValue`
 - Included are `onFocus`, `onChange` and `onBlur` to handle the input field state.
 
 Add the `validator` prop to validate the field value. This function gets two arguments: `value` and `props`.
 It should return a falsy value if the input value is valid.
-If the input value is not valid. any truthy value can be returned, for example a string of array with error message(s).
+If the input value is not valid, any truthy value can be returned, for example a string or array with error message(s).
 
 **useFieldError( namespace, fieldName )  
 getFieldError( namespace, fieldName )**  
@@ -120,7 +121,7 @@ See also `clearNamespace`
 ## Basic usages
 
 ```javascript
-const Input = (props) => <input {...useConnectField(props, ['dirty', 'touched', 'valid', 'error', 'focus'])} />
+const Input = (props) => <input {...useConnectField(props)} />
 
 const BasicForm = () => (
   <form>
@@ -158,7 +159,7 @@ const Input = (props) => {
 }
 
 const simpleTextLengthValidator = (value) =>
-  value && value.length > 2 && value.length < 10 ? null : 'Text should be between 2 en 10 chars'
+  value && value.length > 2 && value.length < 10 ? null : 'Text should be between 2 and 10 chars'
 
 const simplePasswordValidator = (value) => (value && /\d/.test(value) ? null : 'Password should contain a number')
 
@@ -179,7 +180,7 @@ const Input = (props) => {
   return (
     <>
       <input {...fieldProps} style={inputStyle} />
-      {error?.length && touched && dirty && error.map((_error) => <span>{_error}</span>}
+      {error?.length && touched && dirty && error.map((message, index) => <span key={index}>{message}</span>)}
     </>
   )
 }
@@ -230,7 +231,7 @@ const UsernameInput = () => {
       namespace="advanced"
       fieldName="username"
       type="text"
-      defaultValue="fooBar"
+      initialValue="fooBar"
       required
       minLength={2}
       maxLength={15}
@@ -247,7 +248,7 @@ const NicknameInput = () => (
     namespace="advanced"
     fieldName="nickname"
     type="text"
-    defaultValue="barFoo"
+    initialValue="barFoo"
     minLength={5}
     maxLength={25}
     validator={textValidator}

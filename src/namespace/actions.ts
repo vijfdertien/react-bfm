@@ -1,4 +1,4 @@
-import { clearField, resetField } from '..'
+import { clearField, resetField } from '../field/actions'
 import { getNamespaceState } from '../state'
 import { FieldNameType, NamespaceType } from '../common'
 

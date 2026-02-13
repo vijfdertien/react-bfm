@@ -7,7 +7,7 @@ beforeEach(() => {
 })
 
 describe('getFieldState', () => {
-  it('should return the field state, or an empty state', () => {
+  it('should return the field state, or undefined', () => {
     // instead of a global import we use require to have a clean state for every test
     const { getFieldState, updateFieldStateWithCallback, initFieldState } = require('../src/state')
 
@@ -55,7 +55,7 @@ describe('getFieldState', () => {
 })
 
 describe('getNamespaceState', () => {
-  it('should return the namespace state, or an empty state', () => {
+  it('should return the namespace state, or undefined', () => {
     // instead of a global import we use require to have a clean state for every test
     const { getNamespaceState, updateFieldStateWithCallback, initFieldState } = require('../src/state')
 
@@ -274,7 +274,7 @@ describe('updateFieldStateWithCallback', () => {
     })
   })
 
-  it('should only update the field state when the callback returns object', () => {
+  it('should only update the field state when the callback returns a truthy value', () => {
     // instead of a global import we use require to have a clean state for every test
     const {
       getFieldState,

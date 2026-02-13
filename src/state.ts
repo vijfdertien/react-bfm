@@ -52,7 +52,7 @@ const stateCreator = (): StateCreatorReturnType => {
     getFieldState(namespace, fieldName)
   const createGetSnapshotNamespaceState = (namespace: NamespaceType) => () => getNamespaceState(namespace)
 
-  const subscribe = (listener: any, namespace: NamespaceType, fieldName?: FieldNameType) => {
+  const subscribe = (listener: SubscriberListener, namespace: NamespaceType, fieldName?: FieldNameType) => {
     if (!subscribers[namespace]) {
       subscribers[namespace] = new Map()
     }
@@ -62,6 +62,9 @@ const stateCreator = (): StateCreatorReturnType => {
     return () => {
       if (subscribers[namespace] && subscribers[namespace].has(id)) {
         subscribers[namespace].delete(id)
+        if (subscribers[namespace].size === 0) {
+          delete subscribers[namespace]
+        }
       }
     }
   }
@@ -108,7 +111,7 @@ const stateCreator = (): StateCreatorReturnType => {
     if (currentFieldState) {
       const update = callback(currentFieldState)
 
-      if (update) {
+      if (update && typeof update === 'object') {
         state[namespace] = {
           ...state[namespace],
           [fieldName]: { ...currentFieldState, ...update },

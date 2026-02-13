@@ -21,6 +21,14 @@
   "main": "lib/index.js",
   "unpkg": "dist/react-bfm.js",
   "module": "es/index.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.js",
+      "default": "./dist/react-bfm.js"
+    }
+  },
   "files": [
     "/dist",
     "/lib",

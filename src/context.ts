@@ -66,12 +66,12 @@ const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: an
 }
 
 /**
- * sets default value only when the field is not touched or has focus
+ * sets default value only when the field is not touched and not focused
  * this way you can still change the input value after first rendering
  */
 const initialValueField = (namespace: NamespaceType, fieldName: FieldNameType, initialValue: any, error: any) =>
   updateFieldStateWithCallback(namespace, fieldName, (currentState) => {
-    // only update value and error when field is not touched or has focus
+    // only update value and error when field is not touched and not focused
     const updateState: Partial<FieldStateType> =
       !currentState[FIELD_KEY_TOUCHED] &&
       !currentState[FIELD_KEY_FOCUS] &&

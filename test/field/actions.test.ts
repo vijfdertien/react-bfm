@@ -155,6 +155,26 @@ describe('resetField', () => {
     })
   })
 
+  it('should reset a field with falsy default value', () => {
+    updateFieldStateWithCallback('spaceName', 'nameField', () => ({
+      [FIELD_KEY_INITIAL_VALUE]: '',
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: false,
+    }))
+
+    resetField('spaceName', 'nameField')
+    expect(getFieldState('spaceName', 'nameField')).toStrictEqual({
+      [FIELD_KEY_DIRTY]: FIELD_DEFAULT_DIRTY,
+      [FIELD_KEY_ERROR]: FIELD_DEFAULT_ERROR,
+      [FIELD_KEY_FOCUS]: FIELD_DEFAULT_FOCUS,
+      [FIELD_KEY_TOUCHED]: FIELD_DEFAULT_TOUCHED,
+      [FIELD_KEY_VALID]: FIELD_DEFAULT_VALID,
+      [FIELD_KEY_VALUE]: '',
+      [FIELD_KEY_VALUE_ON_FOCUS]: FIELD_DEFAULT_VALUE_ON_FOCUS,
+      [FIELD_KEY_INITIAL_VALUE]: FIELD_DEFAULT_DEFAULT_VALUE,
+      [FIELD_KEY_INITIAL_VALUE_ERROR]: FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
+    })
+  })
+
   it('should reset a field with default value and error', () => {
     updateFieldStateWithCallback('spaceName', 'nameField', () => ({
       [FIELD_KEY_INITIAL_VALUE]: 'foobar',

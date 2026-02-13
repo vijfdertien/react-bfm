@@ -21,7 +21,7 @@ export const resetField = (namespace: NamespaceType, fieldName: FieldNameType): 
   updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
     ...FIELD_STATE_DEFAULT,
     ...mapFieldValueAndError(
-      currentState[FIELD_KEY_INITIAL_VALUE] || FIELD_DEFAULT_VALUE,
+      currentState[FIELD_KEY_INITIAL_VALUE] ?? FIELD_DEFAULT_VALUE,
       currentState[FIELD_KEY_INITIAL_VALUE_ERROR],
     ),
   }))

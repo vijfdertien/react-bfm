@@ -30,7 +30,7 @@ import mocked = jest.mocked
 
 jest.mock('../../src/state')
 
-describe('creatorGetNamespace', () => {
+describe('getNamespaceKeyValues', () => {
   it('should always return the correct value, if defined', () => {
     SUPPORTED_VALUES.forEach((value) => {
       mocked(getNamespaceState).mockReturnValueOnce({
@@ -57,7 +57,7 @@ describe('getNamespaceKeyIsSome', () => {
   })
 })
 
-describe('creatorIsEveryNamespace', () => {
+describe('getNamespaceKeyIsEvery', () => {
   it('should return true when every field key values are true', () => {
     SUPPORTED_VALUES.forEach((value) => {
       mocked(getNamespaceState).mockReturnValueOnce({
@@ -81,7 +81,7 @@ describe('creatorIsEveryNamespace', () => {
   })
 })
 
-describe('getNamespaceDefaultValues', () => {
+describe('getNamespaceInitialValues', () => {
   it('should return the correct value per field', () => {
     mocked(getNamespaceState).mockReturnValueOnce({
       field1: { ...FIELD_STATE_DEFAULT, [FIELD_KEY_INITIAL_VALUE]: 'correct-value' },

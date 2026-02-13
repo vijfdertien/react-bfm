@@ -69,7 +69,7 @@ export const useNamespaceKeyIsSome = (namespace: NamespaceType, key: FieldStateK
 }
 
 /**
- * Falsy error values are always returned as null
+ * Error values reflect the stored field error; falsy errors are normalized when mapped into field state.
  */
 export const useNamespaceErrors = (namespace: NamespaceType) => useNamespaceKeyValues(namespace, FIELD_KEY_ERROR)
 

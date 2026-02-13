@@ -47,7 +47,7 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
   } = props
 
   // For storing static props see bellow.
-  const propsRef = useRef<object>({})
+  const propsRef = useRef<object>(staticProps)
 
   // Hook specific props.
   const { namespace, fieldName, initialValue, ...otherProps } = staticProps

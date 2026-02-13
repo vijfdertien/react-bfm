@@ -1,11 +1,6 @@
 import {
-  FIELD_DEFAULT_DEFAULT_VALUE,
-  FIELD_DEFAULT_DIRTY,
   FIELD_DEFAULT_ERROR,
-  FIELD_DEFAULT_FOCUS,
-  FIELD_DEFAULT_TOUCHED,
   FIELD_DEFAULT_VALID,
-  FIELD_DEFAULT_VALUE,
   FIELD_DEFAULT_VALUE_ON_FOCUS,
   FIELD_KEY_INITIAL_VALUE,
   FIELD_KEY_DIRTY,
@@ -30,12 +25,12 @@ import mocked = jest.mocked
 
 jest.mock('../../src/state')
 
-describe('getFieldDefaultValue', () => {
+describe('getFieldInitialValue', () => {
   it('should return the value', () => {
     mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_INITIAL_VALUE]: 'foobar' })
     expect(getFieldInitialValue('spaceName', 'nameField')).toBe('foobar')
   })
-  it('should return the default value', () => {
+  it('should return undefined when missing', () => {
     mocked(getFieldState).mockReturnValue({
       initialValue: undefined,
       initialValueError: undefined,
@@ -47,7 +42,7 @@ describe('getFieldDefaultValue', () => {
       value: undefined,
       valueOnFocus: undefined,
     })
-    expect(getFieldInitialValue('spaceName', 'nameField')).toBe(FIELD_DEFAULT_DEFAULT_VALUE)
+    expect(getFieldInitialValue('spaceName', 'nameField')).toBeUndefined()
   })
 })
 
@@ -67,9 +62,9 @@ describe('getFieldValue', () => {
     mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_VALUE]: 'foobar' })
     expect(getFieldValue('spaceName', 'nameField')).toBe('foobar')
   })
-  it('should return the default value', () => {
+  it('should return undefined when missing', () => {
     mocked(getFieldState).mockReturnValueOnce(FIELD_STATE_DEFAULT)
-    expect(getFieldValue('spaceName', 'nameField')).toBe(FIELD_DEFAULT_VALUE)
+    expect(getFieldValue('spaceName', 'nameField')).toBeUndefined()
   })
 })
 
@@ -93,9 +88,9 @@ describe('hasFieldFocus', () => {
     mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_FOCUS]: false })
     expect(hasFieldFocus('spaceName', 'nameField')).toBe(false)
   })
-  it('should return the default value', () => {
+  it('should return false when missing', () => {
     mocked(getFieldState).mockReturnValueOnce(FIELD_STATE_DEFAULT)
-    expect(hasFieldFocus('spaceName', 'nameField')).toBe(FIELD_DEFAULT_FOCUS)
+    expect(hasFieldFocus('spaceName', 'nameField')).toBe(false)
   })
 })
 
@@ -108,9 +103,9 @@ describe('isFieldDirty', () => {
     mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_DIRTY]: false })
     expect(isFieldDirty('spaceName', 'nameField')).toBe(false)
   })
-  it('should return the default value', () => {
+  it('should return false when missing', () => {
     mocked(getFieldState).mockReturnValueOnce(FIELD_STATE_DEFAULT)
-    expect(isFieldDirty('spaceName', 'nameField')).toBe(FIELD_DEFAULT_DIRTY)
+    expect(isFieldDirty('spaceName', 'nameField')).toBe(false)
   })
 })
 
@@ -123,9 +118,9 @@ describe('isFieldTouched', () => {
     mocked(getFieldState).mockReturnValueOnce({ ...FIELD_STATE_DEFAULT, [FIELD_KEY_TOUCHED]: false })
     expect(isFieldTouched('spaceName', 'nameField')).toBe(false)
   })
-  it('should return the default value', () => {
+  it('should return false when missing', () => {
     mocked(getFieldState).mockReturnValueOnce(FIELD_STATE_DEFAULT)
-    expect(isFieldTouched('spaceName', 'nameField')).toBe(FIELD_DEFAULT_TOUCHED)
+    expect(isFieldTouched('spaceName', 'nameField')).toBe(false)
   })
 })
 
