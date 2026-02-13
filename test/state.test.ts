@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { FIELD_KEY_ERROR, FIELD_KEY_FOCUS, FIELD_KEY_VALID, FIELD_KEY_VALUE, FIELD_STATE_DEFAULT } from '../src'
 
 // reset modules to be sure that we have a clean state for every test

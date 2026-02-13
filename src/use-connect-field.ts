@@ -63,7 +63,9 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
 
   // Store static props for use in the validator callback.
   // This way you can (re-)use for example: required, minlength, maxlength, etc. in the validator
-  propsRef.current = staticProps
+  useEffect(() => {
+    propsRef.current = staticProps
+  }, [staticProps])
 
   const getError = useCallback((_value: any) => validator && validator(_value, propsRef.current), [validator])
 
@@ -87,7 +89,9 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
   const handleFocus = useCallback<FocusEventHandler<T>>(
     (event) => {
       focusField(namespace, fieldName)
-      onFocus && onFocus(event)
+      if (onFocus) {
+        onFocus(event)
+      }
     },
     [fieldName, namespace, onFocus, focusField],
   )
@@ -99,7 +103,9 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
         : defaultEventToValue(arg1)
       const error = getError(value)
       changeField(namespace, fieldName, value, error, dirtyCheck)
-      onChange && onChange(arg1, arg2, arg3, arg4, arg5)
+      if (onChange) {
+        onChange(arg1, arg2, arg3, arg4, arg5)
+      }
     },
     [transformEventToValue, getError, changeField, namespace, fieldName, dirtyCheck, onChange],
   )
@@ -107,7 +113,9 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
   const handleBlur = useCallback<FocusEventHandler<T>>(
     (event) => {
       blurField(namespace, fieldName)
-      onBlur && onBlur(event)
+      if (onBlur) {
+        onBlur(event)
+      }
     },
     [fieldName, namespace, onBlur, blurField],
   )

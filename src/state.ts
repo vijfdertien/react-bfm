@@ -60,7 +60,9 @@ const stateCreator = (): StateCreatorReturnType => {
     subscribers[namespace].set(id, { listener, fieldName })
 
     return () => {
-      subscribers[namespace] && subscribers[namespace].has(id) && subscribers[namespace].delete(id)
+      if (subscribers[namespace] && subscribers[namespace].has(id)) {
+        subscribers[namespace].delete(id)
+      }
     }
   }
 
