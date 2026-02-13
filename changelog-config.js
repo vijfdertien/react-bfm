@@ -1,5 +1,5 @@
 'use strict'
-const baseConfig = require('conventional-changelog-conventionalcommits')
+const baseConfig = require('conventional-changelog-conventionalcommits').default
 
 module.exports = baseConfig({
   types: [
