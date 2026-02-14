@@ -38,7 +38,7 @@
   ],
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "bun build-ts && bun build-commonjs && bun build-es && bun build-umd && bun build-umd-min",
+    "build": "bun run build-ts && bun run build-commonjs && bun run build-es && bun run build-umd && bun run build-umd-min",
     "build-ts": "tsc",
     "build-commonjs": "BABEL_ENV=commonjs babel build --out-dir lib",
     "build-es": "babel build --out-dir es",
@@ -48,11 +48,11 @@
     "eslint-check": "eslint . --ext .ts,.js",
     "eslint-fix": "eslint --fix .",
     "prepare": "husky",
-    "prepublishOnly": "bun clean && bun build",
+    "prepublishOnly": "bun run clean && bun run build",
     "prettier-check": "prettier --check .",
     "prettier-fix": "prettier --write .",
     "test": "jest",
-    "check": "bun prettier-check && bun eslint-check && tsc --noEmit --project tsconfig.check.json",
+    "check": "bun run prettier-check && bun run eslint-check && tsc --noEmit --project tsconfig.check.json",
     "version": "conventional-changelog --config ./changelog-config.js --infile CHANGELOG.md --same-file && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "dependencies": {
