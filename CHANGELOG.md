@@ -1,3 +1,14 @@
+## [2.0.0-rc.1](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.18...v2.0.0-rc.1) (2026-02-14)
+
+### Miscellaneous Chores
+
+- fixed package scripts ([35bd0e2](https://github.com/vijfdertien/react-bfm/commit/35bd0e2744878ac21998b3ea30597ada1c0fea76))
+- moved from yarn to bun ([e2242c1](https://github.com/vijfdertien/react-bfm/commit/e2242c18bacd48fc7728d6a4d6587c2918c0291c))
+- small code and test improvements ([783b378](https://github.com/vijfdertien/react-bfm/commit/783b378014c24689439cd5e7e87df381de134b66))
+- updated eslint to version 9 ([9fcc5da](https://github.com/vijfdertien/react-bfm/commit/9fcc5daa825ab0caa4aa681e37c3c6d499d27f76))
+- updated jest to latest version ([2b7084c](https://github.com/vijfdertien/react-bfm/commit/2b7084ce4273190b99df7fdb75eecafab78d0b4a))
+- updated several packages to latest version ([b9b6d88](https://github.com/vijfdertien/react-bfm/commit/b9b6d88dd86b4566c58c203530fe1d7bf31ef031))
+
 ## [2.0.0-beta.18](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2024-01-11)
 
 ### Bug Fixes
