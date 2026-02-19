@@ -1,5 +1,8 @@
 // keys
 export const FIELD_KEY_INITIAL_VALUE = 'initialValue'
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail.
+ */
 export const FIELD_KEY_INITIAL_VALUE_ERROR = 'initialValueError'
 export const FIELD_KEY_DIRTY = 'dirty'
 export const FIELD_KEY_ERROR = 'error'

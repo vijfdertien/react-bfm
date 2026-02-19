@@ -4,6 +4,8 @@ A basic field (or form) state manager for React using hooks.
 
 Version 1.x is no longer maintained. Please upgrade to version 2.x; it is compatible with React 18.2 and above.
 
+> **Migration Guide:** Upgrading from v1.x? See [MIGRATION.md](./MIGRATION.md) for a complete guide.
+
 # Features
 
 - Initialize fields on rendering
@@ -112,9 +114,19 @@ See also `clearField`
 Reset namespace, but ignoring the default values of the fields  
 See also `resetNamespace`
 
-**resetNamespace( namespace )**  
-Reset namespace to default state and setting last provided default value per field  
+**resetNamespace( namespace )**
+Reset namespace to default state and setting last provided default value per field
 See also `clearNamespace`
+
+## Deprecation Notices
+
+The following exports are deprecated and will be removed in v3.0.0:
+
+- **`BFMHooksContext`** - Internal React context
+- **`BFMHookContextType`** - Internal context type
+- **`FIELD_KEY_INITIAL_VALUE_ERROR`** - Internal field key constant
+- **`FIELD_DEFAULT_DEFAULT_VALUE_ERROR`** - Internal field default constant
+- **`mapFieldValueAndError`** - Internal helper function
 
 # Examples
 

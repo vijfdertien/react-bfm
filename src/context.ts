@@ -66,7 +66,7 @@ const initField = (namespace: NamespaceType, fieldName: FieldNameType, value: an
 }
 
 /**
- * sets default value only when the field is not touched and not focused
+ * sets initial value only when the field is not touched and not focused
  * this way you can still change the input value after first rendering
  */
 const initialValueField = (namespace: NamespaceType, fieldName: FieldNameType, initialValue: any, error: any) =>
@@ -92,6 +92,9 @@ const initialValueField = (namespace: NamespaceType, fieldName: FieldNameType, i
     }
   })
 
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail and should not be used directly.
+ */
 export interface BFMHookContextType extends Omit<
   StateCreatorReturnType,
   'updateFieldStateWithCallback' | 'initFieldState'
@@ -109,6 +112,9 @@ export interface BFMHookContextType extends Omit<
   initField: (namespace: NamespaceType, fieldName: FieldNameType, value: any, error: any) => void
 }
 
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail and should not be used directly.
+ */
 export const BFMHooksContext = createContext<BFMHookContextType>({
   blurField,
   changeField,

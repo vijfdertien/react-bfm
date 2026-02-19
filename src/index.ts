@@ -1,7 +1,16 @@
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail and should not be used directly.
+ */
 export { BFMHooksContext } from './context'
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail and should not be used directly.
+ */
 export type { BFMHookContextType } from './context'
 export {
   FIELD_KEY_INITIAL_VALUE,
+  /**
+   * @deprecated Will be removed in v3.0.0. This is an internal implementation detail.
+   */
   FIELD_KEY_INITIAL_VALUE_ERROR,
   FIELD_KEY_DIRTY,
   FIELD_KEY_ERROR,
@@ -13,6 +22,9 @@ export {
 } from './constants/field-keys'
 export {
   FIELD_DEFAULT_DEFAULT_VALUE,
+  /**
+   * @deprecated Will be removed in v3.0.0. This is an internal implementation detail.
+   */
   FIELD_DEFAULT_DEFAULT_VALUE_ERROR,
   FIELD_DEFAULT_DIRTY,
   FIELD_DEFAULT_ERROR,
@@ -49,6 +61,9 @@ export {
   defaultDirtyCheck,
   defaultEventToValue,
   defaultValueToInput,
+  /**
+   * @deprecated Will be removed in v3.0.0. This is an internal implementation detail.
+   */
   mapFieldValueAndError,
   validateFieldName,
   validateNamespace,

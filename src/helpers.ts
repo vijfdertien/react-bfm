@@ -19,6 +19,9 @@ export const defaultDirtyCheck: DirtyCheckFunction = (newValue: any, valueOnFocu
 export const defaultValueToInput: TransformValueToInputFunction = (value?: any): any =>
   value !== undefined ? value : ''
 
+/**
+ * @deprecated Will be removed in v3.0.0. This is an internal implementation detail.
+ */
 export const mapFieldValueAndError = (value: any, error?: any): Pick<FieldStateType, 'error' | 'valid' | 'value'> => ({
   [FIELD_KEY_ERROR]: error || FIELD_DEFAULT_ERROR,
   [FIELD_KEY_VALID]: !error,

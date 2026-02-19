@@ -6,7 +6,7 @@ import { FIELD_DEFAULT_ERROR, FIELD_DEFAULT_VALUE } from '../constants/field-def
 import { FIELD_KEY_INITIAL_VALUE, FIELD_KEY_INITIAL_VALUE_ERROR } from '../constants/field-keys'
 
 /**
- * Reset field, but ignoring default value
+ * Reset field, but ignoring initial value
  */
 export const clearField = (namespace: NamespaceType, fieldName: FieldNameType): void => {
   updateFieldStateWithCallback(namespace, fieldName, () => ({
@@ -15,7 +15,7 @@ export const clearField = (namespace: NamespaceType, fieldName: FieldNameType): 
   }))
 }
 /**
- * Reset field to default state and setting last provided default value
+ * Reset field to default state and setting last provided initial value
  */
 export const resetField = (namespace: NamespaceType, fieldName: FieldNameType): void => {
   updateFieldStateWithCallback(namespace, fieldName, (currentState: FieldStateType) => ({
