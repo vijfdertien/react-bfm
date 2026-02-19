@@ -63,9 +63,8 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
 
   // Store static props for use in the validator callback.
   // This way you can (re-)use for example: required, minlength, maxlength, etc. in the validator
-  useEffect(() => {
-    propsRef.current = staticProps
-  }, [staticProps])
+  // eslint-disable-next-line react-hooks/refs -- Intentional: avoid recreating getError on every render
+  propsRef.current = staticProps
 
   const getError = useCallback((_value: any) => validator && validator(_value, propsRef.current), [validator])
 
@@ -83,17 +82,17 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
 
   // update initialValue on change, see `initialValueField` function for more info
   useEffect(() => {
-    initialValueField(namespace, fieldName, initialValue, getError(initialValue))
-  }, [initialValueField, fieldName, getError, initialValue, namespace])
+    initialValueField(namesRef.current.namespace, namesRef.current.fieldName, initialValue, getError(initialValue))
+  }, [initialValueField, getError, initialValue])
 
   const handleFocus = useCallback<FocusEventHandler<T>>(
     (event) => {
-      focusField(namespace, fieldName)
+      focusField(namesRef.current.namespace, namesRef.current.fieldName)
       if (onFocus) {
         onFocus(event)
       }
     },
-    [fieldName, namespace, onFocus, focusField],
+    [onFocus, focusField],
   )
 
   const handleChange = useCallback<ConnectFieldChangeHandler>(
@@ -102,22 +101,22 @@ export const useConnectField = <P = unknown, T = HTMLInputElement>(
         ? transformEventToValue(arg1, arg2, arg3, arg4, arg5)
         : defaultEventToValue(arg1)
       const error = getError(value)
-      changeField(namespace, fieldName, value, error, dirtyCheck)
+      changeField(namesRef.current.namespace, namesRef.current.fieldName, value, error, dirtyCheck)
       if (onChange) {
         onChange(arg1, arg2, arg3, arg4, arg5)
       }
     },
-    [transformEventToValue, getError, changeField, namespace, fieldName, dirtyCheck, onChange],
+    [transformEventToValue, getError, changeField, dirtyCheck, onChange],
   )
 
   const handleBlur = useCallback<FocusEventHandler<T>>(
     (event) => {
-      blurField(namespace, fieldName)
+      blurField(namesRef.current.namespace, namesRef.current.fieldName)
       if (onBlur) {
         onBlur(event)
       }
     },
-    [fieldName, namespace, onBlur, blurField],
+    [onBlur, blurField],
   )
 
   return {
