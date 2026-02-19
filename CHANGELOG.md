@@ -1,3 +1,27 @@
+### [1.2.3](https://github.com/vijfdertien/react-bfm/compare/v1.2.2...v1.2.3) (2023-11-10)
+
+### Miscellaneous Chores
+
+- update dependencies ([7bcf535](https://github.com/vijfdertien/react-bfm/commit/7bcf535f2f3dccd0109eb143cf81e78ffd66f484))
+
+### [1.2.2](https://github.com/vijfdertien/react-bfm/compare/v1.2.1...v1.2.2) (2023-11-10)
+
+### Miscellaneous Chores
+
+- update dependencies ([9246ecb](https://github.com/vijfdertien/react-bfm/commit/9246ecbbd074723fc1623eb1636efc52e38d514b))
+
+### [1.2.1](https://github.com/vijfdertien/react-bfm/compare/v1.2.0...v1.2.1) (2023-09-26)
+
+### Bug Fixes
+
+- keep field state not working ([e2d7117](https://github.com/vijfdertien/react-bfm/commit/e2d7117bcbf1d61aecda21fb10e8493fcd894338))
+
+## [1.2.0](https://github.com/vijfdertien/react-bfm/compare/v1.1.0...v1.2.0) (2023-09-26)
+
+### Features
+
+- keep field state on unmount with prop `keepFieldStateOnUnmount` ([8d4d260](https://github.com/vijfdertien/react-bfm/commit/8d4d260d66f06cea101badd764d2aded6eeaabc8))
+
 ## [2.0.0-rc.1](https://github.com/vijfdertien/react-bfm/compare/v2.0.0-beta.18...v2.0.0-rc.1) (2026-02-14)
 
 ### Miscellaneous Chores
